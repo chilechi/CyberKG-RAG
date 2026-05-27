@@ -9,6 +9,7 @@ import GraphQueryPage from "./views/GraphQueryPage.vue";
 import HistoryPage from "./views/HistoryPage.vue";
 import QaPage from "./views/QaPage.vue";
 import ReservedPage from "./views/ReservedPage.vue";
+import SettingsPage from "./views/SettingsPage.vue";
 
 type PageKey =
   | "dashboard"
@@ -80,13 +81,7 @@ const pageMeta = computed(() => {
       />
       <DataManagementPage v-else-if="activePage === 'data'" />
       <HistoryPage v-else-if="activePage === 'history'" />
-      <ReservedPage
-        v-else
-        title="系统设置"
-        description="当前只展示可公开配置，API Key 等敏感信息不会返回前端。"
-        endpoint="/api/settings"
-        settings
-      />
+      <SettingsPage v-else />
     </main>
   </div>
 </template>

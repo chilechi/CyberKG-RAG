@@ -1191,6 +1191,173 @@ button {
   overflow-wrap: anywhere;
 }
 
+.settings-page {
+  align-content: start;
+}
+
+.settings-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 0.8fr);
+  gap: 12px;
+}
+
+.settings-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.settings-form-grid label {
+  display: grid;
+  gap: 6px;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.settings-form-grid input,
+.settings-form-grid textarea {
+  width: 100%;
+  border: 1px solid #d8e2f0;
+  border-radius: 8px;
+  padding: 9px 11px;
+  color: #10224d;
+  background: #f8fbff;
+}
+
+.settings-form-grid textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+.full-field {
+  grid-column: 1 / -1;
+}
+
+.settings-kv-list {
+  display: grid;
+  gap: 8px;
+}
+
+.settings-kv-list div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #edf2f7;
+  border-radius: 8px;
+  padding: 9px 10px;
+  background: #fbfdff;
+}
+
+.settings-kv-list span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.settings-kv-list strong {
+  color: #10224d;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.ok-text {
+  color: #047857 !important;
+}
+
+.warn-text {
+  color: #b45309 !important;
+}
+
+.settings-note {
+  margin-top: 10px;
+  border: 1px dashed #d7e2f2;
+  border-radius: 8px;
+  padding: 10px;
+  color: #64748b;
+  background: #f8fafc;
+  font-size: 13px;
+}
+
+.connection-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.connection-card {
+  display: grid;
+  gap: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #fbfdff;
+}
+
+.connection-card > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.status-pill {
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #92400e;
+  background: #fef3c7;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.status-pill.ok {
+  color: #047857;
+  background: #dcfce7;
+}
+
+.status-pill.error {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.connection-card dl {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 6px 8px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.connection-card dt {
+  color: #64748b;
+}
+
+.connection-card dd {
+  margin: 0;
+  color: #10224d;
+  overflow-wrap: anywhere;
+}
+
+.connection-card small {
+  color: #64748b;
+  overflow-wrap: anywhere;
+}
+
+.reserved-config-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.reserved-config-list span {
+  border: 1px solid #d7e2f2;
+  border-radius: 999px;
+  padding: 7px 10px;
+  color: #24446f;
+  background: #f8fbff;
+  font-size: 13px;
+}
+
 @media (max-width: 1080px) {
   .app-shell {
     grid-template-columns: 1fr;
@@ -1215,6 +1382,11 @@ button {
   .dashboard-bottom,
   .graph-workbench,
   .data-main {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-main,
+  .connection-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1254,6 +1426,7 @@ button {
   .data-metrics,
   .history-metrics,
   .history-toolbar,
+  .settings-form-grid,
   .graph-toolbar,
   .compact-stats,
   .qa-metric-grid,

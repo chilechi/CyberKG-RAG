@@ -1,0 +1,40 @@
+import { apiClient } from "./client";
+import type { ApiResponse } from "./mock";
+
+export interface ConnectionSetting {
+  name: string;
+  host: string;
+  port: number | string;
+  database: string;
+  status: "ok" | "error" | string;
+  message: string;
+}
+
+export interface ModelSetting {
+  embedding_provider: string;
+  embedding_model: string;
+  embedding_dim: number;
+  milvus_collection: string;
+  dashscope_configured: boolean;
+  deepseek_configured: boolean;
+}
+
+export interface BasicSetting {
+  system_name: string;
+  description: string;
+  default_qa_mode: string;
+  language: string;
+  timezone: string;
+}
+
+export interface SettingsResponse {
+  basic: BasicSetting;
+  model: ModelSetting;
+  connections: ConnectionSetting[];
+  reserved_sections: string[];
+}
+
+export async function fetchSettings(): Promise<SettingsResponse> {
+  const response = await apiClient.get<ApiResponse<SettingsResponse>>("/api/settings");
+  return response.data.data;
+}

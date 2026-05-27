@@ -10,6 +10,7 @@ from app.api.overview import router as overview_router
 from app.api.placeholders import router as placeholders_router
 from app.api.qa import router as qa_router
 from app.api.search import router as search_router
+from app.api.settings import router as settings_router
 
 
 app = FastAPI(
@@ -45,4 +46,5 @@ app.include_router(history_router, prefix="/api/history", tags=["history"])
 app.include_router(graph_router, prefix="/api/graph", tags=["graph"])
 app.include_router(search_router, prefix="/api/search", tags=["search"])
 app.include_router(qa_router, prefix="/api/qa", tags=["qa"])
+app.include_router(settings_router, prefix="/api/settings", tags=["settings"])
 app.include_router(health_router, prefix="/health", tags=["health"])
