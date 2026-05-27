@@ -26,12 +26,6 @@ def get_kg_completion() -> ApiResponse[ReservedApiResponse]:
     return ApiResponse(data=ReservedApiResponse(message="知识补全实验接口预留，尚未接入训练结果"))
 
 
-@router.get("/data/sources", response_model=ApiResponse[ReservedApiResponse])
-def get_data_sources() -> ApiResponse[ReservedApiResponse]:
-    """数据管理页先暴露预留接口，后续接入数据源配置与同步任务。"""
-    return ApiResponse(data=ReservedApiResponse(message="数据源管理接口预留，导入任务暂由 scripts 目录脚本执行"))
-
-
 @router.get("/settings", response_model=ApiResponse[dict])
 def get_public_settings(settings: Settings = Depends(get_settings)) -> ApiResponse[dict]:
     """只返回可公开展示的配置，避免泄露 API Key。"""

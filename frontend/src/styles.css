@@ -573,6 +573,97 @@ button {
   font-weight: 700;
 }
 
+.data-page {
+  align-content: start;
+}
+
+.data-metrics {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.data-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+  gap: 12px;
+}
+
+.import-flow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+  gap: 8px;
+  align-items: center;
+}
+
+.import-flow div {
+  display: grid;
+  gap: 5px;
+  min-height: 86px;
+  align-content: center;
+  padding: 12px;
+  border: 1px solid #d7e2f2;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.import-flow strong {
+  color: #10224d;
+  font-size: 14px;
+}
+
+.import-flow span,
+.import-flow small {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.import-flow small {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+.import-flow b {
+  color: #2563eb;
+  font-size: 20px;
+}
+
+.data-table {
+  display: grid;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.data-row {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1.4fr 0.55fr 0.55fr;
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 13px;
+}
+
+.data-row:last-child {
+  border-bottom: 0;
+}
+
+.data-row.header {
+  min-height: 38px;
+  color: #64748b;
+  background: #f8fbff;
+  font-weight: 700;
+}
+
+.data-row strong {
+  color: #10224d;
+}
+
+.status-text {
+  color: #047857;
+  font-weight: 700;
+}
+
 .empty-table span,
 .empty-table strong {
   color: #10224d;
@@ -1026,7 +1117,8 @@ button {
   .qa-prototype-layout,
   .dashboard-main,
   .dashboard-bottom,
-  .graph-workbench {
+  .graph-workbench,
+  .data-main {
     grid-template-columns: 1fr;
   }
 
@@ -1063,13 +1155,17 @@ button {
   .mode-grid,
   .settings-grid,
   .dashboard-metrics,
+  .data-metrics,
   .graph-toolbar,
   .compact-stats,
-  .qa-metric-grid {
+  .qa-metric-grid,
+  .import-flow,
+  .data-row {
     grid-template-columns: 1fr;
   }
 
-  .flow-line b {
+  .flow-line b,
+  .import-flow b {
     transform: rotate(90deg);
     justify-self: center;
   }

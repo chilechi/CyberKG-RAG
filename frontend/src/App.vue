@@ -4,6 +4,7 @@ import { computed, ref } from "vue";
 import AppSidebar from "./components/AppSidebar.vue";
 import AppTopbar from "./components/AppTopbar.vue";
 import DashboardPage from "./views/DashboardPage.vue";
+import DataManagementPage from "./views/DataManagementPage.vue";
 import GraphQueryPage from "./views/GraphQueryPage.vue";
 import QaPage from "./views/QaPage.vue";
 import ReservedPage from "./views/ReservedPage.vue";
@@ -48,7 +49,7 @@ const pageMeta = computed(() => {
     qa: { title: "智能问答", subtitle: "融合图谱路径与 Milvus 文本证据生成答案" },
     comparison: { title: "问答对比实验", subtitle: "对比不同问答模式的回答效果与质量表现" },
     completion: { title: "知识补全实验", subtitle: "预留 PyKEEN 知识补全训练和评估结果展示" },
-    data: { title: "数据管理", subtitle: "统一管理数据源、文档与向量数据" },
+    data: { title: "数据管理", subtitle: "统一管理数据源、文档与向量数据，保障知识库质量与一致性" },
     history: { title: "问答历史", subtitle: "查看和管理历史问答记录" },
     settings: { title: "系统设置", subtitle: "查看公开系统配置，敏感密钥不会展示" },
   };
@@ -76,12 +77,7 @@ const pageMeta = computed(() => {
         description="TransE、ComplEx、RotatE 等模型训练结果展示位已预留。"
         endpoint="/api/experiments/kg-completion"
       />
-      <ReservedPage
-        v-else-if="activePage === 'data'"
-        title="数据管理"
-        description="数据源管理和同步任务接口已预留，当前导入由 scripts 脚本执行。"
-        endpoint="/api/data/sources"
-      />
+      <DataManagementPage v-else-if="activePage === 'data'" />
       <ReservedPage
         v-else-if="activePage === 'history'"
         title="问答历史"

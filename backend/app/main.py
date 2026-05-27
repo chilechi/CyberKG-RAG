@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api.data import router as data_router
 from app.api.graph import router as graph_router
 from app.api.health import router as health_router
 from app.api.mock import router as mock_router
@@ -37,6 +38,7 @@ def health_check() -> dict[str, str]:
 
 app.include_router(mock_router, prefix="/api/mock", tags=["mock"])
 app.include_router(overview_router, prefix="/api/overview", tags=["overview"])
+app.include_router(data_router, prefix="/api/data", tags=["data"])
 app.include_router(placeholders_router, prefix="/api", tags=["reserved"])
 app.include_router(graph_router, prefix="/api/graph", tags=["graph"])
 app.include_router(search_router, prefix="/api/search", tags=["search"])
