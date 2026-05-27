@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-import { askMockQuestion, type QaAnswer } from "../api/mock";
+import { askKgRagQuestion } from "../api/qa";
+import type { QaAnswer } from "../api/mock";
 
 const question = ref("Log4Shell 可能关联哪些攻击技术？");
 const answer = ref<QaAnswer | null>(null);
@@ -17,7 +18,7 @@ async function submitQuestion() {
   loading.value = true;
   error.value = "";
   try {
-    answer.value = await askMockQuestion(question.value.trim());
+    answer.value = await askKgRagQuestion(question.value.trim());
   } catch (err) {
     error.value = err instanceof Error ? err.message : "问答请求失败";
   } finally {
@@ -31,7 +32,7 @@ async function submitQuestion() {
     <div class="section-heading">
       <div>
         <h2>KG-RAG 问答</h2>
-        <p>先用 mock 数据固定答案、路径证据和文本证据的展示方式</p>
+        <p>融合 Neo4j 图谱路径和 Milvus 文本证据生成回答</p>
       </div>
     </div>
 

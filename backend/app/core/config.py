@@ -23,6 +23,14 @@ class Settings(BaseSettings):
     milvus_host: str = "localhost"
     milvus_port: int = 19530
 
+    embedding_provider: str = "mock"
+    embedding_model: str = "text-embedding-v4"
+    embedding_dim: int = 1024
+    dashscope_api_key: str = ""
+    dashscope_embedding_url: str = (
+        "https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding"
+    )
+
     deepseek_api_key: str = ""
 
     model_config = SettingsConfigDict(

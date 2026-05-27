@@ -1,16 +1,25 @@
 from pymilvus import Collection, CollectionSchema, DataType, FieldSchema, connections, utility
 
-from common import mock_embedding, read_sample_json
+from common import read_sample_json
 from app.core.config import get_settings
+from app.services.embedding_service import embed_text
 
 
 COLLECTION_NAME = "cyber_doc_chunks"
-VECTOR_DIM = 64
 
 
-def create_collection() -> Collection:
+def create_collection(vector_dim: int) -> Collection:
     if utility.has_collection(COLLECTION_NAME):
-        return Collection(COLLECTION_NAME)
+        collection = Collection(COLLECTION_NAME)
+        existing_dim = next(
+            field.params.get("dim")
+            for field in collection.schema.fields
+            if field.name == "embedding"
+        )
+        if int(existing_dim) == vector_dim:
+            return collection
+        # embedding 维度变化时必须重建 collection，否则 Milvus 会拒绝写入。
+        utility.drop_collection(COLLECTION_NAME)
 
     fields = [
         FieldSchema(name="chunk_id", dtype=DataType.VARCHAR, max_length=128, is_primary=True),
@@ -18,7 +27,7 @@ def create_collection() -> Collection:
         FieldSchema(name="entity_type", dtype=DataType.VARCHAR, max_length=64),
         FieldSchema(name="source", dtype=DataType.VARCHAR, max_length=128),
         FieldSchema(name="text", dtype=DataType.VARCHAR, max_length=4096),
-        FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=VECTOR_DIM),
+        FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, dim=vector_dim),
     ]
     schema = CollectionSchema(fields=fields, description="Cyber security document chunks")
     collection = Collection(COLLECTION_NAME, schema=schema)
@@ -37,9 +46,9 @@ def main() -> None:
     settings = get_settings()
     connections.connect(host=settings.milvus_host, port=str(settings.milvus_port))
     doc_chunks = read_sample_json("doc_chunks.json")
-    collection = create_collection()
+    collection = create_collection(settings.embedding_dim)
 
-    # 为了保持脚本幂等，样例集合每次先清空再写入；真实数据导入时再改为增量 upsert。
+    # 样例导入脚本保持幂等：每次先清空再写入；真实数据导入时再改为增量 upsert。
     if collection.num_entities > 0:
         collection.delete(expr='chunk_id != ""')
         collection.flush()
@@ -51,13 +60,16 @@ def main() -> None:
             [item["entity_type"] for item in doc_chunks],
             [item["source"] for item in doc_chunks],
             [item["text"] for item in doc_chunks],
-            [mock_embedding(item["text"], VECTOR_DIM) for item in doc_chunks],
+            [embed_text(settings, item["text"]) for item in doc_chunks],
         ]
     )
     collection.flush()
     collection.load()
 
-    print(f"Milvus import done: {collection.num_entities} doc chunks in {COLLECTION_NAME}")
+    print(
+        f"Milvus import done: {collection.num_entities} doc chunks in {COLLECTION_NAME} "
+        f"with {settings.embedding_provider}/{settings.embedding_model}"
+    )
     connections.disconnect("default")
 
 
