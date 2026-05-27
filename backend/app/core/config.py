@@ -22,6 +22,7 @@ class Settings(BaseSettings):
 
     milvus_host: str = "localhost"
     milvus_port: int = 19530
+    milvus_collection: str = "cyber_doc_chunks"
 
     embedding_provider: str = "mock"
     embedding_model: str = "text-embedding-v4"

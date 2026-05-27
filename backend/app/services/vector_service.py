@@ -5,14 +5,11 @@ from app.schemas.qa import QaEvidence
 from app.services.embedding_service import embed_text
 
 
-COLLECTION_NAME = "cyber_doc_chunks"
-
-
 def search_doc_chunks(settings: Settings, query: str, top_k: int = 3) -> list[QaEvidence]:
     """从 Milvus 检索和问题最相似的文本片段。"""
     connections.connect(host=settings.milvus_host, port=str(settings.milvus_port))
     try:
-        collection = Collection(COLLECTION_NAME)
+        collection = Collection(settings.milvus_collection)
         collection.load()
         results = collection.search(
             data=[embed_text(settings, query)],
