@@ -8,7 +8,7 @@ class QaRequest(BaseModel):
 
 
 class QaEvidence(BaseModel):
-    """文本证据片段，后续由 Milvus 召回结果填充。"""
+    """文本证据片段，由 Milvus 召回结果填充。"""
 
     source: str
     entity_id: str
@@ -17,7 +17,7 @@ class QaEvidence(BaseModel):
 
 
 class QaResponse(BaseModel):
-    """问答响应，提前固定答案、图谱路径、文本证据和置信度字段。"""
+    """问答响应，包含答案、图谱路径、文本证据和置信度。"""
 
     question: str
     answer: str

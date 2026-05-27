@@ -664,6 +664,102 @@ button {
   font-weight: 700;
 }
 
+.history-page {
+  align-content: start;
+}
+
+.history-toolbar {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto auto;
+  gap: 10px;
+  align-items: end;
+}
+
+.history-metrics {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.history-table {
+  display: grid;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.history-row {
+  display: grid;
+  grid-template-columns: minmax(240px, 1.5fr) 90px 80px 80px 130px 150px 70px;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 13px;
+}
+
+.history-row:last-child {
+  border-bottom: 0;
+}
+
+.history-row.header {
+  min-height: 38px;
+  color: #64748b;
+  background: #f8fbff;
+  font-weight: 700;
+}
+
+.question-cell {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.question-cell strong,
+.question-cell small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.question-cell small {
+  color: #64748b;
+}
+
+.mode-pill {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #047857;
+  background: #dcfce7;
+  font-weight: 700;
+}
+
+.link-button {
+  border: 0;
+  padding: 0;
+  color: #1463ed;
+  background: transparent;
+}
+
+.link-button.danger {
+  color: #dc2626;
+}
+
+.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  color: #64748b;
+  font-size: 13px;
+}
+
+.pagination-row > div {
+  display: flex;
+  gap: 8px;
+}
+
 .empty-table span,
 .empty-table strong {
   color: #10224d;
@@ -1156,12 +1252,20 @@ button {
   .settings-grid,
   .dashboard-metrics,
   .data-metrics,
+  .history-metrics,
+  .history-toolbar,
   .graph-toolbar,
   .compact-stats,
   .qa-metric-grid,
   .import-flow,
-  .data-row {
+  .data-row,
+  .history-row {
     grid-template-columns: 1fr;
+  }
+
+  .pagination-row {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .flow-line b,

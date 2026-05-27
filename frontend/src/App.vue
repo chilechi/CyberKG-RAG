@@ -6,6 +6,7 @@ import AppTopbar from "./components/AppTopbar.vue";
 import DashboardPage from "./views/DashboardPage.vue";
 import DataManagementPage from "./views/DataManagementPage.vue";
 import GraphQueryPage from "./views/GraphQueryPage.vue";
+import HistoryPage from "./views/HistoryPage.vue";
 import QaPage from "./views/QaPage.vue";
 import ReservedPage from "./views/ReservedPage.vue";
 
@@ -78,12 +79,7 @@ const pageMeta = computed(() => {
         endpoint="/api/experiments/kg-completion"
       />
       <DataManagementPage v-else-if="activePage === 'data'" />
-      <ReservedPage
-        v-else-if="activePage === 'history'"
-        title="问答历史"
-        description="问答日志持久化后会在这里展示真实历史记录。"
-        endpoint="/api/history"
-      />
+      <HistoryPage v-else-if="activePage === 'history'" />
       <ReservedPage
         v-else
         title="系统设置"

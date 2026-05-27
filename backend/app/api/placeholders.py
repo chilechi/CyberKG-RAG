@@ -8,12 +8,6 @@ from app.schemas.overview import ReservedApiResponse
 router = APIRouter()
 
 
-@router.get("/history", response_model=ApiResponse[ReservedApiResponse])
-def get_question_history() -> ApiResponse[ReservedApiResponse]:
-    """问答历史后续接入持久化日志表，目前只返回预留接口。"""
-    return ApiResponse(data=ReservedApiResponse(message="问答历史模块预留，尚未接入日志表"))
-
-
 @router.get("/experiments/qa-comparison", response_model=ApiResponse[ReservedApiResponse])
 def get_qa_comparison() -> ApiResponse[ReservedApiResponse]:
     """问答对比实验后续接入评测任务与指标表。"""
