@@ -1,22 +1,103 @@
 [
-  {
-    "source": "CVE-2021-44228",
-    "target": "CWE-502",
-    "relation": "HAS_WEAKNESS"
-  },
-  {
-    "source": "CWE-502",
-    "target": "CAPEC-586",
-    "relation": "RELATED_TO_CAPEC"
-  },
-  {
-    "source": "CAPEC-586",
-    "target": "T1190",
-    "relation": "USES_TECHNIQUE"
-  },
-  {
-    "source": "T1190",
-    "target": "TA0001",
-    "relation": "BELONGS_TO_TACTIC"
-  }
+  {"source": "CVE-2021-44228", "target": "PROD-LOG4J", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2021-44228", "target": "CWE-502", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2021-44228", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2021-44228", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2021-44228", "target": "MIT-004", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2021-44228", "target": "MIT-009", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2022-22965", "target": "PROD-SPRING", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2022-22965", "target": "CWE-94", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2022-22965", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-22965", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2022-22965", "target": "MIT-002", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2022-22965", "target": "MIT-003", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2017-5638", "target": "PROD-STRUTS2", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2017-5638", "target": "CWE-20", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2017-5638", "target": "CWE-78", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2017-5638", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2017-5638", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2017-5638", "target": "MIT-003", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2021-34473", "target": "PROD-EXCHANGE", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2021-34473", "target": "CWE-287", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2021-34473", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2021-34473", "target": "T1505.003", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2021-34473", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2021-34473", "target": "MIT-009", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2019-19781", "target": "PROD-CITRIX-ADC", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2019-19781", "target": "CWE-22", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2019-19781", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2019-19781", "target": "T1505.003", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2019-19781", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2019-19781", "target": "MIT-006", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2018-13379", "target": "PROD-FORTIGATE", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2018-13379", "target": "CWE-22", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2018-13379", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2018-13379", "target": "T1078", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2018-13379", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2018-13379", "target": "MIT-010", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2023-34362", "target": "PROD-MOVEIT", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2023-34362", "target": "CWE-89", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2023-34362", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-34362", "target": "T1105", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-34362", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2023-34362", "target": "MIT-002", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2023-34362", "target": "MIT-009", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2023-3519", "target": "PROD-CITRIX-ADC", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2023-3519", "target": "CWE-306", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2023-3519", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-3519", "target": "T1505.003", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-3519", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2023-3519", "target": "MIT-006", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2022-1388", "target": "PROD-F5-BIGIP", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2022-1388", "target": "CWE-287", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2022-1388", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-1388", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-1388", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2022-1388", "target": "MIT-007", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2020-0796", "target": "PROD-WINDOWS-SMB", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2020-0796", "target": "CWE-20", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2020-0796", "target": "T1210", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2020-0796", "target": "T1068", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2020-0796", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2020-0796", "target": "MIT-006", "relation": "HAS_MITIGATION"},
+
+  {"source": "CWE-502", "target": "CAPEC-586", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-78", "target": "CAPEC-88", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-89", "target": "CAPEC-66", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-79", "target": "CAPEC-63", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-22", "target": "CAPEC-126", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-94", "target": "CAPEC-242", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-287", "target": "CAPEC-115", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-306", "target": "CAPEC-115", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-434", "target": "CAPEC-650", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-20", "target": "CAPEC-242", "relation": "RELATED_TO_CAPEC"},
+
+  {"source": "CAPEC-586", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-88", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-66", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-63", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-126", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-242", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-115", "target": "T1078", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-650", "target": "T1505.003", "relation": "USES_TECHNIQUE"},
+
+  {"source": "T1190", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1059", "target": "TA0002", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1505.003", "target": "TA0003", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1068", "target": "TA0004", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1078", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1105", "target": "TA0002", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1110", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1210", "target": "TA0002", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1046", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1053", "target": "TA0003", "relation": "BELONGS_TO_TACTIC"}
 ]

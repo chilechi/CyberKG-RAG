@@ -6,16 +6,8 @@ from app.services.embedding_service import embed_text
 
 
 def create_collection(collection_name: str, vector_dim: int) -> Collection:
+    """样例数据导入每次重建 collection，保证统计值和样例文件完全一致。"""
     if utility.has_collection(collection_name):
-        collection = Collection(collection_name)
-        existing_dim = next(
-            field.params.get("dim")
-            for field in collection.schema.fields
-            if field.name == "embedding"
-        )
-        if int(existing_dim) == vector_dim:
-            return collection
-        # embedding 维度变化时必须重建 collection，否则 Milvus 会拒绝写入。
         utility.drop_collection(collection_name)
 
     fields = [
@@ -44,11 +36,6 @@ def main() -> None:
     connections.connect(host=settings.milvus_host, port=str(settings.milvus_port))
     doc_chunks = read_sample_json("doc_chunks.json")
     collection = create_collection(settings.milvus_collection, settings.embedding_dim)
-
-    # 样例导入脚本保持幂等：每次先清空再写入；真实数据导入时再改为增量 upsert。
-    if collection.num_entities > 0:
-        collection.delete(expr='chunk_id != ""')
-        collection.flush()
 
     collection.insert(
         [

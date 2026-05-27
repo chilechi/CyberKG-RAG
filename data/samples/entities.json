@@ -1,32 +1,69 @@
 [
-  {
-    "id": "CVE-2021-44228",
-    "name": "Log4Shell",
-    "type": "Vulnerability",
-    "description": "Apache Log4j2 远程代码执行漏洞。"
-  },
-  {
-    "id": "CWE-502",
-    "name": "Deserialization of Untrusted Data",
-    "type": "Weakness",
-    "description": "不可信数据反序列化弱点。"
-  },
-  {
-    "id": "CAPEC-586",
-    "name": "Object Injection",
-    "type": "AttackPattern",
-    "description": "对象注入攻击模式。"
-  },
-  {
-    "id": "T1190",
-    "name": "Exploit Public-Facing Application",
-    "type": "Technique",
-    "description": "利用公网暴露应用的 ATT&CK 技术。"
-  },
-  {
-    "id": "TA0001",
-    "name": "Initial Access",
-    "type": "Tactic",
-    "description": "初始访问战术。"
-  }
+  {"id": "CVE-2021-44228", "name": "Log4Shell", "type": "Vulnerability", "description": "Apache Log4j2 JNDI 远程代码执行漏洞。"},
+  {"id": "CVE-2022-22965", "name": "Spring4Shell", "type": "Vulnerability", "description": "Spring Framework 数据绑定导致的远程代码执行漏洞。"},
+  {"id": "CVE-2017-5638", "name": "Apache Struts2 S2-045", "type": "Vulnerability", "description": "Apache Struts2 Jakarta Multipart 解析导致远程代码执行。"},
+  {"id": "CVE-2021-34473", "name": "ProxyShell", "type": "Vulnerability", "description": "Microsoft Exchange ProxyShell 攻击链中的远程代码执行入口漏洞。"},
+  {"id": "CVE-2019-19781", "name": "Citrix ADC Path Traversal", "type": "Vulnerability", "description": "Citrix ADC 与 Gateway 路径遍历并可能导致代码执行。"},
+  {"id": "CVE-2018-13379", "name": "Fortinet FortiGate Path Traversal", "type": "Vulnerability", "description": "Fortinet FortiGate SSL VPN 路径遍历导致敏感文件泄露。"},
+  {"id": "CVE-2023-34362", "name": "MOVEit SQL Injection", "type": "Vulnerability", "description": "MOVEit Transfer SQL 注入漏洞，可被用于未授权访问和数据窃取。"},
+  {"id": "CVE-2023-3519", "name": "Citrix ADC RCE", "type": "Vulnerability", "description": "Citrix ADC 与 Gateway 未授权远程代码执行漏洞。"},
+  {"id": "CVE-2022-1388", "name": "F5 BIG-IP iControl REST RCE", "type": "Vulnerability", "description": "F5 BIG-IP iControl REST 身份绕过导致远程代码执行。"},
+  {"id": "CVE-2020-0796", "name": "SMBGhost", "type": "Vulnerability", "description": "Windows SMBv3 压缩处理中的远程代码执行漏洞。"},
+
+  {"id": "CWE-20", "name": "Improper Input Validation", "type": "Weakness", "description": "输入校验不足可能导致注入、越权或逻辑绕过。"},
+  {"id": "CWE-22", "name": "Path Traversal", "type": "Weakness", "description": "路径遍历弱点允许攻击者访问非预期目录或文件。"},
+  {"id": "CWE-78", "name": "OS Command Injection", "type": "Weakness", "description": "操作系统命令注入可能导致攻击者执行任意命令。"},
+  {"id": "CWE-79", "name": "Cross-site Scripting", "type": "Weakness", "description": "跨站脚本弱点允许攻击者在用户浏览器执行脚本。"},
+  {"id": "CWE-89", "name": "SQL Injection", "type": "Weakness", "description": "SQL 注入弱点允许攻击者改变数据库查询语义。"},
+  {"id": "CWE-94", "name": "Code Injection", "type": "Weakness", "description": "代码注入弱点可能导致攻击者执行非预期代码。"},
+  {"id": "CWE-287", "name": "Improper Authentication", "type": "Weakness", "description": "身份认证不当可能导致攻击者绕过登录或访问控制。"},
+  {"id": "CWE-306", "name": "Missing Authentication for Critical Function", "type": "Weakness", "description": "关键功能缺少认证会导致未授权操作。"},
+  {"id": "CWE-434", "name": "Unrestricted Upload of File", "type": "Weakness", "description": "不受限制的文件上传可能导致 WebShell 或恶意文件落地。"},
+  {"id": "CWE-502", "name": "Deserialization of Untrusted Data", "type": "Weakness", "description": "不可信数据反序列化可能导致远程代码执行。"},
+
+  {"id": "CAPEC-63", "name": "Cross-Site Scripting", "type": "AttackPattern", "description": "利用 Web 应用输出编码不足执行脚本。"},
+  {"id": "CAPEC-66", "name": "SQL Injection", "type": "AttackPattern", "description": "构造 SQL 片段影响后端数据库查询。"},
+  {"id": "CAPEC-88", "name": "OS Command Injection", "type": "AttackPattern", "description": "通过输入拼接执行系统命令。"},
+  {"id": "CAPEC-115", "name": "Authentication Bypass", "type": "AttackPattern", "description": "绕过认证流程访问受保护资源。"},
+  {"id": "CAPEC-126", "name": "Path Traversal", "type": "AttackPattern", "description": "使用 ../ 等路径片段访问任意文件。"},
+  {"id": "CAPEC-242", "name": "Code Injection", "type": "AttackPattern", "description": "向应用注入并执行攻击者控制的代码。"},
+  {"id": "CAPEC-586", "name": "Object Injection", "type": "AttackPattern", "description": "利用对象或反序列化机制执行恶意逻辑。"},
+  {"id": "CAPEC-650", "name": "Upload a Web Shell to a Web Server", "type": "AttackPattern", "description": "上传 WebShell 以获得持久化远程控制能力。"},
+
+  {"id": "T1046", "name": "Network Service Discovery", "type": "Technique", "description": "发现网络中开放服务和可攻击入口。"},
+  {"id": "T1053", "name": "Scheduled Task/Job", "type": "Technique", "description": "通过计划任务实现执行或持久化。"},
+  {"id": "T1059", "name": "Command and Scripting Interpreter", "type": "Technique", "description": "使用命令解释器或脚本执行攻击代码。"},
+  {"id": "T1068", "name": "Exploitation for Privilege Escalation", "type": "Technique", "description": "利用漏洞提升权限。"},
+  {"id": "T1078", "name": "Valid Accounts", "type": "Technique", "description": "利用合法账号进行访问。"},
+  {"id": "T1105", "name": "Ingress Tool Transfer", "type": "Technique", "description": "向目标环境传输攻击工具。"},
+  {"id": "T1110", "name": "Brute Force", "type": "Technique", "description": "尝试猜测凭据或弱口令。"},
+  {"id": "T1190", "name": "Exploit Public-Facing Application", "type": "Technique", "description": "利用公网暴露应用获得初始访问。"},
+  {"id": "T1210", "name": "Exploitation of Remote Services", "type": "Technique", "description": "利用远程服务漏洞横向移动或执行代码。"},
+  {"id": "T1505.003", "name": "Web Shell", "type": "Technique", "description": "在 Web 服务器上部署 WebShell 实现持久化。"},
+
+  {"id": "TA0001", "name": "Initial Access", "type": "Tactic", "description": "初始访问战术。"},
+  {"id": "TA0002", "name": "Execution", "type": "Tactic", "description": "执行战术。"},
+  {"id": "TA0003", "name": "Persistence", "type": "Tactic", "description": "持久化战术。"},
+  {"id": "TA0004", "name": "Privilege Escalation", "type": "Tactic", "description": "权限提升战术。"},
+
+  {"id": "MIT-001", "name": "Apply Security Patch", "type": "Mitigation", "description": "及时升级到官方修复版本。"},
+  {"id": "MIT-002", "name": "Input Validation", "type": "Mitigation", "description": "对外部输入进行白名单校验、长度限制和编码处理。"},
+  {"id": "MIT-003", "name": "WAF Rule", "type": "Mitigation", "description": "部署针对已知利用载荷的 Web 应用防火墙规则。"},
+  {"id": "MIT-004", "name": "Disable Vulnerable Component", "type": "Mitigation", "description": "禁用高风险组件、危险接口或不必要功能。"},
+  {"id": "MIT-005", "name": "Least Privilege", "type": "Mitigation", "description": "降低应用和服务账号权限，减少漏洞利用影响。"},
+  {"id": "MIT-006", "name": "Network Segmentation", "type": "Mitigation", "description": "限制攻击面和东西向访问范围。"},
+  {"id": "MIT-007", "name": "Authentication Hardening", "type": "Mitigation", "description": "强化认证、会话和管理接口访问控制。"},
+  {"id": "MIT-008", "name": "File Upload Restriction", "type": "Mitigation", "description": "限制上传类型、路径和执行权限。"},
+  {"id": "MIT-009", "name": "Security Monitoring", "type": "Mitigation", "description": "监控异常请求、WebShell、命令执行和数据外传迹象。"},
+  {"id": "MIT-010", "name": "Credential Rotation", "type": "Mitigation", "description": "泄露风险出现后及时轮换凭据和会话密钥。"},
+
+  {"id": "PROD-LOG4J", "name": "Apache Log4j2", "type": "Product", "description": "Java 日志组件。"},
+  {"id": "PROD-SPRING", "name": "Spring Framework", "type": "Product", "description": "Java 应用开发框架。"},
+  {"id": "PROD-STRUTS2", "name": "Apache Struts2", "type": "Product", "description": "Java Web MVC 框架。"},
+  {"id": "PROD-EXCHANGE", "name": "Microsoft Exchange Server", "type": "Product", "description": "企业邮件服务器。"},
+  {"id": "PROD-CITRIX-ADC", "name": "Citrix ADC", "type": "Product", "description": "应用交付控制器和网关产品。"},
+  {"id": "PROD-FORTIGATE", "name": "Fortinet FortiGate SSL VPN", "type": "Product", "description": "Fortinet 防火墙和 SSL VPN 产品。"},
+  {"id": "PROD-MOVEIT", "name": "MOVEit Transfer", "type": "Product", "description": "托管文件传输产品。"},
+  {"id": "PROD-F5-BIGIP", "name": "F5 BIG-IP", "type": "Product", "description": "应用交付和负载均衡平台。"},
+  {"id": "PROD-WINDOWS-SMB", "name": "Windows SMBv3", "type": "Product", "description": "Windows 文件共享协议实现。"}
 ]

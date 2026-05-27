@@ -5,7 +5,7 @@ from app.schemas.qa import QaEvidence
 from app.services.embedding_service import embed_text
 
 
-def search_doc_chunks(settings: Settings, query: str, top_k: int = 3) -> list[QaEvidence]:
+def search_doc_chunks(settings: Settings, query: str, top_k: int = 5) -> list[QaEvidence]:
     """从 Milvus 检索和问题最相似的文本片段。"""
     connections.connect(host=settings.milvus_host, port=str(settings.milvus_port))
     try:

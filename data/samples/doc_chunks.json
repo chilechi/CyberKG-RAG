@@ -1,26 +1,40 @@
 [
-  {
-    "chunk_id": "chunk-cve-2021-44228-desc",
-    "entity_id": "CVE-2021-44228",
-    "entity_type": "Vulnerability",
-    "source": "NVD",
-    "text": "Apache Log4j2 远程代码执行漏洞样例描述。",
-    "score": 0.92
-  },
-  {
-    "chunk_id": "chunk-cwe-502-desc",
-    "entity_id": "CWE-502",
-    "entity_type": "Weakness",
-    "source": "MITRE CWE",
-    "text": "CWE-502 表示应用程序对不可信数据进行反序列化，可能导致远程代码执行。",
-    "score": 0.88
-  },
-  {
-    "chunk_id": "chunk-t1190-desc",
-    "entity_id": "T1190",
-    "entity_type": "Technique",
-    "source": "MITRE ATT&CK",
-    "text": "T1190 表示利用公网暴露应用以获得初始访问。",
-    "score": 0.86
-  }
+  {"chunk_id": "chunk-log4shell-001", "entity_id": "CVE-2021-44228", "entity_type": "Vulnerability", "source": "NVD", "text": "Log4Shell 是 Apache Log4j2 中的 JNDI 远程代码执行漏洞，攻击者可通过可控日志内容触发远程查找并执行代码。", "score": 0.95},
+  {"chunk_id": "chunk-log4shell-002", "entity_id": "CVE-2021-44228", "entity_type": "Vulnerability", "source": "Security Advisory", "text": "Log4Shell 缓解措施包括升级 Log4j2、移除 JndiLookup、限制出站 LDAP/RMI 访问并监控异常 JNDI 字符串。", "score": 0.93},
+  {"chunk_id": "chunk-spring4shell-001", "entity_id": "CVE-2022-22965", "entity_type": "Vulnerability", "source": "Spring Advisory", "text": "Spring4Shell 影响特定 Spring Framework 部署场景，攻击者可能利用数据绑定写入恶意字段并实现远程代码执行。", "score": 0.92},
+  {"chunk_id": "chunk-spring4shell-002", "entity_id": "CVE-2022-22965", "entity_type": "Vulnerability", "source": "Security Advisory", "text": "Spring4Shell 防护建议包括升级 Spring Framework、限制危险字段绑定、部署 WAF 规则并排查异常 Web 请求。", "score": 0.9},
+  {"chunk_id": "chunk-struts2-001", "entity_id": "CVE-2017-5638", "entity_type": "Vulnerability", "source": "Apache Advisory", "text": "Apache Struts2 S2-045 与 Jakarta Multipart 解析有关，恶意 Content-Type 头可能触发表达式执行。", "score": 0.9},
+  {"chunk_id": "chunk-proxyshell-001", "entity_id": "CVE-2021-34473", "entity_type": "Vulnerability", "source": "Microsoft Advisory", "text": "ProxyShell 攻击链针对 Microsoft Exchange，可能结合认证绕过、权限提升和远程代码执行部署 WebShell。", "score": 0.91},
+  {"chunk_id": "chunk-citrix-19781-001", "entity_id": "CVE-2019-19781", "entity_type": "Vulnerability", "source": "Citrix Advisory", "text": "CVE-2019-19781 是 Citrix ADC 与 Gateway 的路径遍历漏洞，可导致未授权访问和代码执行风险。", "score": 0.89},
+  {"chunk_id": "chunk-fortigate-001", "entity_id": "CVE-2018-13379", "entity_type": "Vulnerability", "source": "Fortinet Advisory", "text": "CVE-2018-13379 可通过 SSL VPN 路径遍历读取敏感会话文件，攻击者可能进一步利用泄露凭据登录。", "score": 0.88},
+  {"chunk_id": "chunk-moveit-001", "entity_id": "CVE-2023-34362", "entity_type": "Vulnerability", "source": "Vendor Advisory", "text": "MOVEit Transfer SQL 注入漏洞可被用于未授权访问、数据窃取和后续工具传输。", "score": 0.9},
+  {"chunk_id": "chunk-citrix-3519-001", "entity_id": "CVE-2023-3519", "entity_type": "Vulnerability", "source": "Citrix Advisory", "text": "CVE-2023-3519 是 Citrix ADC 与 Gateway 的未授权远程代码执行漏洞，常与 WebShell 活动相关。", "score": 0.89},
+  {"chunk_id": "chunk-f5-001", "entity_id": "CVE-2022-1388", "entity_type": "Vulnerability", "source": "F5 Advisory", "text": "F5 BIG-IP iControl REST 漏洞可通过身份绕过访问管理接口并执行系统命令。", "score": 0.89},
+  {"chunk_id": "chunk-smbghost-001", "entity_id": "CVE-2020-0796", "entity_type": "Vulnerability", "source": "Microsoft Advisory", "text": "SMBGhost 与 Windows SMBv3 压缩处理有关，可能导致远程代码执行或权限提升风险。", "score": 0.86},
+
+  {"chunk_id": "chunk-cwe-502", "entity_id": "CWE-502", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-502 描述应用反序列化不可信数据时可能创建攻击者控制的对象并执行非预期逻辑。", "score": 0.88},
+  {"chunk_id": "chunk-cwe-78", "entity_id": "CWE-78", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-78 操作系统命令注入通常源于将未校验输入拼接到系统命令中。", "score": 0.86},
+  {"chunk_id": "chunk-cwe-89", "entity_id": "CWE-89", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-89 SQL 注入会破坏查询边界，可能导致认证绕过、数据泄露或数据篡改。", "score": 0.87},
+  {"chunk_id": "chunk-cwe-79", "entity_id": "CWE-79", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-79 跨站脚本通常因为输出未正确编码，攻击者可在受害者浏览器执行脚本。", "score": 0.84},
+  {"chunk_id": "chunk-cwe-22", "entity_id": "CWE-22", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-22 路径遍历允许攻击者通过路径控制访问 Web 根目录以外的文件。", "score": 0.85},
+  {"chunk_id": "chunk-cwe-287", "entity_id": "CWE-287", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-287 身份认证不当会让攻击者绕过登录流程或冒用合法身份。", "score": 0.83},
+
+  {"chunk_id": "chunk-capec-586", "entity_id": "CAPEC-586", "entity_type": "AttackPattern", "source": "CAPEC", "text": "CAPEC-586 对象注入描述攻击者通过对象构造、反序列化或动态绑定影响应用逻辑。", "score": 0.84},
+  {"chunk_id": "chunk-capec-88", "entity_id": "CAPEC-88", "entity_type": "AttackPattern", "source": "CAPEC", "text": "CAPEC-88 命令注入利用应用调用系统命令时的输入拼接缺陷。", "score": 0.83},
+  {"chunk_id": "chunk-capec-66", "entity_id": "CAPEC-66", "entity_type": "AttackPattern", "source": "CAPEC", "text": "CAPEC-66 SQL 注入通过构造数据库查询片段影响后端数据访问。", "score": 0.84},
+  {"chunk_id": "chunk-capec-126", "entity_id": "CAPEC-126", "entity_type": "AttackPattern", "source": "CAPEC", "text": "CAPEC-126 路径遍历通过 ../ 或编码变体读取非授权文件。", "score": 0.82},
+  {"chunk_id": "chunk-capec-650", "entity_id": "CAPEC-650", "entity_type": "AttackPattern", "source": "CAPEC", "text": "CAPEC-650 通过上传 WebShell 获取远程控制能力，常见于文件上传和 Web 服务器漏洞之后。", "score": 0.82},
+
+  {"chunk_id": "chunk-t1190", "entity_id": "T1190", "entity_type": "Technique", "source": "MITRE ATT&CK", "text": "T1190 Exploit Public-Facing Application 表示攻击者利用公网暴露应用漏洞获得初始访问。", "score": 0.86},
+  {"chunk_id": "chunk-t1059", "entity_id": "T1059", "entity_type": "Technique", "source": "MITRE ATT&CK", "text": "T1059 Command and Scripting Interpreter 表示通过 shell、脚本或命令解释器执行攻击载荷。", "score": 0.85},
+  {"chunk_id": "chunk-t1505-003", "entity_id": "T1505.003", "entity_type": "Technique", "source": "MITRE ATT&CK", "text": "T1505.003 Web Shell 表示攻击者在 Web 服务器上部署可远程控制的脚本文件。", "score": 0.86},
+  {"chunk_id": "chunk-t1078", "entity_id": "T1078", "entity_type": "Technique", "source": "MITRE ATT&CK", "text": "T1078 Valid Accounts 表示攻击者使用合法凭据访问系统，常见于凭据泄露或认证绕过之后。", "score": 0.82},
+  {"chunk_id": "chunk-t1210", "entity_id": "T1210", "entity_type": "Technique", "source": "MITRE ATT&CK", "text": "T1210 Exploitation of Remote Services 表示利用远程服务漏洞执行代码或横向移动。", "score": 0.82},
+
+  {"chunk_id": "chunk-mit-001", "entity_id": "MIT-001", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "及时安装供应商安全补丁是处理已知 CVE 的首要缓解措施。", "score": 0.8},
+  {"chunk_id": "chunk-mit-002", "entity_id": "MIT-002", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "输入校验应采用白名单、长度限制、类型校验和上下文相关编码。", "score": 0.8},
+  {"chunk_id": "chunk-mit-003", "entity_id": "MIT-003", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "WAF 规则可作为临时缓解措施，用于拦截已知利用载荷，但不能替代补丁。", "score": 0.8},
+  {"chunk_id": "chunk-mit-006", "entity_id": "MIT-006", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "网络分段可限制攻击者从公网入口继续访问内部服务。", "score": 0.79},
+  {"chunk_id": "chunk-mit-009", "entity_id": "MIT-009", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "安全监控应关注异常命令执行、WebShell 文件、可疑出站连接和敏感数据访问。", "score": 0.8},
+  {"chunk_id": "chunk-mit-010", "entity_id": "MIT-010", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "当 VPN、管理接口或会话文件存在泄露风险时，应及时轮换密码、令牌和会话密钥。", "score": 0.78}
 ]
