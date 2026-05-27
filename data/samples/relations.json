@@ -1,0 +1,22 @@
+[
+  {
+    "source": "CVE-2021-44228",
+    "target": "CWE-502",
+    "relation": "HAS_WEAKNESS"
+  },
+  {
+    "source": "CWE-502",
+    "target": "CAPEC-586",
+    "relation": "RELATED_TO_CAPEC"
+  },
+  {
+    "source": "CAPEC-586",
+    "target": "T1190",
+    "relation": "USES_TECHNIQUE"
+  },
+  {
+    "source": "T1190",
+    "target": "TA0001",
+    "relation": "BELONGS_TO_TACTIC"
+  }
+]

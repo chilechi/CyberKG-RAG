@@ -1,0 +1,32 @@
+[
+  {
+    "id": "CVE-2021-44228",
+    "name": "Log4Shell",
+    "type": "Vulnerability",
+    "description": "Apache Log4j2 远程代码执行漏洞。"
+  },
+  {
+    "id": "CWE-502",
+    "name": "Deserialization of Untrusted Data",
+    "type": "Weakness",
+    "description": "不可信数据反序列化弱点。"
+  },
+  {
+    "id": "CAPEC-586",
+    "name": "Object Injection",
+    "type": "AttackPattern",
+    "description": "对象注入攻击模式。"
+  },
+  {
+    "id": "T1190",
+    "name": "Exploit Public-Facing Application",
+    "type": "Technique",
+    "description": "利用公网暴露应用的 ATT&CK 技术。"
+  },
+  {
+    "id": "TA0001",
+    "name": "Initial Access",
+    "type": "Tactic",
+    "description": "初始访问战术。"
+  }
+]

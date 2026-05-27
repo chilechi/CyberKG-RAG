@@ -1,0 +1,26 @@
+[
+  {
+    "chunk_id": "chunk-cve-2021-44228-desc",
+    "entity_id": "CVE-2021-44228",
+    "entity_type": "Vulnerability",
+    "source": "NVD",
+    "text": "Apache Log4j2 远程代码执行漏洞样例描述。",
+    "score": 0.92
+  },
+  {
+    "chunk_id": "chunk-cwe-502-desc",
+    "entity_id": "CWE-502",
+    "entity_type": "Weakness",
+    "source": "MITRE CWE",
+    "text": "CWE-502 表示应用程序对不可信数据进行反序列化，可能导致远程代码执行。",
+    "score": 0.88
+  },
+  {
+    "chunk_id": "chunk-t1190-desc",
+    "entity_id": "T1190",
+    "entity_type": "Technique",
+    "source": "MITRE ATT&CK",
+    "text": "T1190 表示利用公网暴露应用以获得初始访问。",
+    "score": 0.86
+  }
+]
