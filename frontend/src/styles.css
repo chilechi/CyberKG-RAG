@@ -130,6 +130,22 @@ input {
   gap: 10px;
 }
 
+.query-row {
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) 140px auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 16px;
+}
+
+.query-row label {
+  display: grid;
+  gap: 6px;
+  color: #475569;
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .question-row input {
   width: 100%;
   border: 1px solid #cbd5e1;
@@ -138,7 +154,24 @@ input {
   outline: none;
 }
 
+.query-row input,
+.query-row select {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 10px 12px;
+  outline: none;
+  background: #ffffff;
+  color: #172033;
+}
+
 .question-row input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.query-row input:focus,
+.query-row select:focus {
   border-color: #2563eb;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
@@ -205,6 +238,7 @@ input {
 
   .topbar,
   .section-heading,
+  .query-row,
   .question-row {
     grid-template-columns: 1fr;
     flex-direction: column;
