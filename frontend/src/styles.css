@@ -770,6 +770,143 @@ button {
   font-size: 14px;
 }
 
+.kg-completion-page {
+  align-content: start;
+}
+
+.kg-completion-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: 12px;
+}
+
+.kg-model-table {
+  display: grid;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.kg-model-row {
+  display: grid;
+  grid-template-columns: 1fr repeat(5, minmax(72px, 0.7fr));
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 13px;
+}
+
+.kg-model-row:last-child {
+  border-bottom: 0;
+}
+
+.kg-model-row.header {
+  color: #64748b;
+  background: #f8fbff;
+  font-weight: 700;
+}
+
+.kg-predict-form {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(150px, 0.9fr) 92px auto;
+  gap: 10px;
+  align-items: end;
+  margin-bottom: 12px;
+}
+
+.kg-prediction-list {
+  display: grid;
+  gap: 8px;
+}
+
+.kg-prediction-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 10px;
+  background: #f8fbff;
+}
+
+.rank-badge {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  color: #ffffff;
+  background: #1463ed;
+  font-weight: 800;
+}
+
+.kg-prediction-row strong,
+.kg-prediction-row small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.kg-prediction-row small {
+  margin-top: 3px;
+  color: #64748b;
+}
+
+.kg-prediction-row b {
+  color: #047857;
+}
+
+.curve-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.curve-grid h3 {
+  margin: 0 0 10px;
+  color: #10224d;
+  font-size: 14px;
+}
+
+.curve-row {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 44px;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.curve-row b {
+  display: block;
+  max-width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #1463ed;
+}
+
+.curve-row.loss b {
+  background: #f97316;
+}
+
+.curve-row small {
+  color: #10224d;
+  font-weight: 700;
+}
+
+.kg-conclusion {
+  margin: 0;
+  border: 1px solid #d7e2f2;
+  border-radius: 8px;
+  padding: 12px;
+  color: #10224d;
+  background: #f8fbff;
+  line-height: 1.7;
+}
+
 .history-toolbar {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) auto auto;
@@ -1475,7 +1612,9 @@ button {
   .status-list,
   .dashboard-metrics,
   .comparison-result-grid,
-  .comparison-evidence-layout {
+  .comparison-evidence-layout,
+  .kg-completion-main,
+  .curve-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1534,6 +1673,10 @@ button {
   .comparison-result-grid,
   .comparison-row,
   .comparison-evidence-layout,
+  .kg-completion-main,
+  .kg-model-row,
+  .kg-predict-form,
+  .curve-grid,
   .settings-form-grid,
   .graph-toolbar,
   .compact-stats,
