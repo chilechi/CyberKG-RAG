@@ -2,6 +2,7 @@ from app.core.config import Settings
 from app.schemas.qa import QaResponse
 from app.services.entity_service import identify_entity
 from app.services.graph_service import get_neighbor_graph
+from app.services.llm_service import build_kg_rag_prompt, generate_with_deepseek
 from app.services.vector_service import search_doc_chunks
 
 
@@ -20,7 +21,10 @@ def _build_paths(graph_edges) -> list[list[str]]:
 
 def _pick_entity_id(settings: Settings, question: str, text_evidence) -> str:
     """优先用 PostgreSQL 实体识别，失败时用 Milvus 召回的首条证据兜底。"""
-    matched_entity = identify_entity(settings, question)
+    try:
+        matched_entity = identify_entity(settings, question)
+    except Exception:  # noqa: BLE001 - PostgreSQL 临时不可用时允许问答链路继续降级
+        matched_entity = None
     if matched_entity:
         return matched_entity.id
     if text_evidence:
@@ -28,7 +32,7 @@ def _pick_entity_id(settings: Settings, question: str, text_evidence) -> str:
     return DEFAULT_ENTITY_ID
 
 
-def _build_answer(question: str, entity_id: str, graph_paths: list[list[str]], evidence_count: int) -> str:
+def _build_fallback_answer(question: str, entity_id: str, graph_paths: list[list[str]], evidence_count: int) -> str:
     if not graph_paths and evidence_count == 0:
         return (
             f"针对问题“{question}”，当前知识库没有检索到足够的图谱路径或文本证据。"
@@ -40,16 +44,28 @@ def _build_answer(question: str, entity_id: str, graph_paths: list[list[str]], e
         f"针对问题“{question}”，系统识别到核心实体 {entity_id}。"
         f"图谱检索得到 {len(graph_paths)} 条证据边，文本检索召回 {evidence_count} 条相关片段。"
         f"主要图谱证据包括：{path_text}。"
-        "当前答案仍由规则模板生成，下一步会接入 DeepSeek 基于这些证据生成更自然的攻击原理、影响范围和防护建议。"
+        "DeepSeek 当前未配置或调用失败，因此先返回基于证据的规则化答案。"
     )
 
 
 def answer_with_kg_rag(settings: Settings, question: str) -> QaResponse:
     """组合实体识别、Neo4j 图谱路径和 Milvus 文本证据，形成 KG-RAG 闭环。"""
-    text_evidence = search_doc_chunks(settings, query=question, top_k=5)
+    try:
+        text_evidence = search_doc_chunks(settings, query=question, top_k=5)
+    except Exception:  # noqa: BLE001 - Milvus 不可用时保留问答接口可用性
+        text_evidence = []
     entity_id = _pick_entity_id(settings, question, text_evidence)
-    graph = get_neighbor_graph(settings, entity_id=entity_id, depth=2)
-    graph_paths = _build_paths(graph.edges)
+    try:
+        graph = get_neighbor_graph(settings, entity_id=entity_id, depth=2)
+        graph_paths = _build_paths(graph.edges)
+    except Exception:  # noqa: BLE001 - Neo4j 不可用时仍可基于文本证据或兜底提示返回
+        graph_paths = []
+    answer = generate_with_deepseek(
+        settings,
+        build_kg_rag_prompt(question, entity_id, graph_paths, text_evidence),
+    )
+    if answer is None:
+        answer = _build_fallback_answer(question, entity_id, graph_paths, len(text_evidence))
 
     confidence = 0.25
     if entity_id != DEFAULT_ENTITY_ID or DEFAULT_ENTITY_ID.upper() in question.upper():
@@ -61,7 +77,7 @@ def answer_with_kg_rag(settings: Settings, question: str) -> QaResponse:
 
     return QaResponse(
         question=question,
-        answer=_build_answer(question, entity_id, graph_paths, len(text_evidence)),
+        answer=answer,
         graph_paths=graph_paths,
         text_evidence=text_evidence,
         confidence=min(confidence, 0.95),
