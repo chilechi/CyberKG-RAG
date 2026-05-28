@@ -668,6 +668,108 @@ button {
   align-content: start;
 }
 
+.comparison-page {
+  align-content: start;
+}
+
+.comparison-input-panel {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.comparison-result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.comparison-card {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.comparison-answer {
+  min-height: 190px;
+  margin: 0;
+  color: #10224d;
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.mode-pill.best {
+  color: #047857;
+  background: #dcfce7;
+}
+
+.comparison-score-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.comparison-score-grid div {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.comparison-score-grid span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.comparison-score-grid strong {
+  color: #061338;
+  font-size: 22px;
+}
+
+.comparison-table {
+  display: grid;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.comparison-row {
+  display: grid;
+  grid-template-columns: 1.1fr repeat(4, minmax(90px, 0.8fr));
+  gap: 10px;
+  align-items: center;
+  min-height: 44px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #edf2f7;
+  font-size: 13px;
+}
+
+.comparison-row:last-child {
+  border-bottom: 0;
+}
+
+.comparison-row.header {
+  color: #64748b;
+  background: #f8fbff;
+  font-weight: 700;
+}
+
+.comparison-evidence-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+}
+
+.comparison-evidence-layout h3 {
+  margin: 0 0 10px;
+  color: #10224d;
+  font-size: 14px;
+}
+
 .history-toolbar {
   display: grid;
   grid-template-columns: minmax(280px, 1fr) auto auto;
@@ -1371,7 +1473,9 @@ button {
   .side-nav,
   .metric-grid,
   .status-list,
-  .dashboard-metrics {
+  .dashboard-metrics,
+  .comparison-result-grid,
+  .comparison-evidence-layout {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1426,6 +1530,10 @@ button {
   .data-metrics,
   .history-metrics,
   .history-toolbar,
+  .comparison-input-panel,
+  .comparison-result-grid,
+  .comparison-row,
+  .comparison-evidence-layout,
   .settings-form-grid,
   .graph-toolbar,
   .compact-stats,

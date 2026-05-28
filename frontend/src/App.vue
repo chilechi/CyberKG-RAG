@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 
 import AppSidebar from "./components/AppSidebar.vue";
 import AppTopbar from "./components/AppTopbar.vue";
+import ComparisonPage from "./views/ComparisonPage.vue";
 import DashboardPage from "./views/DashboardPage.vue";
 import DataManagementPage from "./views/DataManagementPage.vue";
 import GraphQueryPage from "./views/GraphQueryPage.vue";
@@ -67,12 +68,7 @@ const pageMeta = computed(() => {
       <DashboardPage v-if="activePage === 'dashboard'" />
       <GraphQueryPage v-else-if="activePage === 'graph'" />
       <QaPage v-else-if="activePage === 'qa'" />
-      <ReservedPage
-        v-else-if="activePage === 'comparison'"
-        title="问答对比实验"
-        description="普通 LLM、普通 RAG、KG-RAG 的对比评测接口已预留。"
-        endpoint="/api/experiments/qa-comparison"
-      />
+      <ComparisonPage v-else-if="activePage === 'comparison'" />
       <ReservedPage
         v-else-if="activePage === 'completion'"
         title="知识补全实验"

@@ -8,6 +8,10 @@ SYSTEM_PROMPT = """你是网络安全知识图谱问答助手。
 如果证据不足，要明确说明“当前证据不足”，并给出可以继续查询的方向。
 回答使用简体中文，结构包括：结论、证据依据、防护建议。"""
 
+FREE_LLM_SYSTEM_PROMPT = """你是网络安全问答助手。
+回答使用简体中文，结构包括：结论、原理分析、防护建议。
+如果问题缺少必要上下文，要说明不确定点。"""
+
 
 def _format_graph_paths(graph_paths: list[list[str]]) -> str:
     if not graph_paths:
@@ -46,6 +50,10 @@ def build_kg_rag_prompt(question: str, entity_id: str, graph_paths: list[list[st
 
 def generate_with_deepseek(settings: Settings, prompt: str) -> str | None:
     """调用 DeepSeek Chat Completions；未配置或调用失败时返回 None，由上层兜底。"""
+    return _call_deepseek(settings, SYSTEM_PROMPT, prompt)
+
+
+def _call_deepseek(settings: Settings, system_prompt: str, user_prompt: str) -> str | None:
     if not settings.deepseek_api_key.strip():
         return None
 
@@ -60,8 +68,8 @@ def generate_with_deepseek(settings: Settings, prompt: str) -> str | None:
             json={
                 "model": settings.deepseek_model,
                 "messages": [
-                    {"role": "system", "content": SYSTEM_PROMPT},
-                    {"role": "user", "content": prompt},
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
                 ],
                 "temperature": 0.2,
                 "stream": False,
@@ -73,5 +81,21 @@ def generate_with_deepseek(settings: Settings, prompt: str) -> str | None:
         answer = payload["choices"][0]["message"]["content"]
     except (httpx.HTTPError, KeyError, IndexError, TypeError):
         return None
-
     return answer.strip() or None
+
+
+def generate_free_answer(settings: Settings, question: str) -> str | None:
+    """普通 LLM 模式：不接检索证据，直接调用 DeepSeek 回答。"""
+    return _call_deepseek(settings, FREE_LLM_SYSTEM_PROMPT, question)
+
+
+def generate_rag_answer(settings: Settings, question: str, text_evidence) -> str | None:
+    """普通 RAG 模式：只基于文本证据调用 DeepSeek，不使用图谱路径。"""
+    prompt = f"""用户问题：
+{question}
+
+文本证据：
+{_format_text_evidence(text_evidence)}
+
+请只基于文本证据生成答案。"""
+    return _call_deepseek(settings, SYSTEM_PROMPT, prompt)
