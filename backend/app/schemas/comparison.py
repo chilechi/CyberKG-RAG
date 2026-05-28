@@ -37,3 +37,36 @@ class QaComparisonResponse(BaseModel):
     question: str
     results: list[QaComparisonResult]
     metrics: QaComparisonMetric
+
+
+class QaEvaluationModeSummary(BaseModel):
+    """离线问答评测中单个模式的平均指标。"""
+
+    avg_final_score: float
+    avg_entity_hit_rate: float
+    avg_relation_hit_rate: float
+    avg_keyword_coverage: float
+    avg_elapsed_ms: float
+    case_count: int
+
+
+class QaEvaluationResult(BaseModel):
+    """离线问答评测中单个问题的详细结果。"""
+
+    id: str
+    question: str
+    reference_answer: str
+    expected_entities: list[str]
+    expected_relations: list[str]
+    expected_keywords: list[str]
+    best_mode: str
+    results: list[dict]
+
+
+class QaEvaluationResponse(BaseModel):
+    """从 experiments/qa_eval 读取的问答评测报告。"""
+
+    case_count: int
+    best_mode: str
+    mode_summary: dict[str, QaEvaluationModeSummary]
+    cases: list[QaEvaluationResult]

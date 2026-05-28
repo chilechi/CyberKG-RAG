@@ -72,7 +72,6 @@ def build_data_management_summary(settings: Settings) -> DataManagementSummary:
         DataMetric(key="vectors", label="向量数量", value=vector_count, description="Milvus collection"),
         DataMetric(key="entities", label="图谱实体", value=entity_count, description="PostgreSQL entities"),
         DataMetric(key="relations", label="图谱关系", value=relation_count, description="PostgreSQL relations"),
-        DataMetric(key="tasks", label="同步任务", value=None, description="任务表尚未实现", status="reserved"),
     ]
 
     import_steps = [
@@ -82,4 +81,4 @@ def build_data_management_summary(settings: Settings) -> DataManagementSummary:
         DataImportStep(key="neo4j", label="图谱关系入库", description="Neo4j 实体与关系", count=(entity_count or 0) + (relation_count or 0) if None not in [entity_count, relation_count] else None),
     ]
 
-    return DataManagementSummary(metrics=metrics, sources=sources, import_steps=import_steps, recent_tasks=[])
+    return DataManagementSummary(metrics=metrics, sources=sources, import_steps=import_steps)

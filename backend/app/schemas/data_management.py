@@ -37,4 +37,3 @@ class DataManagementSummary(BaseModel):
     metrics: list[DataMetric]
     sources: list[DataSourceItem]
     import_steps: list[DataImportStep]
-    recent_tasks: list[dict] = []

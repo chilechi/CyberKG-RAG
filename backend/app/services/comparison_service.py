@@ -1,10 +1,17 @@
+import json
+from pathlib import Path
 from time import perf_counter
+from typing import Any
 
 from app.core.config import Settings
-from app.schemas.comparison import QaComparisonMetric, QaComparisonResponse, QaComparisonResult
+from app.schemas.comparison import QaComparisonMetric, QaComparisonResponse, QaComparisonResult, QaEvaluationResponse
 from app.services.llm_service import generate_free_answer, generate_rag_answer
 from app.services.rag_service import answer_with_kg_rag
 from app.services.vector_service import search_doc_chunks
+
+
+ROOT_DIR = Path(__file__).resolve().parents[3]
+QA_EVAL_DIR = ROOT_DIR / "experiments" / "qa_eval"
 
 
 def _elapsed_ms(started_at: float) -> int:
@@ -94,4 +101,23 @@ def run_qa_comparison(settings: Settings, question: str) -> QaComparisonResponse
             max_confidence=best_result.confidence,
             total_elapsed_ms=sum(item.elapsed_ms for item in results),
         ),
+    )
+
+
+def _read_json(path: Path, default: Any) -> Any:
+    if not path.exists():
+        return default
+    with path.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def load_qa_evaluation() -> QaEvaluationResponse:
+    """读取离线问答评测脚本生成的结果，供前端实验页展示真实评分。"""
+    summary = _read_json(QA_EVAL_DIR / "summary.json", {})
+    cases = _read_json(QA_EVAL_DIR / "results.json", [])
+    return QaEvaluationResponse(
+        case_count=summary.get("case_count", 0),
+        best_mode=summary.get("best_mode", ""),
+        mode_summary=summary.get("mode_summary", {}),
+        cases=cases,
     )

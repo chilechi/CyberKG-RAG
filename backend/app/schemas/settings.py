@@ -39,4 +39,3 @@ class SettingsResponse(BaseModel):
     basic: BasicSetting
     model: ModelSetting
     connections: list[ConnectionSetting]
-    reserved_sections: list[str]

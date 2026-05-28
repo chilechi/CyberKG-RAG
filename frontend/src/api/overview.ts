@@ -1,12 +1,12 @@
 import { apiClient } from "./client";
-import type { ApiResponse } from "./mock";
+import type { ApiResponse } from "./types";
 
 export interface MetricCard {
   key: string;
   label: string;
   value: number | null;
   unit: string;
-  status: "ready" | "reserved" | string;
+  status: "ready" | "empty" | "error" | string;
   description: string;
 }
 
@@ -27,7 +27,7 @@ export interface FlowStep {
   label: string;
   description: string;
   count: number | null;
-  status: "ready" | "reserved" | "empty" | "error" | string;
+  status: "ready" | "empty" | "error" | string;
 }
 
 export interface OverviewSummary {

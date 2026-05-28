@@ -77,6 +77,7 @@ def answer_with_kg_rag(settings: Settings, question: str) -> QaResponse:
 
     return QaResponse(
         question=question,
+        mode="KG-RAG",
         answer=answer,
         graph_paths=graph_paths,
         text_evidence=text_evidence,

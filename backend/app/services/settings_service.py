@@ -61,5 +61,4 @@ def build_public_settings(settings: Settings) -> SettingsResponse:
                 message=milvus_message,
             ),
         ],
-        reserved_sections=["提示词模板", "日志管理", "权限控制"],
     )

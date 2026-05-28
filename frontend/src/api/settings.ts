@@ -1,5 +1,5 @@
 import { apiClient } from "./client";
-import type { ApiResponse } from "./mock";
+import type { ApiResponse } from "./types";
 
 export interface ConnectionSetting {
   name: string;
@@ -31,7 +31,6 @@ export interface SettingsResponse {
   basic: BasicSetting;
   model: ModelSetting;
   connections: ConnectionSetting[];
-  reserved_sections: string[];
 }
 
 export async function fetchSettings(): Promise<SettingsResponse> {

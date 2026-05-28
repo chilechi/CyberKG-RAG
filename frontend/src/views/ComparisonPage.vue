@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 
-import { runQaComparison, type QaComparisonResponse } from "../api/comparison";
+import {
+  getQaComparisonEvaluation,
+  runQaComparison,
+  type QaComparisonResponse,
+  type QaEvaluationResponse,
+} from "../api/comparison";
 
 const question = ref("Log4Shell 漏洞的攻击原理和防护措施是什么？");
 const data = ref<QaComparisonResponse | null>(null);
+const evaluation = ref<QaEvaluationResponse | null>(null);
 const loading = ref(false);
+const evaluationLoading = ref(false);
 const error = ref("");
+const evaluationError = ref("");
 
 const metricCards = computed(() => {
   if (!data.value) {
@@ -25,6 +33,32 @@ const metricCards = computed(() => {
   ];
 });
 
+const evaluationRows = computed(() => {
+  if (!evaluation.value) {
+    return [];
+  }
+  return Object.entries(evaluation.value.mode_summary).map(([mode, summary]) => ({
+    mode,
+    ...summary,
+  }));
+});
+
+function formatRate(value: number) {
+  return `${Math.round(value * 100)}%`;
+}
+
+async function loadEvaluation() {
+  evaluationLoading.value = true;
+  evaluationError.value = "";
+  try {
+    evaluation.value = await getQaComparisonEvaluation();
+  } catch (err) {
+    evaluationError.value = err instanceof Error ? err.message : "评测结果加载失败";
+  } finally {
+    evaluationLoading.value = false;
+  }
+}
+
 async function submitComparison() {
   if (!question.value.trim()) {
     error.value = "请输入测试问题";
@@ -41,10 +75,68 @@ async function submitComparison() {
     loading.value = false;
   }
 }
+
+onMounted(loadEvaluation);
 </script>
 
 <template>
   <div class="page-grid comparison-page">
+    <section class="panel">
+      <div class="section-heading compact">
+        <div>
+          <h2>离线评测汇总</h2>
+          <p>读取 evaluate_qa.py 生成的真实评测结果，按实体、关系、关键词和证据综合打分。</p>
+        </div>
+        <button class="ghost" :disabled="evaluationLoading" type="button" @click="loadEvaluation">
+          {{ evaluationLoading ? "加载中..." : "刷新评测" }}
+        </button>
+      </div>
+
+      <div v-if="evaluationError" class="state-panel error compact-state">{{ evaluationError }}</div>
+      <div v-else-if="evaluationLoading" class="state-panel compact-state">正在加载评测结果...</div>
+      <div v-else-if="!evaluation || evaluation.case_count === 0" class="state-panel compact-state">
+        暂无评测结果，请先运行 scripts/evaluate_qa.py。
+      </div>
+      <template v-else>
+        <div class="comparison-eval-summary">
+          <article class="compact-card">
+            <span class="metric-label">评测题数</span>
+            <strong>{{ evaluation.case_count }}</strong>
+            <small>来自 experiments/qa_eval</small>
+          </article>
+          <article class="compact-card">
+            <span class="metric-label">最佳模式</span>
+            <strong>{{ evaluation.best_mode }}</strong>
+            <small>按平均综合分判断</small>
+          </article>
+          <article class="compact-card">
+            <span class="metric-label">评测结果</span>
+            <strong>{{ evaluationRows.length }}</strong>
+            <small>普通 LLM / RAG / KG-RAG</small>
+          </article>
+        </div>
+
+        <div class="comparison-eval-table">
+          <div class="comparison-eval-row header">
+            <span>模式</span>
+            <span>综合分</span>
+            <span>实体命中</span>
+            <span>关系命中</span>
+            <span>关键词覆盖</span>
+            <span>平均耗时</span>
+          </div>
+          <div v-for="row in evaluationRows" :key="row.mode" class="comparison-eval-row">
+            <strong>{{ row.mode }}</strong>
+            <span>{{ row.avg_final_score.toFixed(4) }}</span>
+            <span>{{ formatRate(row.avg_entity_hit_rate) }}</span>
+            <span>{{ formatRate(row.avg_relation_hit_rate) }}</span>
+            <span>{{ formatRate(row.avg_keyword_coverage) }}</span>
+            <span>{{ Math.round(row.avg_elapsed_ms) }}ms</span>
+          </div>
+        </div>
+      </template>
+    </section>
+
     <section class="panel comparison-input-panel">
       <label class="field">
         <span>测试问题</span>

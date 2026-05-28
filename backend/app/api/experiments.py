@@ -2,21 +2,20 @@ from fastapi import APIRouter
 from fastapi import Depends
 
 from app.core.config import Settings, get_settings
-from app.schemas.comparison import QaComparisonRequest, QaComparisonResponse
 from app.schemas.common import ApiResponse
+from app.schemas.comparison import QaComparisonRequest, QaComparisonResponse, QaEvaluationResponse
 from app.schemas.kg_completion import KgCompletionPredictRequest, KgCompletionPredictResponse, KgCompletionResponse
-from app.schemas.overview import ReservedApiResponse
-from app.services.comparison_service import run_qa_comparison
+from app.services.comparison_service import load_qa_evaluation, run_qa_comparison
 from app.services.kg_completion_service import build_kg_completion_summary, predict_tail_entities
 
 
 router = APIRouter()
 
 
-@router.get("/experiments/qa-comparison", response_model=ApiResponse[ReservedApiResponse])
-def get_qa_comparison() -> ApiResponse[ReservedApiResponse]:
-    """问答对比实验后续接入评测任务与指标表。"""
-    return ApiResponse(data=ReservedApiResponse(message="问答对比实验接口预留，尚未接入评测数据"))
+@router.get("/experiments/qa-comparison", response_model=ApiResponse[QaEvaluationResponse])
+def get_qa_comparison() -> ApiResponse[QaEvaluationResponse]:
+    """返回 evaluate_qa.py 生成的离线问答评测结果。"""
+    return ApiResponse(data=load_qa_evaluation(), message="qa evaluation loaded")
 
 
 @router.post("/experiments/qa-comparison", response_model=ApiResponse[QaComparisonResponse])

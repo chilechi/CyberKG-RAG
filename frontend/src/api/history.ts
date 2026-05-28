@@ -1,5 +1,5 @@
 import { apiClient } from "./client";
-import type { ApiResponse } from "./mock";
+import type { ApiResponse } from "./types";
 
 export interface HistoryItem {
   id: number;

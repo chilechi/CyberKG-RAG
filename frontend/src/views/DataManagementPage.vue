@@ -10,7 +10,6 @@ const error = ref("");
 const metrics = computed(() => summary.value?.metrics ?? []);
 const sources = computed(() => summary.value?.sources ?? []);
 const importSteps = computed(() => summary.value?.import_steps ?? []);
-const recentTasks = computed(() => summary.value?.recent_tasks ?? []);
 
 function formatValue(value: number | null | undefined) {
   return value === null || value === undefined ? "--" : value.toLocaleString("zh-CN");
@@ -38,7 +37,6 @@ onMounted(loadDataSummary);
         <span class="metric-label">{{ metric.label }}</span>
         <strong>{{ formatValue(metric.value) }}</strong>
         <small>{{ metric.description }}</small>
-        <em v-if="metric.status === 'reserved'">接口预留</em>
       </article>
     </section>
 
@@ -68,14 +66,24 @@ onMounted(loadDataSummary);
       <div class="panel">
         <div class="section-heading compact">
           <div>
-            <h2>最近导入任务</h2>
-            <p>任务表尚未实现，后续接入同步任务记录。</p>
+            <h2>数据来源说明</h2>
+            <p>当前页面只展示已经入库的 PostgreSQL 文档来源、Neo4j 图谱关系和 Milvus 向量数量。</p>
           </div>
           <button class="ghost-button small-button" type="button" @click="loadDataSummary">刷新</button>
         </div>
-        <div v-if="recentTasks.length === 0" class="empty-table compact-empty">
-          <span>暂无真实任务记录</span>
-          <small>接口预留：导入任务、同步状态、失败原因</small>
+        <div class="compact-stats">
+          <div>
+            <span>实体表</span>
+            <strong>{{ formatValue(metrics.find((item) => item.key === "entities")?.value) }}</strong>
+          </div>
+          <div>
+            <span>关系表</span>
+            <strong>{{ formatValue(metrics.find((item) => item.key === "relations")?.value) }}</strong>
+          </div>
+          <div>
+            <span>文档片段</span>
+            <strong>{{ formatValue(metrics.find((item) => item.key === "documents")?.value) }}</strong>
+          </div>
         </div>
       </div>
     </section>

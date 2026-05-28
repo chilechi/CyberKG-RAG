@@ -1,12 +1,12 @@
 import { apiClient } from "./client";
-import type { ApiResponse } from "./mock";
+import type { ApiResponse } from "./types";
 
 export interface DataMetric {
   key: string;
   label: string;
   value: number | null;
   description: string;
-  status: "ready" | "reserved" | string;
+  status: "ready" | "empty" | "error" | string;
 }
 
 export interface DataSourceItem {
@@ -29,7 +29,6 @@ export interface DataManagementSummary {
   metrics: DataMetric[];
   sources: DataSourceItem[];
   import_steps: DataImportStep[];
-  recent_tasks: Record<string, unknown>[];
 }
 
 export async function fetchDataManagementSummary(): Promise<DataManagementSummary> {

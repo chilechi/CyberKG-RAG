@@ -134,18 +134,6 @@ onMounted(loadSettings);
           </article>
         </div>
       </section>
-
-      <section class="panel">
-        <div class="section-heading compact">
-          <div>
-            <h2>预留配置</h2>
-            <p>这些模块已有页面位置，后续接具体配置表。</p>
-          </div>
-        </div>
-        <div class="reserved-config-list">
-          <span v-for="item in settings.reserved_sections" :key="item">{{ item }}（预留）</span>
-        </div>
-      </section>
     </template>
   </div>
 </template>

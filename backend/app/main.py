@@ -2,12 +2,11 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.data import router as data_router
+from app.api.experiments import router as experiments_router
 from app.api.graph import router as graph_router
 from app.api.health import router as health_router
 from app.api.history import router as history_router
-from app.api.mock import router as mock_router
 from app.api.overview import router as overview_router
-from app.api.placeholders import router as placeholders_router
 from app.api.qa import router as qa_router
 from app.api.search import router as search_router
 from app.api.settings import router as settings_router
@@ -38,10 +37,9 @@ def health_check() -> dict[str, str]:
     return {"status": "ok", "service": "cyberkg-rag-backend"}
 
 
-app.include_router(mock_router, prefix="/api/mock", tags=["mock"])
 app.include_router(overview_router, prefix="/api/overview", tags=["overview"])
 app.include_router(data_router, prefix="/api/data", tags=["data"])
-app.include_router(placeholders_router, prefix="/api", tags=["reserved"])
+app.include_router(experiments_router, prefix="/api", tags=["experiments"])
 app.include_router(history_router, prefix="/api/history", tags=["history"])
 app.include_router(graph_router, prefix="/api/graph", tags=["graph"])
 app.include_router(search_router, prefix="/api/search", tags=["search"])

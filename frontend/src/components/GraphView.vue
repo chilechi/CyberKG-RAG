@@ -2,7 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref, watch } from "vue";
 import * as echarts from "echarts";
 
-import type { GraphData } from "../api/mock";
+import type { GraphData } from "../api/types";
 
 const props = defineProps<{
   graph: GraphData;

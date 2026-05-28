@@ -1,204 +1,188 @@
 # CyberKG-RAG
 
-基于知识图谱的网络安全知识问答系统。本项目围绕 CVE、CWE、CAPEC、MITRE ATT&CK 等公开安全知识数据，构建网络安全知识图谱，并结合 Neo4j 图谱检索、Milvus 向量检索、PostgreSQL 结构化存储、知识图谱补全模型和大语言模型，实现可追溯的 KG-RAG 安全问答。
+CyberKG-RAG 是一个面向网络安全知识的知识图谱增强问答系统。项目围绕 CVE、CWE、CAPEC、MITRE ATT&CK、缓解措施和安全文档片段构建知识库，并结合 PostgreSQL、Neo4j、Milvus、DeepSeek 和阿里云 DashScope Embedding 实现可溯源问答、图谱查询、问答对比实验和知识补全演示。
 
-## 代码组织
-
-正式项目代码统一放在当前目录 `code/` 下，后端和前端分开维护：
+## 项目结构
 
 ```text
 code/
-  backend/      # FastAPI 后端、数据处理、KG-RAG、图谱补全
-  frontend/     # Vue3 前端、ECharts 图谱可视化
-  data/         # 原始数据、处理后数据、样例数据
-  scripts/      # 数据导入、初始化、实验辅助脚本
-  experiments/  # 图谱补全实验、问答评估
-  docs/         # 项目内部说明文档
+  backend/        FastAPI 后端接口、检索服务、问答服务
+  frontend/       Vue3 + Vite 前端页面
+  docker/         PostgreSQL、Neo4j、Milvus、Attu 等容器编排
+  data/
+    samples/      项目内置样例实体、关系、文本片段
+    raw/          原始数据输入目录，默认只保留示例文件
+    eval/         问答评测集
+  scripts/        数据导入、检查、评测、Obsidian 导出脚本
+  experiments/    问答评测结果
+  docs/           项目内部说明
 ```
 
 ## 运行环境
 
-### 操作系统
-
 推荐环境：
 
-- Windows 10/11 + Docker Desktop
-- Ubuntu 20.04/22.04
-- macOS 13+
+- Windows 10/11 + PowerShell
+- Docker Desktop
+- Python 3.10+
+- Node.js 18+，npm 9+
 
-开发和演示阶段建议优先使用 Docker Compose 启动 PostgreSQL、Neo4j、Milvus 等基础服务，减少本机环境差异。
-
-### Python 版本
-
-推荐版本：
-
-```text
-Python 3.10+
-```
-
-建议使用虚拟环境：
-
-```bash
-python -m venv .venv
-```
-
-Windows PowerShell：
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-```
-
-Linux/macOS：
-
-```bash
-source .venv/bin/activate
-```
-
-### Node.js 版本
-
-如果运行前端 Demo，推荐：
-
-```text
-Node.js 18+
-pnpm 8+ 或 npm 9+
-```
-
-### 基础服务
-
-计划使用以下服务：
-
-| 服务 | 用途 |
-|---|---|
-| PostgreSQL | 存储原始数据、结构化实体、文档片段、实验结果、问答日志 |
-| Neo4j | 存储知识图谱节点和关系，支持多跳路径查询 |
-| Milvus | 存储文本向量，支持语义检索 |
-| FastAPI | 后端 API 服务 |
-| Vue3 | 前端可视化 Demo |
-
-## 依赖库
-
-后端主要依赖计划如下：
-
-```text
-fastapi
-uvicorn
-pydantic
-pydantic-settings
-sqlalchemy
-psycopg2-binary
-neo4j
-pymilvus
-pandas
-numpy
-pykeen
-torch
-sentence-transformers
-httpx
-python-dotenv
-pytest
-```
-
-前端主要依赖计划如下：
-
-```text
-vue
-vite
-typescript
-echarts
-axios
-pinia
-vue-router
-```
-
-最终依赖以后续 `requirements.txt`、`pyproject.toml`、`package.json` 为准。
+后端主要依赖见 [backend/requirements.txt](backend/requirements.txt)，前端依赖见 [frontend/package.json](frontend/package.json)。
 
 ## 数据来源
 
-本项目计划使用公开网络安全知识库，不采集真实系统的敏感日志或未授权数据。
+当前项目使用两类数据：
 
-| 数据源 | 内容 | 用途 |
-|---|---|---|
-| NVD / CVE | 漏洞编号、描述、CVSS、CWE 映射 | 构建漏洞实体和漏洞属性 |
-| CWE | 软件弱点类型、描述、层级关系 | 构建弱点实体 |
-| CAPEC | 攻击模式、攻击步骤、相关弱点 | 构建攻击模式实体 |
-| MITRE ATT&CK | 攻击技术、战术、缓解措施、检测建议 | 构建攻击技术、战术和防护知识 |
+- 内置样例数据：`data/samples/entities.json`、`relations.json`、`doc_chunks.json`
+- 原始数据示例：`data/raw/security_records.example.json`
 
-参考链接：
+数据内容围绕公开安全知识组织，包括：
 
-- NVD API: https://nvd.nist.gov/developers/vulnerabilities
-- MITRE CWE: https://cwe.mitre.org/
-- MITRE CAPEC: https://capec.mitre.org/
-- MITRE ATT&CK: https://attack.mitre.org/
-- MITRE CTI: https://github.com/mitre/cti
+- CVE / NVD 漏洞信息
+- CWE 弱点类型
+- CAPEC 攻击模式
+- MITRE ATT&CK 技术和战术
+- 安全缓解措施、产品、文本证据片段
 
-## 运行步骤
+项目只使用公开安全知识数据，不采集未授权目标或真实敏感日志。
 
-当前项目仍处于规划和初始化阶段。下面是目标运行方式，后续代码完成后按此流程执行。
+## 三库存储说明
 
-### 1. 克隆项目
+PostgreSQL 保存结构化业务数据：
 
-```bash
-git clone <repo-url>
-cd CyberKG-RAG
-```
+- `entities`：图谱实体，如 CVE、CWE、CAPEC、ATT&CK 技术、产品、缓解措施
+- `relations`：实体之间的关系三元组
+- `doc_chunks`：文本证据片段
+- `qa_history`：智能问答历史记录
 
-### 2. 配置环境变量
+Neo4j 保存知识图谱：
 
-复制环境变量模板：
+- 节点：实体
+- 边：实体关系，如 `HAS_WEAKNESS`、`USES_TECHNIQUE`、`HAS_MITIGATION`
 
-```bash
-cp .env.example .env
-```
+Milvus 保存文本向量：
 
-需要配置的核心变量包括：
+- collection 默认为 `cyber_doc_chunks`
+- 用于普通 RAG 和 KG-RAG 的语义检索
+
+Attu 用于查看 Milvus：
 
 ```text
-POSTGRES_HOST=
-POSTGRES_PORT=
-POSTGRES_DB=
-POSTGRES_USER=
-POSTGRES_PASSWORD=
+http://localhost:8001
+```
 
-NEO4J_URI=
-NEO4J_USER=
-NEO4J_PASSWORD=
+## 环境变量
 
-MILVUS_HOST=
-MILVUS_PORT=
+复制模板：
+
+```powershell
+Copy-Item .env.example .env
+```
+
+核心变量：
+
+```text
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=cyberkg
+POSTGRES_USER=cyberkg
+POSTGRES_PASSWORD=cyberkg
+
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=password
+
+MILVUS_HOST=localhost
+MILVUS_PORT=19530
+MILVUS_COLLECTION=cyber_doc_chunks
+
+EMBEDDING_PROVIDER=mock
+EMBEDDING_MODEL=text-embedding-v4
+EMBEDDING_DIM=1024
+DASHSCOPE_API_KEY=
 
 DEEPSEEK_API_KEY=
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_MODEL=deepseek-chat
+DEEPSEEK_TIMEOUT=60
 ```
 
-### 3. 启动基础服务
+说明：
 
-```bash
-docker compose up -d
+- `EMBEDDING_PROVIDER=mock` 时使用本地确定性向量，方便无 Key 跑通链路。
+- 使用阿里云文本向量时，将 `EMBEDDING_PROVIDER` 改为 `dashscope` 并填写 `DASHSCOPE_API_KEY`。
+- `.env` 已加入 `.gitignore`，不要提交真实 Key。
+
+## 启动基础服务
+
+在 `code/` 目录执行：
+
+```powershell
+docker compose -f docker\docker-compose.yml --env-file .env up -d
 ```
 
-计划启动：
+查看容器状态：
 
-- PostgreSQL
-- Neo4j
-- Milvus
+```powershell
+docker compose -f docker\docker-compose.yml --env-file .env ps
+```
 
-### 4. 安装后端依赖
+服务端口：
 
-```bash
+```text
+PostgreSQL  localhost:5432
+Neo4j       http://localhost:7474 / bolt://localhost:7687
+Milvus      localhost:19530
+Attu        http://localhost:8001
+MinIO       http://localhost:9001
+```
+
+## 安装依赖
+
+后端：
+
+```powershell
 cd backend
 pip install -r requirements.txt
+cd ..
 ```
 
-### 5. 初始化数据
+前端：
 
-```bash
-python scripts/import_postgres.py
-python scripts/import_neo4j.py
-python scripts/import_milvus.py
+```powershell
+cd frontend
+npm install
+cd ..
 ```
 
-### 6. 启动后端
+## 初始化数据
 
-```bash
+在 `code/` 目录执行：
+
+```powershell
+python scripts\import_postgres.py
+python scripts\import_neo4j.py
+python scripts\import_milvus.py
+```
+
+查看数据结构和内容：
+
+```powershell
+# PostgreSQL 查询脚本
+psql -h localhost -p 5432 -U cyberkg -d cyberkg -f scripts\inspect_postgres.sql
+
+# Neo4j Cypher 示例
+Get-Content scripts\inspect_neo4j.cypher
+
+# Milvus collection 检查
+python scripts\inspect_milvus.py
+```
+
+## 启动后端
+
+在 `code/backend` 目录执行：
+
+```powershell
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -206,54 +190,118 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 ```text
 http://localhost:8000/health
+http://localhost:8000/health/dependencies
 ```
 
-### 7. 启动前端
+## 启动前端
 
-```bash
-cd frontend
-npm install
+在 `code/frontend` 目录执行：
+
+```powershell
 npm run dev
 ```
 
-默认访问：
+访问：
 
 ```text
 http://localhost:5173
 ```
 
-## 预期功能
+如果前端出现接口错误，先确认后端 `http://localhost:8000` 已启动。
 
-1. 图谱实体查询。
-2. 图谱邻居和多跳路径可视化。
-3. KG-RAG 安全问答。
-4. 知识图谱补全预测。
-5. TransE、ComplEx、RotatE 实验结果展示。
+## 已实现页面
 
-## 项目状态
+- 系统总览：三库状态、实体/关系/文档数量、数据来源概览
+- 知识图谱查询：按实体 ID 查询 Neo4j 邻居图
+- 智能问答：支持普通 LLM、普通 RAG、KG-RAG 三种模式切换
+- 问答对比实验：一次性对比普通 LLM、普通 RAG、KG-RAG，并展示离线评测结果
+- 知识补全实验：基于图谱三元组的 Top-K 补全演示和指标展示
+- 数据管理：展示数据来源、导入流程和三库存储数量
+- 问答历史：查看和删除历史问答记录
+- 系统设置：查看模型配置状态和三库连接状态
 
-当前状态：
+## 问答模式
+
+智能问答页支持三种模式：
+
+- 普通 LLM：直接调用 DeepSeek，不使用检索证据
+- 普通 RAG：检索 Milvus 文本证据，再调用 DeepSeek
+- KG-RAG：识别实体，查询 Neo4j 图谱路径，检索 Milvus 文本证据，再调用 DeepSeek
+
+DeepSeek 输出要求为 Markdown，前端会渲染标题、列表、加粗、行内代码和代码块。
+
+## 问答评测
+
+评测集：
 
 ```text
-规划阶段 / 初始化阶段
+data/eval/qa_eval.json
 ```
 
-已完成：
+运行评测：
 
-1. B 题技术方案。
-2. B 题开发计划。
-3. README 初版运行说明。
+```powershell
+python scripts\evaluate_qa.py
+```
 
-待完成：
+输出结果：
 
-1. 项目工程结构初始化。
-2. Docker Compose 编写。
-3. 数据采集与清洗脚本。
-4. 后端 API。
-5. 前端 Demo。
-6. 图谱补全实验。
+```text
+experiments/qa_eval/results.json
+experiments/qa_eval/summary.json
+```
 
-## 相关文档
+问答对比实验页面会读取这些结果展示平均综合分、实体命中率、关系命中率、关键词覆盖率和平均耗时。
 
-- `文档/B题技术方案.md`
-- `文档/B题开发计划.md`
+## Obsidian 导出
+
+将图谱实体和关系导出到 Obsidian vault：
+
+```powershell
+python scripts\export_obsidian.py
+```
+
+当前导出目标：
+
+```text
+D:\enviroment\obsidian\myresposity\cyberkg
+```
+
+导出内容包括实体 Markdown 笔记、索引页和 JSON Canvas 图谱。
+
+## 项目检查
+
+执行整体检查：
+
+```powershell
+python scripts\check_project.py
+```
+
+检查内容包括：
+
+- PostgreSQL / Neo4j / Milvus 连通性
+- PostgreSQL 表数据
+- 系统总览接口
+- Neo4j 图谱查询
+- Milvus 文本检索
+- 知识补全实验
+- KG-RAG 智能问答
+- 问答对比实验
+
+前端构建检查：
+
+```powershell
+cd frontend
+npm run build
+```
+
+## 常用 Git 提交
+
+不要提交 `.env` 和 `codeguard.db`。
+
+```powershell
+git status
+git add backend/app frontend/src data/eval/qa_eval.json experiments/qa_eval/results.json experiments/qa_eval/summary.json scripts/evaluate_qa.py scripts/export_obsidian.py README.md
+git commit -m "完善项目功能和运行说明"
+git push
+```

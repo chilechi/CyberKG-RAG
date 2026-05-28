@@ -2,7 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 
 import { fetchGraphNeighbors } from "../api/graph";
-import type { GraphData, GraphNode } from "../api/mock";
+import type { GraphData, GraphNode } from "../api/types";
 import GraphView from "../components/GraphView.vue";
 
 const graph = ref<GraphData | null>(null);

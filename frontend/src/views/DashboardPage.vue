@@ -55,7 +55,6 @@ onMounted(loadSummary);
         <span class="metric-label">{{ metric.label }}</span>
         <strong>{{ formatValue(metric.value) }}{{ metric.unit }}</strong>
         <small>{{ metric.description }}</small>
-        <em v-if="metric.status === 'reserved'">接口预留</em>
       </article>
     </section>
 

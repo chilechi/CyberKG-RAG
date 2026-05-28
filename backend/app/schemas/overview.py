@@ -2,7 +2,7 @@ from pydantic import BaseModel
 
 
 class MetricCard(BaseModel):
-    """系统总览中的指标卡片，value 为 None 时前端展示为预留状态。"""
+    """系统总览中的指标卡片。"""
 
     key: str
     label: str
@@ -47,11 +47,3 @@ class OverviewSummary(BaseModel):
     relation_types: list[DistributionItem]
     document_sources: list[DistributionItem]
     flow_steps: list[FlowStep]
-
-
-class ReservedApiResponse(BaseModel):
-    """未完成模块的统一预留响应，避免前端写死演示数据。"""
-
-    implemented: bool = False
-    message: str
-    items: list[dict] = []

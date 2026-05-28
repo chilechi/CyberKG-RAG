@@ -7,6 +7,7 @@ from sqlalchemy import text
 from app.core.config import Settings
 from app.db.postgres import create_postgres_engine
 from app.schemas.overview import DependencyStatus, DistributionItem, FlowStep, MetricCard, OverviewSummary
+from app.services.history_service import get_history_stats
 
 
 def _safe_count(label: str, counter: Callable[[], int]) -> tuple[int | None, DependencyStatus]:
@@ -117,6 +118,10 @@ def build_overview_summary(settings: Settings) -> OverviewSummary:
         "Milvus 向量集合",
         lambda: _count_milvus(settings),
     )
+    qa_history_count, history_status = _safe_count(
+        "PostgreSQL 问答历史",
+        lambda: get_history_stats(settings).total,
+    )
 
     entity_types, entity_type_status = _safe_distribution(
         "实体类型分布",
@@ -138,7 +143,13 @@ def build_overview_summary(settings: Settings) -> OverviewSummary:
         MetricCard(key="graph_nodes", label="图谱节点", value=graph_node_count, description="来自 Neo4j"),
         MetricCard(key="graph_relations", label="图谱关系", value=graph_relation_count, description="来自 Neo4j"),
         MetricCard(key="vectors", label="向量数量", value=vector_count, description="来自 Milvus"),
-        MetricCard(key="qa_history", label="问答记录", value=None, status="reserved", description="历史记录表尚未实现"),
+        MetricCard(
+            key="qa_history",
+            label="问答记录",
+            value=qa_history_count,
+            status=_status_from_count(qa_history_count),
+            description="来自 PostgreSQL qa_history",
+        ),
     ]
 
     flow_steps = [
@@ -169,8 +180,8 @@ def build_overview_summary(settings: Settings) -> OverviewSummary:
             key="answer",
             label="可溯源答案",
             description="返回答案、图谱路径和文本证据",
-            count=None,
-            status="reserved",
+            count=qa_history_count,
+            status=_status_from_count(qa_history_count),
         ),
     ]
 
@@ -181,6 +192,7 @@ def build_overview_summary(settings: Settings) -> OverviewSummary:
         neo4j_nodes_status,
         neo4j_relations_status,
         milvus_status,
+        history_status,
         entity_type_status,
         relation_type_status,
         doc_source_status,

@@ -1,0 +1,30 @@
+{
+  "case_count": 3,
+  "mode_summary": {
+    "普通 LLM": {
+      "avg_final_score": 0.3445,
+      "avg_entity_hit_rate": 0.1588,
+      "avg_relation_hit_rate": 0.0,
+      "avg_keyword_coverage": 0.7619,
+      "avg_elapsed_ms": 8435.33,
+      "case_count": 3
+    },
+    "普通 RAG": {
+      "avg_final_score": 0.3688,
+      "avg_entity_hit_rate": 0.2619,
+      "avg_relation_hit_rate": 0.0,
+      "avg_keyword_coverage": 0.5238,
+      "avg_elapsed_ms": 5047,
+      "case_count": 3
+    },
+    "KG-RAG": {
+      "avg_final_score": 0.6806,
+      "avg_entity_hit_rate": 0.5318,
+      "avg_relation_hit_rate": 0.75,
+      "avg_keyword_coverage": 0.6191,
+      "avg_elapsed_ms": 7587.67,
+      "case_count": 3
+    }
+  },
+  "best_mode": "KG-RAG"
+}

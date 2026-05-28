@@ -1,0 +1,26 @@
+[
+  {
+    "id": "eval-log4shell",
+    "question": "Log4Shell 漏洞的攻击原理和防护措施是什么？",
+    "expected_entities": ["CVE-2021-44228", "CWE-502", "T1190", "MIT-001", "MIT-004", "MIT-009"],
+    "expected_relations": ["AFFECTS_PRODUCT", "HAS_WEAKNESS", "USES_TECHNIQUE", "HAS_MITIGATION"],
+    "expected_keywords": ["Log4Shell", "Log4j", "JNDI", "LDAP", "远程代码执行", "升级", "监控"],
+    "reference_answer": "Log4Shell 是 Apache Log4j2 的 JNDI 远程代码执行漏洞，攻击者可通过可控日志内容触发远程查找并执行代码。防护重点包括升级 Log4j2、移除或禁用高风险组件、限制 LDAP/RMI 出站访问并监控异常 JNDI 请求。"
+  },
+  {
+    "id": "eval-moveit",
+    "question": "MOVEit SQL 注入漏洞会关联哪些攻击技术和防护措施？",
+    "expected_entities": ["CVE-2023-34362", "CWE-89", "T1190", "T1105", "MIT-001", "MIT-002", "MIT-009"],
+    "expected_relations": ["AFFECTS_PRODUCT", "HAS_WEAKNESS", "USES_TECHNIQUE", "HAS_MITIGATION"],
+    "expected_keywords": ["MOVEit", "SQL 注入", "未授权", "数据窃取", "工具传输", "输入校验", "补丁"],
+    "reference_answer": "MOVEit Transfer SQL 注入漏洞可导致未授权访问、数据窃取，并可能关联公网应用利用和工具传输等攻击技术。缓解方式包括安装补丁、加强输入校验和监控异常数据访问。"
+  },
+  {
+    "id": "eval-fortigate",
+    "question": "FortiGate SSL VPN 路径遍历漏洞的风险和处置建议是什么？",
+    "expected_entities": ["CVE-2018-13379", "CWE-22", "T1190", "T1078", "MIT-001", "MIT-010"],
+    "expected_relations": ["AFFECTS_PRODUCT", "HAS_WEAKNESS", "USES_TECHNIQUE", "HAS_MITIGATION"],
+    "expected_keywords": ["FortiGate", "SSL VPN", "路径遍历", "会话", "凭据", "升级", "轮换"],
+    "reference_answer": "FortiGate SSL VPN 路径遍历漏洞可能导致敏感会话文件泄露，攻击者可进一步利用泄露凭据登录系统。建议升级修复版本，并对可能泄露的密码、令牌和会话密钥进行轮换。"
+  }
+]
