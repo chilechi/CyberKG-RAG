@@ -1,0 +1,34 @@
+[
+  {
+    "id": "CVE-2099-0001",
+    "name": "Example Web RCE",
+    "type": "Vulnerability",
+    "description": "示例 Web 远程代码执行漏洞，用于演示 raw 数据转换流程。",
+    "source": "Example Advisory",
+    "text": "Example Web RCE 影响示例 Web 组件，攻击者可通过恶意参数触发命令执行。建议升级组件、限制危险参数并监控异常命令执行。",
+    "score": 0.75,
+    "relations": [
+      {
+        "relation": "HAS_WEAKNESS",
+        "target": "CWE-78",
+        "target_name": "OS Command Injection",
+        "target_type": "Weakness",
+        "target_description": "操作系统命令注入可能导致攻击者执行任意命令。"
+      },
+      {
+        "relation": "USES_TECHNIQUE",
+        "target": "T1059",
+        "target_name": "Command and Scripting Interpreter",
+        "target_type": "Technique",
+        "target_description": "使用命令解释器或脚本执行攻击代码。"
+      },
+      {
+        "relation": "HAS_MITIGATION",
+        "target": "MIT-001",
+        "target_name": "Apply Security Patch",
+        "target_type": "Mitigation",
+        "target_description": "及时升级到官方修复版本。"
+      }
+    ]
+  }
+]

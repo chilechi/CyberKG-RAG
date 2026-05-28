@@ -38,6 +38,7 @@ logs/
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
+!data/raw/*.example.json
 !data/processed/.gitkeep
 
 # Model and experiment outputs
