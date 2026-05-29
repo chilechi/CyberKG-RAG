@@ -24,6 +24,9 @@ def main() -> None:
 
     with driver.session() as session:
         session.run("CREATE CONSTRAINT entity_id IF NOT EXISTS FOR (e:Entity) REQUIRE e.id IS UNIQUE")
+        # 导入脚本按 samples 重建课程样例图谱，避免旧节点和旧关系残留影响统计与查询。
+        session.run("MATCH (:Entity)-[r]->(:Entity) DELETE r")
+        session.run("MATCH (e:Entity) DELETE e")
 
         for entity in entities:
             session.run(

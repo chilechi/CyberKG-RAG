@@ -51,6 +51,28 @@ def upsert_rows(connection, table: Table, rows: list[dict]) -> None:
     connection.execute(statement.on_conflict_do_update(index_elements=table.primary_key.columns, set_=update_columns))
 
 
+def delete_missing_rows(connection, table: Table, rows: list[dict], key_columns: list[str]) -> None:
+    """以 samples 文件为准清理旧样例数据，避免反复导入后 PostgreSQL 残留过期记录。"""
+    if not rows:
+        connection.execute(table.delete())
+        return
+    if len(key_columns) == 1:
+        key = key_columns[0]
+        values = [row[key] for row in rows]
+        connection.execute(table.delete().where(table.c[key].not_in(values)))
+        return
+
+    current_keys = {tuple(row[key] for key in key_columns) for row in rows}
+    existing_rows = connection.execute(table.select()).mappings().all()
+    for existing in existing_rows:
+        existing_key = tuple(existing[key] for key in key_columns)
+        if existing_key not in current_keys:
+            condition = table.c[key_columns[0]] == existing[key_columns[0]]
+            for key in key_columns[1:]:
+                condition = condition & (table.c[key] == existing[key])
+            connection.execute(table.delete().where(condition))
+
+
 def main() -> None:
     settings = get_settings()
     engine = create_engine(settings.postgres_url, pool_pre_ping=True)
@@ -61,6 +83,9 @@ def main() -> None:
     # 样例导入脚本要幂等，方便反复执行验证数据库连接和表结构。
     with engine.begin() as connection:
         metadata.create_all(connection)
+        delete_missing_rows(connection, entities_table, entities, ["id"])
+        delete_missing_rows(connection, relations_table, relations, ["source", "target", "relation"])
+        delete_missing_rows(connection, doc_chunks_table, doc_chunks, ["chunk_id"])
         upsert_rows(connection, entities_table, entities)
         upsert_rows(connection, relations_table, relations)
         upsert_rows(connection, doc_chunks_table, doc_chunks)

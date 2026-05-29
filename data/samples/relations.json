@@ -99,5 +99,67 @@
   {"source": "T1110", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
   {"source": "T1210", "target": "TA0002", "relation": "BELONGS_TO_TACTIC"},
   {"source": "T1046", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
-  {"source": "T1053", "target": "TA0003", "relation": "BELONGS_TO_TACTIC"}
+  {"source": "T1053", "target": "TA0003", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1133", "target": "TA0001", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1005", "target": "TA0009", "relation": "BELONGS_TO_TACTIC"},
+  {"source": "T1021", "target": "TA0002", "relation": "BELONGS_TO_TACTIC"},
+
+  {"source": "CVE-2022-26134", "target": "PROD-CONFLUENCE", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2022-26134", "target": "CWE-94", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2022-26134", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-26134", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-26134", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2022-26134", "target": "MIT-003", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2022-24682", "target": "PROD-ZIMBRA", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2022-24682", "target": "CWE-863", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2022-24682", "target": "T1078", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-24682", "target": "T1005", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2022-24682", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2022-24682", "target": "MIT-010", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2023-27997", "target": "PROD-FORTIOS", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2023-27997", "target": "CWE-94", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2023-27997", "target": "T1133", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-27997", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-27997", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2023-27997", "target": "MIT-011", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2023-46805", "target": "PROD-IVANTI-CONNECT", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2023-46805", "target": "CWE-287", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2023-46805", "target": "T1133", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-46805", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2023-46805", "target": "MIT-011", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2024-21887", "target": "PROD-IVANTI-CONNECT", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2024-21887", "target": "CWE-78", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2024-21887", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2024-21887", "target": "T1021", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2024-21887", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2024-21887", "target": "MIT-009", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2024-3400", "target": "PROD-PANOS", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2024-3400", "target": "CWE-78", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2024-3400", "target": "T1133", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2024-3400", "target": "T1059", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2024-3400", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2024-3400", "target": "MIT-009", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2024-23897", "target": "PROD-JENKINS", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2024-23897", "target": "CWE-22", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2024-23897", "target": "T1005", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2024-23897", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2024-23897", "target": "MIT-012", "relation": "HAS_MITIGATION"},
+
+  {"source": "CVE-2023-49103", "target": "PROD-OWNCLOUD", "relation": "AFFECTS_PRODUCT"},
+  {"source": "CVE-2023-49103", "target": "CWE-200", "relation": "HAS_WEAKNESS"},
+  {"source": "CVE-2023-49103", "target": "T1005", "relation": "USES_TECHNIQUE"},
+  {"source": "CVE-2023-49103", "target": "MIT-001", "relation": "HAS_MITIGATION"},
+  {"source": "CVE-2023-49103", "target": "MIT-012", "relation": "HAS_MITIGATION"},
+
+  {"source": "CWE-918", "target": "CAPEC-664", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-863", "target": "CAPEC-122", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CWE-269", "target": "CAPEC-122", "relation": "RELATED_TO_CAPEC"},
+  {"source": "CAPEC-664", "target": "T1190", "relation": "USES_TECHNIQUE"},
+  {"source": "CAPEC-122", "target": "T1078", "relation": "USES_TECHNIQUE"}
 ]

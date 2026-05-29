@@ -36,5 +36,22 @@
   {"chunk_id": "chunk-mit-003", "entity_id": "MIT-003", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "WAF 规则可作为临时缓解措施，用于拦截已知利用载荷，但不能替代补丁。", "score": 0.8},
   {"chunk_id": "chunk-mit-006", "entity_id": "MIT-006", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "网络分段可限制攻击者从公网入口继续访问内部服务。", "score": 0.79},
   {"chunk_id": "chunk-mit-009", "entity_id": "MIT-009", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "安全监控应关注异常命令执行、WebShell 文件、可疑出站连接和敏感数据访问。", "score": 0.8},
-  {"chunk_id": "chunk-mit-010", "entity_id": "MIT-010", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "当 VPN、管理接口或会话文件存在泄露风险时，应及时轮换密码、令牌和会话密钥。", "score": 0.78}
+  {"chunk_id": "chunk-mit-010", "entity_id": "MIT-010", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "当 VPN、管理接口或会话文件存在泄露风险时，应及时轮换密码、令牌和会话密钥。", "score": 0.78},
+
+  {"chunk_id": "chunk-confluence-26134-001", "entity_id": "CVE-2022-26134", "entity_type": "Vulnerability", "source": "Atlassian Advisory", "text": "CVE-2022-26134 是 Atlassian Confluence Server 与 Data Center 的 OGNL 注入漏洞，攻击者可在未授权情况下构造请求触发远程代码执行。", "score": 0.9},
+  {"chunk_id": "chunk-confluence-26134-002", "entity_id": "CVE-2022-26134", "entity_type": "Vulnerability", "source": "Mitigation Guide", "text": "Confluence OGNL 注入漏洞的处置重点包括升级到官方修复版本、部署 WAF 临时规则、检查异常进程执行和 Web 访问日志。", "score": 0.87},
+  {"chunk_id": "chunk-zimbra-24682-001", "entity_id": "CVE-2022-24682", "entity_type": "Vulnerability", "source": "Zimbra Advisory", "text": "CVE-2022-24682 与 Zimbra 认证流程和缓存投毒有关，可能导致攻击者绕过认证并访问邮箱数据。", "score": 0.86},
+  {"chunk_id": "chunk-zimbra-24682-002", "entity_id": "CVE-2022-24682", "entity_type": "Vulnerability", "source": "Mitigation Guide", "text": "Zimbra 认证绕过风险出现后，应升级补丁、清理可疑会话、轮换受影响账号密码并审计邮箱访问日志。", "score": 0.84},
+  {"chunk_id": "chunk-fortios-27997-001", "entity_id": "CVE-2023-27997", "entity_type": "Vulnerability", "source": "Fortinet Advisory", "text": "CVE-2023-27997 是 Fortinet FortiOS SSL-VPN 的远程代码执行漏洞，攻击者可通过暴露的 VPN 入口触发异常代码执行。", "score": 0.89},
+  {"chunk_id": "chunk-fortios-27997-002", "entity_id": "CVE-2023-27997", "entity_type": "Vulnerability", "source": "Mitigation Guide", "text": "FortiOS SSL-VPN 高危漏洞应优先升级修复，必要时临时限制公网 VPN 暴露面，并监控异常登录和命令执行迹象。", "score": 0.86},
+  {"chunk_id": "chunk-ivanti-46805-001", "entity_id": "CVE-2023-46805", "entity_type": "Vulnerability", "source": "Ivanti Advisory", "text": "CVE-2023-46805 是 Ivanti Connect Secure 的认证绕过漏洞，常与后续命令注入漏洞组合形成完整入侵链。", "score": 0.88},
+  {"chunk_id": "chunk-ivanti-21887-001", "entity_id": "CVE-2024-21887", "entity_type": "Vulnerability", "source": "Ivanti Advisory", "text": "CVE-2024-21887 是 Ivanti Connect Secure 的命令注入漏洞，攻击者在绕过认证后可能执行系统命令并建立持久访问。", "score": 0.89},
+  {"chunk_id": "chunk-panos-3400-001", "entity_id": "CVE-2024-3400", "entity_type": "Vulnerability", "source": "Palo Alto Advisory", "text": "CVE-2024-3400 是 PAN-OS GlobalProtect 中的命令注入漏洞，影响公网暴露的安全网关，可能导致未授权命令执行。", "score": 0.89},
+  {"chunk_id": "chunk-panos-3400-002", "entity_id": "CVE-2024-3400", "entity_type": "Vulnerability", "source": "Mitigation Guide", "text": "PAN-OS GlobalProtect 命令注入风险应通过升级、检查可疑文件、审计系统日志和限制管理面暴露进行处置。", "score": 0.86},
+  {"chunk_id": "chunk-jenkins-23897-001", "entity_id": "CVE-2024-23897", "entity_type": "Vulnerability", "source": "Jenkins Advisory", "text": "CVE-2024-23897 是 Jenkins CLI 任意文件读取漏洞，攻击者可能读取配置、密钥或构建相关敏感文件。", "score": 0.87},
+  {"chunk_id": "chunk-owncloud-49103-001", "entity_id": "CVE-2023-49103", "entity_type": "Vulnerability", "source": "ownCloud Advisory", "text": "CVE-2023-49103 涉及 ownCloud graphapi 应用泄露 PHP 环境信息，可能暴露数据库口令、对象存储密钥等敏感配置。", "score": 0.86},
+  {"chunk_id": "chunk-cwe-918", "entity_id": "CWE-918", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-918 服务端请求伪造会让攻击者通过应用服务器访问内网服务、云元数据接口或其他受限资源。", "score": 0.84},
+  {"chunk_id": "chunk-cwe-863", "entity_id": "CWE-863", "entity_type": "Weakness", "source": "MITRE CWE", "text": "CWE-863 授权检查不正确会导致用户访问超出权限范围的功能、数据或管理接口。", "score": 0.83},
+  {"chunk_id": "chunk-mit-011", "entity_id": "MIT-011", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "当 VPN、网关或管理入口出现高危漏洞时，可临时关闭公网入口、限制来源地址或启用额外访问控制降低暴露面。", "score": 0.79},
+  {"chunk_id": "chunk-mit-012", "entity_id": "MIT-012", "entity_type": "Mitigation", "source": "Mitigation Guide", "text": "发现配置文件、环境变量或日志泄露后，应排查密钥使用范围，轮换数据库、对象存储、API Token 和管理员凭据。", "score": 0.79}
 ]

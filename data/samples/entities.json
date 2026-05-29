@@ -65,5 +65,41 @@
   {"id": "PROD-FORTIGATE", "name": "Fortinet FortiGate SSL VPN", "type": "Product", "description": "Fortinet 防火墙和 SSL VPN 产品。"},
   {"id": "PROD-MOVEIT", "name": "MOVEit Transfer", "type": "Product", "description": "托管文件传输产品。"},
   {"id": "PROD-F5-BIGIP", "name": "F5 BIG-IP", "type": "Product", "description": "应用交付和负载均衡平台。"},
-  {"id": "PROD-WINDOWS-SMB", "name": "Windows SMBv3", "type": "Product", "description": "Windows 文件共享协议实现。"}
+  {"id": "PROD-WINDOWS-SMB", "name": "Windows SMBv3", "type": "Product", "description": "Windows 文件共享协议实现。"},
+
+  {"id": "CVE-2022-26134", "name": "Atlassian Confluence OGNL Injection", "type": "Vulnerability", "description": "Atlassian Confluence Server 与 Data Center 的 OGNL 注入远程代码执行漏洞。"},
+  {"id": "CVE-2022-24682", "name": "Zimbra Memcached Poisoning", "type": "Vulnerability", "description": "Zimbra Collaboration 中可导致凭据窃取和邮箱访问的认证绕过漏洞。"},
+  {"id": "CVE-2023-27997", "name": "Fortinet FortiOS SSL-VPN RCE", "type": "Vulnerability", "description": "Fortinet FortiOS SSL-VPN 堆溢出漏洞，可能导致远程代码执行。"},
+  {"id": "CVE-2023-46805", "name": "Ivanti Connect Secure Auth Bypass", "type": "Vulnerability", "description": "Ivanti Connect Secure 和 Policy Secure 的认证绕过漏洞。"},
+  {"id": "CVE-2024-21887", "name": "Ivanti Connect Secure Command Injection", "type": "Vulnerability", "description": "Ivanti Connect Secure 和 Policy Secure 的命令注入漏洞，可与认证绕过组合利用。"},
+  {"id": "CVE-2024-3400", "name": "Palo Alto PAN-OS GlobalProtect Command Injection", "type": "Vulnerability", "description": "Palo Alto Networks PAN-OS GlobalProtect 中的命令注入漏洞。"},
+  {"id": "CVE-2024-23897", "name": "Jenkins CLI Arbitrary File Read", "type": "Vulnerability", "description": "Jenkins CLI 参数解析导致的任意文件读取漏洞。"},
+  {"id": "CVE-2023-49103", "name": "ownCloud graphapi Sensitive Information Disclosure", "type": "Vulnerability", "description": "ownCloud graphapi 应用暴露 PHP 环境信息导致敏感信息泄露。"},
+
+  {"id": "CWE-918", "name": "Server-Side Request Forgery", "type": "Weakness", "description": "服务端请求伪造允许攻击者诱导服务端访问非预期内部或外部资源。"},
+  {"id": "CWE-863", "name": "Incorrect Authorization", "type": "Weakness", "description": "授权检查不正确可能导致用户访问未被授权的功能或资源。"},
+  {"id": "CWE-269", "name": "Improper Privilege Management", "type": "Weakness", "description": "权限管理不当可能导致权限提升或越权访问。"},
+  {"id": "CWE-200", "name": "Exposure of Sensitive Information", "type": "Weakness", "description": "敏感信息泄露可能暴露凭据、配置、密钥或其他可被攻击者利用的数据。"},
+
+  {"id": "CAPEC-664", "name": "Server Side Request Forgery", "type": "AttackPattern", "description": "诱导服务端代表攻击者发起请求以访问内部资产或元数据服务。"},
+  {"id": "CAPEC-122", "name": "Privilege Abuse", "type": "AttackPattern", "description": "滥用权限或授权缺陷访问受保护资源。"},
+
+  {"id": "T1133", "name": "External Remote Services", "type": "Technique", "description": "利用 VPN、远程桌面、远程管理入口等外部远程服务进入环境。"},
+  {"id": "T1005", "name": "Data from Local System", "type": "Technique", "description": "从本地系统收集文件、配置、密钥或其他敏感数据。"},
+  {"id": "T1021", "name": "Remote Services", "type": "Technique", "description": "利用远程服务协议进行访问、横向移动或执行。"},
+
+  {"id": "TA0006", "name": "Credential Access", "type": "Tactic", "description": "凭据访问战术。"},
+  {"id": "TA0007", "name": "Discovery", "type": "Tactic", "description": "发现战术。"},
+  {"id": "TA0009", "name": "Collection", "type": "Tactic", "description": "收集战术。"},
+
+  {"id": "MIT-011", "name": "Disable Public Exploit Surface", "type": "Mitigation", "description": "临时关闭或限制公网暴露的高风险管理入口、VPN 入口和调试接口。"},
+  {"id": "MIT-012", "name": "Secrets Review", "type": "Mitigation", "description": "排查配置文件、环境变量和日志中的密钥泄露，并及时轮换受影响凭据。"},
+
+  {"id": "PROD-CONFLUENCE", "name": "Atlassian Confluence", "type": "Product", "description": "企业协作文档和知识库平台。"},
+  {"id": "PROD-ZIMBRA", "name": "Zimbra Collaboration", "type": "Product", "description": "邮件和协作服务器。"},
+  {"id": "PROD-FORTIOS", "name": "Fortinet FortiOS SSL-VPN", "type": "Product", "description": "Fortinet 防火墙操作系统与 SSL-VPN 组件。"},
+  {"id": "PROD-IVANTI-CONNECT", "name": "Ivanti Connect Secure", "type": "Product", "description": "企业 VPN 和安全接入网关。"},
+  {"id": "PROD-PANOS", "name": "Palo Alto Networks PAN-OS", "type": "Product", "description": "Palo Alto Networks 防火墙操作系统。"},
+  {"id": "PROD-JENKINS", "name": "Jenkins", "type": "Product", "description": "持续集成与持续交付自动化服务器。"},
+  {"id": "PROD-OWNCLOUD", "name": "ownCloud", "type": "Product", "description": "企业文件同步和共享平台。"}
 ]
