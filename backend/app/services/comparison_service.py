@@ -5,6 +5,7 @@ from typing import Any
 
 from app.core.config import Settings
 from app.schemas.comparison import QaComparisonMetric, QaComparisonResponse, QaComparisonResult, QaEvaluationResponse
+from app.services.confidence_service import calculate_llm_confidence, calculate_rag_confidence
 from app.services.llm_service import generate_free_answer, generate_rag_answer
 from app.services.rag_service import answer_with_kg_rag
 from app.services.vector_service import search_doc_chunks
@@ -42,12 +43,13 @@ def run_qa_comparison(settings: Settings, question: str) -> QaComparisonResponse
     results: list[QaComparisonResult] = []
 
     started_at = perf_counter()
-    llm_answer = generate_free_answer(settings, question) or _fallback_llm_answer(question)
+    llm_model_answer = generate_free_answer(settings, question)
+    llm_answer = llm_model_answer or _fallback_llm_answer(question)
     results.append(
         QaComparisonResult(
             mode="普通 LLM",
             answer=llm_answer,
-            confidence=0.45 if settings.deepseek_api_key.strip() else 0.15,
+            confidence=calculate_llm_confidence(llm_model_answer is not None),
             elapsed_ms=_elapsed_ms(started_at),
             graph_path_count=0,
             text_evidence_count=0,
@@ -61,12 +63,13 @@ def run_qa_comparison(settings: Settings, question: str) -> QaComparisonResponse
         text_evidence = search_doc_chunks(settings, query=question, top_k=5)
     except Exception:  # noqa: BLE001 - 对比实验允许 Milvus 失败后继续展示其它模式
         text_evidence = []
-    rag_answer = generate_rag_answer(settings, question, text_evidence) or _fallback_rag_answer(question, len(text_evidence))
+    rag_model_answer = generate_rag_answer(settings, question, text_evidence)
+    rag_answer = rag_model_answer or _fallback_rag_answer(question, len(text_evidence))
     results.append(
         QaComparisonResult(
             mode="普通 RAG",
             answer=rag_answer,
-            confidence=min(0.75, 0.25 + len(text_evidence) * 0.08),
+            confidence=calculate_rag_confidence(text_evidence, rag_model_answer is not None),
             elapsed_ms=_elapsed_ms(started_at),
             graph_path_count=0,
             text_evidence_count=len(text_evidence),

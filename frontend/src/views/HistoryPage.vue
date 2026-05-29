@@ -142,6 +142,7 @@ onMounted(loadHistory);
             <small v-if="firstPath(item)" class="history-evidence-line">路径：{{ firstPath(item) }}</small>
             <small v-if="item.text_evidence[0]" class="history-evidence-line">
               证据：{{ item.text_evidence[0].source }} / {{ item.text_evidence[0].entity_id }}
+              · 重排分 {{ Math.round(item.text_evidence[0].rerank_score * 100) }}%
             </small>
           </div>
           <span class="mode-pill">{{ item.mode }}</span>

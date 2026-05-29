@@ -35,7 +35,8 @@ def _format_text_evidence(text_evidence) -> str:
     for index, evidence in enumerate(text_evidence[:5], start=1):
         lines.append(
             f"{index}. 来源：{evidence.source}；实体：{evidence.entity_id}；"
-            f"相关度：{evidence.score:.2f}；内容：{evidence.text}"
+            f"相关度：{evidence.score:.2f}；重排分：{evidence.rerank_score:.2f}；"
+            f"排序依据：{evidence.rank_reason or '向量相似度'}；内容：{evidence.text}"
         )
     return "\n".join(lines)
 

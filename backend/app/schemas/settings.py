@@ -15,9 +15,14 @@ class ConnectionSetting(BaseModel):
 class ModelSetting(BaseModel):
     """模型和向量化配置，敏感 key 不返回。"""
 
+    llm_provider: str
+    llm_model: str
+    llm_base_url: str
+    llm_timeout: int
     embedding_provider: str
     embedding_model: str
     embedding_dim: int
+    embedding_url: str
     milvus_collection: str
     dashscope_configured: bool
     deepseek_configured: bool

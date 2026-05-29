@@ -1,5 +1,6 @@
 from app.core.config import Settings
 from app.schemas.qa import QaResponse
+from app.services.confidence_service import calculate_kg_rag_confidence
 from app.services.entity_service import identify_entity
 from app.services.graph_service import get_neighbor_graph
 from app.services.llm_service import build_kg_rag_prompt, generate_with_deepseek
@@ -55,25 +56,17 @@ def answer_with_kg_rag(settings: Settings, question: str) -> QaResponse:
     except Exception:  # noqa: BLE001 - Milvus 不可用时保留问答接口可用性
         text_evidence = []
     entity_id = _pick_entity_id(settings, question, text_evidence)
+    entity_matched = entity_id != DEFAULT_ENTITY_ID or DEFAULT_ENTITY_ID.upper() in question.upper()
     try:
         graph = get_neighbor_graph(settings, entity_id=entity_id, depth=2)
         graph_paths = _build_paths(graph.edges)
     except Exception:  # noqa: BLE001 - Neo4j 不可用时仍可基于文本证据或兜底提示返回
         graph_paths = []
-    answer = generate_with_deepseek(
+    model_answer = generate_with_deepseek(
         settings,
         build_kg_rag_prompt(question, entity_id, graph_paths, text_evidence),
     )
-    if answer is None:
-        answer = _build_fallback_answer(question, entity_id, graph_paths, len(text_evidence))
-
-    confidence = 0.25
-    if entity_id != DEFAULT_ENTITY_ID or DEFAULT_ENTITY_ID.upper() in question.upper():
-        confidence += 0.2
-    if graph_paths:
-        confidence += min(0.3, len(graph_paths) * 0.04)
-    if text_evidence:
-        confidence += min(0.25, len(text_evidence) * 0.05)
+    answer = model_answer or _build_fallback_answer(question, entity_id, graph_paths, len(text_evidence))
 
     return QaResponse(
         question=question,
@@ -81,5 +74,10 @@ def answer_with_kg_rag(settings: Settings, question: str) -> QaResponse:
         answer=answer,
         graph_paths=graph_paths,
         text_evidence=text_evidence,
-        confidence=min(confidence, 0.95),
+        confidence=calculate_kg_rag_confidence(
+            entity_matched=entity_matched,
+            graph_path_count=len(graph_paths),
+            text_evidence=text_evidence,
+            has_model_answer=model_answer is not None,
+        ),
     )

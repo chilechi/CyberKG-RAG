@@ -1499,6 +1499,13 @@ button {
   color: #475569;
 }
 
+.evidence-list .rank-reason {
+  display: block;
+  margin-top: 4px;
+  color: #2563eb;
+  font-size: 12px;
+}
+
 .qa-metric-grid {
   display: grid;
   grid-template-columns: 1fr;

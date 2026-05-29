@@ -130,7 +130,10 @@ async function submitQuestion() {
       <div v-if="answer && answer.text_evidence.length > 0" class="evidence-list">
         <div v-for="evidence in answer.text_evidence" :key="`${evidence.source}-${evidence.entity_id}`">
           <strong>{{ evidence.source }} / {{ evidence.entity_id }}</strong>
-          <span>相似度 {{ Math.round(evidence.score * 100) }}%</span>
+          <span>
+            相似度 {{ Math.round(evidence.score * 100) }}% · 重排分 {{ Math.round(evidence.rerank_score * 100) }}%
+          </span>
+          <small class="rank-reason">排序依据：{{ evidence.rank_reason || "向量相似度" }}</small>
           <div class="markdown-body evidence-markdown" v-html="renderMarkdown(evidence.text)"></div>
         </div>
       </div>

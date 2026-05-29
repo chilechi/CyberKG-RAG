@@ -74,7 +74,23 @@ onMounted(loadSettings);
           </div>
           <div class="settings-kv-list">
             <div>
-              <span>Embedding Provider</span>
+              <span>LLM Provider</span>
+              <strong>{{ settings.model.llm_provider }}</strong>
+            </div>
+            <div>
+              <span>LLM Model</span>
+              <strong>{{ settings.model.llm_model }}</strong>
+            </div>
+            <div>
+              <span>LLM Base URL</span>
+              <strong>{{ settings.model.llm_base_url }}</strong>
+            </div>
+            <div>
+              <span>LLM 超时</span>
+              <strong>{{ settings.model.llm_timeout }}s</strong>
+            </div>
+            <div>
+              <span>向量化服务</span>
               <strong>{{ settings.model.embedding_provider }}</strong>
             </div>
             <div>
@@ -84,6 +100,10 @@ onMounted(loadSettings);
             <div>
               <span>Embedding 维度</span>
               <strong>{{ settings.model.embedding_dim }}</strong>
+            </div>
+            <div>
+              <span>Embedding URL</span>
+              <strong>{{ settings.model.embedding_url }}</strong>
             </div>
             <div>
               <span>Milvus Collection</span>

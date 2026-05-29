@@ -27,6 +27,8 @@ export interface QaEvidence {
   entity_id: string;
   text: string;
   score: number;
+  rerank_score: number;
+  rank_reason: string;
 }
 
 export interface QaAnswer {

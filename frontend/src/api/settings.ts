@@ -11,9 +11,14 @@ export interface ConnectionSetting {
 }
 
 export interface ModelSetting {
+  llm_provider: string;
+  llm_model: string;
+  llm_base_url: string;
+  llm_timeout: number;
   embedding_provider: string;
   embedding_model: string;
   embedding_dim: number;
+  embedding_url: string;
   milvus_collection: string;
   dashscope_configured: boolean;
   deepseek_configured: boolean;

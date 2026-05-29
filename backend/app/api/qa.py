@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 from app.core.config import Settings, get_settings
 from app.schemas.common import ApiResponse
 from app.schemas.qa import QaRequest, QaResponse
+from app.services.confidence_service import calculate_llm_confidence, calculate_rag_confidence
 from app.services.history_service import save_qa_history
 from app.services.llm_service import generate_free_answer, generate_rag_answer
 from app.services.rag_service import answer_with_kg_rag
@@ -34,14 +35,15 @@ def _fallback_rag_answer(question: str, evidence_count: int) -> str:
 
 
 def _answer_with_llm(settings: Settings, question: str) -> QaResponse:
-    answer = generate_free_answer(settings, question) or _fallback_llm_answer(question)
+    model_answer = generate_free_answer(settings, question)
+    answer = model_answer or _fallback_llm_answer(question)
     return QaResponse(
         question=question,
         mode="普通 LLM",
         answer=answer,
         graph_paths=[],
         text_evidence=[],
-        confidence=0.45 if settings.deepseek_api_key.strip() else 0.15,
+        confidence=calculate_llm_confidence(model_answer is not None),
     )
 
 
@@ -50,14 +52,15 @@ def _answer_with_rag(settings: Settings, question: str) -> QaResponse:
         text_evidence = search_doc_chunks(settings, query=question, top_k=5)
     except Exception:  # noqa: BLE001 - Milvus 异常时仍返回可解释的降级结果
         text_evidence = []
-    answer = generate_rag_answer(settings, question, text_evidence) or _fallback_rag_answer(question, len(text_evidence))
+    model_answer = generate_rag_answer(settings, question, text_evidence)
+    answer = model_answer or _fallback_rag_answer(question, len(text_evidence))
     return QaResponse(
         question=question,
         mode="普通 RAG",
         answer=answer,
         graph_paths=[],
         text_evidence=text_evidence,
-        confidence=min(0.75, 0.25 + len(text_evidence) * 0.08),
+        confidence=calculate_rag_confidence(text_evidence, model_answer is not None),
     )
 
 
