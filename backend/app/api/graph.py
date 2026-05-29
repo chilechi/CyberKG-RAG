@@ -14,7 +14,7 @@ router = APIRouter()
 @router.get("/neighbors", response_model=ApiResponse[GraphData])
 def get_graph_neighbors(
     entity_id: Annotated[str, Query(min_length=1, description="起始实体 ID")],
-    depth: Annotated[int, Query(ge=1, le=4, description="查询跳数，限制 1-4 跳")] = 2,
+    depth: Annotated[int, Query(ge=1, le=3, description="查询跳数，限制 1-3 跳")] = 2,
 ) -> ApiResponse[GraphData]:
     """从 Neo4j 查询实体邻居子图。"""
     graph = get_neighbor_graph(get_settings(), entity_id=entity_id, depth=depth)

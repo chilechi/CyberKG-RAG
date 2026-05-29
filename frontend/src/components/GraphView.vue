@@ -16,6 +16,15 @@ const categories = computed(() => {
   return types.map((name) => ({ name }));
 });
 
+const showNodeLabel = computed(() => props.graph.nodes.length <= 45);
+
+function getSymbolSize(type: string) {
+  if (type === "Vulnerability") return 54;
+  if (type === "Tactic") return 34;
+  if (type === "Technique") return 38;
+  return 42;
+}
+
 function renderGraph() {
   if (!chartEl.value) return;
   if (!chart) {
@@ -24,8 +33,9 @@ function renderGraph() {
 
   const categoryIndex = new Map(categories.value.map((item, index) => [item.name, index]));
 
-  // ECharts 需要稳定的节点和边结构；这里把后端返回字段映射成图谱组件字段。
+  // ECharts 需要稳定的节点和边结构；大图默认隐藏边标签，避免关系文字遮挡。
   chart.setOption({
+    animation: props.graph.nodes.length <= 60,
     tooltip: {
       trigger: "item",
       formatter: (params: any) => {
@@ -50,29 +60,34 @@ function renderGraph() {
         categories: categories.value,
         data: props.graph.nodes.map((node) => ({
           ...node,
-          symbolSize: node.type === "Vulnerability" ? 62 : 48,
+          symbolSize: getSymbolSize(node.type),
           category: categoryIndex.get(node.type) ?? 0,
         })),
         links: props.graph.edges.map((edge) => ({
           ...edge,
           label: {
-            show: true,
+            show: false,
             formatter: edge.relation,
           },
         })),
         force: {
-          repulsion: 420,
-          edgeLength: 155,
+          repulsion: 680,
+          edgeLength: [120, 190],
+          gravity: 0.08,
+          layoutAnimation: props.graph.nodes.length <= 60,
         },
         label: {
-          show: true,
+          show: showNodeLabel.value,
           formatter: "{b}",
+          fontSize: 11,
+          color: "#1e293b",
         },
         edgeSymbol: ["none", "arrow"],
-        edgeSymbolSize: 8,
+        edgeSymbolSize: 7,
         lineStyle: {
           color: "#64748b",
-          curveness: 0.08,
+          opacity: 0.45,
+          curveness: 0.12,
         },
         emphasis: {
           focus: "adjacency",

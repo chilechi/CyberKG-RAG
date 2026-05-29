@@ -9,7 +9,7 @@ const graph = ref<GraphData | null>(null);
 const loading = ref(false);
 const error = ref("");
 const entityId = ref("CVE-2021-44228");
-const depth = ref(4);
+const depth = ref(2);
 
 const selectedEntity = computed<GraphNode | null>(() => {
   if (!graph.value) return null;
@@ -42,6 +42,9 @@ const relationLegend = computed(() => {
   });
   return Array.from(countByType, ([label, count]) => ({ label, count }));
 });
+
+const visibleEdges = computed(() => graph.value?.edges.slice(0, 40) ?? []);
+const hiddenEdgeCount = computed(() => Math.max((graph.value?.edges.length ?? 0) - visibleEdges.value.length, 0));
 
 async function loadGraph() {
   if (!entityId.value.trim()) {
@@ -78,7 +81,6 @@ onMounted(loadGraph);
             <option :value="1">1 跳</option>
             <option :value="2">2 跳</option>
             <option :value="3">3 跳</option>
-            <option :value="4">4 跳</option>
           </select>
         </label>
         <button class="primary small-button" :disabled="loading" type="button" @click="loadGraph">
@@ -92,7 +94,7 @@ onMounted(loadGraph);
         <div class="section-heading compact">
           <div>
             <h2>图谱可视化</h2>
-            <p>数据来自 Neo4j 邻居查询接口。</p>
+            <p>数据来自 Neo4j 邻居查询接口，默认收敛到核心安全链路。</p>
           </div>
           <span class="panel-badge">真实接口</span>
         </div>
@@ -161,11 +163,16 @@ onMounted(loadGraph);
           <p>根据本次 Neo4j 查询结果生成，不写静态路径。</p>
         </div>
       </div>
-      <div v-if="graph && graph.edges.length > 0" class="edge-strip dense-strip">
-        <span v-for="edge in graph.edges" :key="`${edge.source}-${edge.target}-${edge.relation}`">
-          {{ edge.source }} → {{ edge.relation }} → {{ edge.target }}
-        </span>
-      </div>
+      <template v-if="graph && graph.edges.length > 0">
+        <div class="edge-strip dense-strip">
+          <span v-for="edge in visibleEdges" :key="`${edge.source}-${edge.target}-${edge.relation}`">
+            {{ edge.source }} → {{ edge.relation }} → {{ edge.target }}
+          </span>
+        </div>
+        <p v-if="hiddenEdgeCount > 0" class="muted-note">
+          当前列表展示前 {{ visibleEdges.length }} 条关系，其余 {{ hiddenEdgeCount }} 条仍保留在图谱统计中。
+        </p>
+      </template>
       <div v-else class="empty-table compact-empty">暂无路径数据</div>
     </section>
   </div>
