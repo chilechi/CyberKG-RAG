@@ -46,6 +46,10 @@ class QaEvaluationModeSummary(BaseModel):
     avg_entity_hit_rate: float
     avg_relation_hit_rate: float
     avg_keyword_coverage: float
+    avg_evidence_score: float = 0.0
+    avg_confidence: float = 0.0
+    avg_graph_path_count: float = 0.0
+    avg_text_evidence_count: float = 0.0
     avg_elapsed_ms: float
     case_count: int
 

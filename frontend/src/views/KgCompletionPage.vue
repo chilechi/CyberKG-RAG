@@ -99,7 +99,7 @@ onMounted(async () => {
           <div class="section-heading compact">
             <div>
               <h2>模型性能对比</h2>
-              <p>当前为基于知识图谱规模和关系分布的轻量基线，后续可替换为 PyKEEN 训练结果。</p>
+              <p>基于 PostgreSQL 三元组按 8:1:1 划分，在测试三元组上计算 MRR 和 Hits 指标。</p>
             </div>
           </div>
           <div class="kg-model-table">
@@ -109,7 +109,7 @@ onMounted(async () => {
               <span>Hits@1</span>
               <span>Hits@3</span>
               <span>Hits@10</span>
-              <span>耗时</span>
+              <span>评测耗时</span>
             </div>
             <div v-for="item in summary.model_metrics" :key="item.model" class="kg-model-row">
               <strong>{{ item.model }}</strong>

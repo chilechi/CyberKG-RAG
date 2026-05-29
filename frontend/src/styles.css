@@ -695,7 +695,7 @@ button {
 
 .comparison-eval-row {
   display: grid;
-  grid-template-columns: 1.1fr repeat(5, minmax(86px, 0.8fr));
+  grid-template-columns: 1.1fr repeat(7, minmax(78px, 0.8fr));
   gap: 10px;
   align-items: center;
   min-height: 42px;

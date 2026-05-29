@@ -132,6 +132,10 @@ def _summarize(case_results: list[dict[str, Any]]) -> dict[str, Any]:
             "avg_entity_hit_rate": round(statistics.mean(item["entity_hit_rate"] for item in results), 4),
             "avg_relation_hit_rate": round(statistics.mean(item["relation_hit_rate"] for item in results), 4),
             "avg_keyword_coverage": round(statistics.mean(item["keyword_coverage"] for item in results), 4),
+            "avg_evidence_score": round(statistics.mean(item["evidence_score"] for item in results), 4),
+            "avg_confidence": round(statistics.mean(item["confidence"] for item in results), 4),
+            "avg_graph_path_count": round(statistics.mean(item["graph_path_count"] for item in results), 2),
+            "avg_text_evidence_count": round(statistics.mean(item["text_evidence_count"] for item in results), 2),
             "avg_elapsed_ms": round(statistics.mean(item["elapsed_ms"] for item in results), 2),
             "case_count": len(results),
         }

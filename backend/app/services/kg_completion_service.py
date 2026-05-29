@@ -1,5 +1,6 @@
 from collections import Counter, defaultdict
-from math import log1p
+from statistics import mean
+from time import perf_counter
 
 from sqlalchemy import text
 
@@ -47,15 +48,109 @@ def _build_dataset(entities: list[dict], relations: list[dict]) -> KgCompletionD
     )
 
 
-def _model_metrics(dataset: KgCompletionDataset) -> list[KgCompletionModelMetric]:
-    """根据当前图谱规模生成可复现实验基线，后续可替换为 PyKEEN 真实训练结果。"""
-    density = dataset.triple_count / max(1, dataset.entity_count * max(1, dataset.relation_count))
-    coverage = log1p(dataset.triple_count) / 6.0
-    base = min(0.72, 0.35 + coverage * 0.22 + density * 0.35)
+def _split_relations(relations: list[dict]) -> tuple[list[dict], list[dict], list[dict]]:
+    ordered = sorted(relations, key=lambda item: (item["source"], item["relation"], item["target"]))
+    train_count, valid_count, _ = _split_counts(len(ordered))
+    train = ordered[:train_count]
+    valid = ordered[train_count : train_count + valid_count]
+    test = ordered[train_count + valid_count :]
+    return train, valid, test
+
+
+def _build_train_indexes(entities: list[dict], train_relations: list[dict]) -> dict:
+    entity_by_id = {item["id"]: item for item in entities}
+    relation_targets = defaultdict(list)
+    neighbors = defaultdict(set)
+    target_types_by_relation = defaultdict(Counter)
+
+    for item in train_relations:
+        relation_targets[item["relation"]].append(item["target"])
+        neighbors[item["source"]].add(item["target"])
+        neighbors[item["target"]].add(item["source"])
+        target = entity_by_id.get(item["target"])
+        if target:
+            target_types_by_relation[item["relation"]][target["type"]] += 1
+
+    return {
+        "entity_by_id": entity_by_id,
+        "relation_targets": relation_targets,
+        "neighbors": neighbors,
+        "target_types_by_relation": target_types_by_relation,
+    }
+
+
+def _candidate_ids_for_relation(indexes: dict, relation: str, actual_tail: str | None = None) -> set[str]:
+    entity_by_id = indexes["entity_by_id"]
+    target_type_counts = indexes["target_types_by_relation"].get(relation, Counter())
+    if target_type_counts:
+        allowed_types = {item for item, _ in target_type_counts.most_common(2)}
+        candidate_ids = {entity_id for entity_id, entity in entity_by_id.items() if entity["type"] in allowed_types}
+    else:
+        candidate_ids = set(entity_by_id)
+    if actual_tail:
+        candidate_ids.add(actual_tail)
+    return candidate_ids
+
+
+def _score_candidate(model: str, indexes: dict, head: str, relation: str, candidate_id: str) -> float:
+    relation_targets = indexes["relation_targets"]
+    neighbors = indexes["neighbors"]
+    entity_by_id = indexes["entity_by_id"]
+    target_types_by_relation = indexes["target_types_by_relation"]
+
+    frequency = Counter(relation_targets.get(relation, []))
+    frequency_score = frequency.get(candidate_id, 0) / max(frequency.values(), default=1)
+    overlap_score = min(len(neighbors.get(head, set()) & neighbors.get(candidate_id, set())) / 4, 1.0)
+
+    target_type_counts = target_types_by_relation.get(relation, Counter())
+    candidate_type = entity_by_id.get(candidate_id, {}).get("type", "")
+    type_score = target_type_counts.get(candidate_type, 0) / max(target_type_counts.values(), default=1)
+
+    if model == "关系频率基线":
+        return frequency_score
+    if model == "邻域重叠基线":
+        return frequency_score * 0.35 + overlap_score * 0.55 + type_score * 0.10
+    return frequency_score * 0.35 + overlap_score * 0.35 + type_score * 0.30
+
+
+def _rank_tail(model: str, indexes: dict, triple: dict) -> int:
+    candidates = _candidate_ids_for_relation(indexes, triple["relation"], actual_tail=triple["target"])
+    ranked = sorted(
+        candidates,
+        key=lambda candidate_id: (
+            _score_candidate(model, indexes, triple["source"], triple["relation"], candidate_id),
+            candidate_id,
+        ),
+        reverse=True,
+    )
+    return ranked.index(triple["target"]) + 1
+
+
+def _evaluate_model(model: str, indexes: dict, test_relations: list[dict]) -> KgCompletionModelMetric:
+    started_at = perf_counter()
+    if not test_relations:
+        return KgCompletionModelMetric(model=model, mrr=0.0, hits_at_1=0.0, hits_at_3=0.0, hits_at_10=0.0, train_seconds=0)
+
+    ranks = [_rank_tail(model, indexes, triple) for triple in test_relations]
+    elapsed_seconds = max(1, int(perf_counter() - started_at))
+    return KgCompletionModelMetric(
+        model=model,
+        mrr=round(mean(1 / rank for rank in ranks), 4),
+        hits_at_1=round(sum(rank <= 1 for rank in ranks) / len(ranks), 4),
+        hits_at_3=round(sum(rank <= 3 for rank in ranks) / len(ranks), 4),
+        hits_at_10=round(sum(rank <= 10 for rank in ranks) / len(ranks), 4),
+        train_seconds=elapsed_seconds,
+    )
+
+
+def _model_metrics(entities: list[dict], relations: list[dict]) -> list[KgCompletionModelMetric]:
+    """基于真实三元组 8:1:1 切分评测 Top-K 尾实体补全效果。"""
+    train_relations, _, test_relations = _split_relations(relations)
+    indexes = _build_train_indexes(entities, train_relations)
     return [
-        KgCompletionModelMetric(model="TransE", mrr=round(base, 2), hits_at_1=round(base - 0.15, 2), hits_at_3=round(base + 0.06, 2), hits_at_10=round(base + 0.22, 2), train_seconds=72),
-        KgCompletionModelMetric(model="ComplEx", mrr=round(base + 0.06, 2), hits_at_1=round(base - 0.10, 2), hits_at_3=round(base + 0.12, 2), hits_at_10=round(base + 0.28, 2), train_seconds=85),
-        KgCompletionModelMetric(model="RotatE", mrr=round(base + 0.12, 2), hits_at_1=round(base - 0.05, 2), hits_at_3=round(base + 0.18, 2), hits_at_10=round(base + 0.34, 2), train_seconds=94),
+        _evaluate_model("关系频率基线", indexes, test_relations),
+        _evaluate_model("邻域重叠基线", indexes, test_relations),
+        _evaluate_model("混合补全基线", indexes, test_relations),
     ]
 
 
@@ -98,7 +193,7 @@ def build_kg_completion_summary(settings: Settings) -> KgCompletionResponse:
     """构建知识补全实验总览数据，所有规模统计均来自 PostgreSQL 当前知识图谱。"""
     entities, relations = _load_graph_rows(settings)
     dataset = _build_dataset(entities, relations)
-    metrics = _model_metrics(dataset)
+    metrics = _model_metrics(entities, relations)
     best_model = max(metrics, key=lambda item: item.mrr)
     return KgCompletionResponse(
         dataset=dataset,
@@ -107,53 +202,37 @@ def build_kg_completion_summary(settings: Settings) -> KgCompletionResponse:
         hits_at_10_curve=_curve_points("hits"),
         loss_curve=_curve_points("loss"),
         conclusion=(
-            f"当前轻量基线显示 {best_model.model} 的 MRR 最高。"
-            "该结果基于现有三元组规模和关系分布生成，后续接入 PyKEEN 后可替换为真实训练产物。"
+            f"当前基于 PostgreSQL 三元组按 8:1:1 划分后评测，{best_model.model} 的 MRR 最高。"
+            "该结果来自真实测试三元组的尾实体排序，后续可接入 PyKEEN 训练模型替换启发式基线。"
         ),
     )
-
-
-def _target_type_for_relation(relations: list[dict], relation: str) -> str | None:
-    targets = [item["target"] for item in relations if item["relation"] == relation]
-    if not targets:
-        return None
-    return Counter(targets).most_common(1)[0][0]
 
 
 def predict_tail_entities(settings: Settings, head: str, relation: str, top_k: int) -> KgCompletionPredictResponse:
     """基于关系模式和邻域重叠做 Top-K 尾实体预测。"""
     entities, relations = _load_graph_rows(settings)
-    entity_by_id = {item["id"]: item for item in entities}
+    train_relations, _, _ = _split_relations(relations)
+    indexes = _build_train_indexes(entities, train_relations)
+    entity_by_id = indexes["entity_by_id"]
     relation = relation.strip()
     head = head.strip()
 
-    relation_targets = defaultdict(list)
-    neighbors = defaultdict(set)
     known_tails = set()
     for item in relations:
-        relation_targets[item["relation"]].append(item["target"])
-        neighbors[item["source"]].add(item["target"])
-        neighbors[item["target"]].add(item["source"])
         if item["source"] == head and item["relation"] == relation:
             known_tails.add(item["target"])
 
-    candidate_ids = set(relation_targets.get(relation, []))
-    if not candidate_ids:
-        candidate_ids = {item["id"] for item in entities}
+    candidate_ids = _candidate_ids_for_relation(indexes, relation)
 
     scored: list[tuple[float, dict, str]] = []
-    head_neighbors = neighbors.get(head, set())
-    relation_frequency = Counter(relation_targets.get(relation, []))
-    max_frequency = max(relation_frequency.values(), default=1)
     for candidate_id in candidate_ids:
         entity = entity_by_id.get(candidate_id)
         if not entity:
             continue
-        overlap = len(head_neighbors & neighbors.get(candidate_id, set()))
-        frequency_score = relation_frequency.get(candidate_id, 0) / max_frequency
+        overlap = len(indexes["neighbors"].get(head, set()) & indexes["neighbors"].get(candidate_id, set()))
         known_bonus = 0.25 if candidate_id in known_tails else 0.0
-        score = min(0.98, 0.38 + frequency_score * 0.22 + min(overlap, 4) * 0.08 + known_bonus)
-        reason = "同类关系高频候选"
+        score = min(0.98, _score_candidate("混合补全基线", indexes, head, relation, candidate_id) + known_bonus)
+        reason = "关系类型、邻域重叠和候选类型综合得分较高"
         if known_bonus:
             reason = "当前图谱已存在该关系，可作为正例校验"
         elif overlap:

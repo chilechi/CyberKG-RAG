@@ -128,6 +128,8 @@ onMounted(loadEvaluation);
             <span>实体命中</span>
             <span>关系命中</span>
             <span>关键词覆盖</span>
+            <span>证据分</span>
+            <span>置信度</span>
             <span>平均耗时</span>
           </div>
           <div v-for="row in evaluationRows" :key="row.mode" class="comparison-eval-row">
@@ -136,6 +138,8 @@ onMounted(loadEvaluation);
             <span>{{ formatRate(row.avg_entity_hit_rate) }}</span>
             <span>{{ formatRate(row.avg_relation_hit_rate) }}</span>
             <span>{{ formatRate(row.avg_keyword_coverage) }}</span>
+            <span>{{ formatRate(row.avg_evidence_score ?? 0) }}</span>
+            <span>{{ formatRate(row.avg_confidence ?? 0) }}</span>
             <span>{{ Math.round(row.avg_elapsed_ms) }}ms</span>
           </div>
         </div>

@@ -30,6 +30,10 @@ export interface QaEvaluationModeSummary {
   avg_entity_hit_rate: number;
   avg_relation_hit_rate: number;
   avg_keyword_coverage: number;
+  avg_evidence_score: number;
+  avg_confidence: number;
+  avg_graph_path_count: number;
+  avg_text_evidence_count: number;
   avg_elapsed_ms: number;
   case_count: number;
 }
