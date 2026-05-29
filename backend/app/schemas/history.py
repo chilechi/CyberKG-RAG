@@ -2,6 +2,8 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field
 
+from app.schemas.qa import QaEvidence
+
 
 class HistoryItem(BaseModel):
     """问答历史记录。"""
@@ -14,6 +16,8 @@ class HistoryItem(BaseModel):
     elapsed_ms: int
     graph_path_count: int
     text_evidence_count: int
+    graph_paths: list[list[str]] = Field(default_factory=list)
+    text_evidence: list[QaEvidence] = Field(default_factory=list)
     created_at: datetime
 
 

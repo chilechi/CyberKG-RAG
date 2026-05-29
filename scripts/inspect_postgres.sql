@@ -128,6 +128,8 @@ LIMIT 20;
 --   elapsed_ms          问答耗时，单位毫秒。
 --   graph_path_count    使用的图谱路径数量。
 --   text_evidence_count 使用的文本证据数量。
+--   graph_paths         本次问答使用的图谱路径明细，JSON 数组。
+--   text_evidence       本次问答使用的文本证据明细，JSON 数组。
 --   created_at          创建时间。
 
 SELECT COUNT(*) AS qa_history_count FROM qa_history;
@@ -139,6 +141,8 @@ SELECT
     elapsed_ms,
     graph_path_count,
     text_evidence_count,
+    graph_paths,
+    text_evidence,
     created_at,
     LEFT(question, 80) AS question_preview,
     LEFT(answer, 120) AS answer_preview

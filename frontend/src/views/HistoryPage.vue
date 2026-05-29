@@ -26,6 +26,10 @@ function formatMs(value: number | null | undefined) {
   return value === null || value === undefined ? "--" : `${(value / 1000).toFixed(2)}s`;
 }
 
+function firstPath(item: HistoryItem) {
+  return item.graph_paths[0]?.join(" → ") ?? "";
+}
+
 async function loadHistory() {
   loading.value = true;
   error.value = "";
@@ -130,6 +134,10 @@ onMounted(loadHistory);
           <div class="question-cell">
             <strong>{{ item.question }}</strong>
             <small>{{ item.answer }}</small>
+            <small v-if="firstPath(item)" class="history-evidence-line">路径：{{ firstPath(item) }}</small>
+            <small v-if="item.text_evidence[0]" class="history-evidence-line">
+              证据：{{ item.text_evidence[0].source }} / {{ item.text_evidence[0].entity_id }}
+            </small>
           </div>
           <span class="mode-pill">{{ item.mode }}</span>
           <span>{{ formatPercent(item.confidence) }}</span>

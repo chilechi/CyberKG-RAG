@@ -1,5 +1,5 @@
 import { apiClient } from "./client";
-import type { ApiResponse } from "./types";
+import type { ApiResponse, QaEvidence } from "./types";
 
 export interface HistoryItem {
   id: number;
@@ -10,6 +10,8 @@ export interface HistoryItem {
   elapsed_ms: number;
   graph_path_count: number;
   text_evidence_count: number;
+  graph_paths: string[][];
+  text_evidence: QaEvidence[];
   created_at: string;
 }
 

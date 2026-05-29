@@ -5,6 +5,7 @@ from sqlalchemy import (
     DateTime,
     Float,
     Integer,
+    JSON,
     MetaData,
     String,
     Table,
@@ -12,6 +13,7 @@ from sqlalchemy import (
     delete,
     func,
     select,
+    text,
 )
 
 from app.core.config import Settings
@@ -33,6 +35,8 @@ qa_history_table = Table(
     Column("elapsed_ms", Integer, nullable=False),
     Column("graph_path_count", Integer, nullable=False),
     Column("text_evidence_count", Integer, nullable=False),
+    Column("graph_paths", JSON, nullable=False, default=list),
+    Column("text_evidence", JSON, nullable=False, default=list),
     Column("created_at", DateTime(timezone=True), nullable=False),
 )
 
@@ -43,6 +47,13 @@ def ensure_history_table(settings: Settings) -> None:
     try:
         with engine.begin() as connection:
             metadata.create_all(connection)
+            # 兼容旧版本已创建的 qa_history 表，补齐完整证据落库字段。
+            connection.execute(
+                text("ALTER TABLE qa_history ADD COLUMN IF NOT EXISTS graph_paths JSONB NOT NULL DEFAULT '[]'::jsonb")
+            )
+            connection.execute(
+                text("ALTER TABLE qa_history ADD COLUMN IF NOT EXISTS text_evidence JSONB NOT NULL DEFAULT '[]'::jsonb")
+            )
     finally:
         engine.dispose()
 
@@ -63,6 +74,8 @@ def save_qa_history(settings: Settings, response: QaResponse, elapsed_ms: int, m
                     elapsed_ms=elapsed_ms,
                     graph_path_count=len(response.graph_paths),
                     text_evidence_count=len(response.text_evidence),
+                    graph_paths=response.graph_paths,
+                    text_evidence=[evidence.model_dump() for evidence in response.text_evidence],
                     created_at=datetime.now(UTC),
                 )
                 .returning(qa_history_table.c.id)
