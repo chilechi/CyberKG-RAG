@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue";
 
 import { deleteHistoryItem, fetchHistory, fetchHistoryStats, type HistoryItem, type HistoryStats } from "../api/history";
+import { renderMarkdown } from "../utils/markdown";
 
 const items = ref<HistoryItem[]>([]);
 const stats = ref<HistoryStats | null>(null);
@@ -28,6 +29,10 @@ function formatMs(value: number | null | undefined) {
 
 function firstPath(item: HistoryItem) {
   return item.graph_paths[0]?.join(" → ") ?? "";
+}
+
+function markdown(value: string) {
+  return renderMarkdown(value);
 }
 
 async function loadHistory() {
@@ -133,7 +138,7 @@ onMounted(loadHistory);
         <div v-for="item in items" :key="item.id" class="history-row">
           <div class="question-cell">
             <strong>{{ item.question }}</strong>
-            <small>{{ item.answer }}</small>
+            <div class="history-answer-preview markdown-body" v-html="markdown(item.answer)"></div>
             <small v-if="firstPath(item)" class="history-evidence-line">路径：{{ firstPath(item) }}</small>
             <small v-if="item.text_evidence[0]" class="history-evidence-line">
               证据：{{ item.text_evidence[0].source }} / {{ item.text_evidence[0].entity_id }}

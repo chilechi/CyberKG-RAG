@@ -4,6 +4,7 @@ import { computed, onMounted, ref } from "vue";
 import { fetchGraphNeighbors } from "../api/graph";
 import type { GraphData, GraphNode } from "../api/types";
 import GraphView from "../components/GraphView.vue";
+import { renderMarkdown } from "../utils/markdown";
 
 const graph = ref<GraphData | null>(null);
 const loading = ref(false);
@@ -45,6 +46,11 @@ const relationLegend = computed(() => {
 
 const visibleEdges = computed(() => graph.value?.edges.slice(0, 40) ?? []);
 const hiddenEdgeCount = computed(() => Math.max((graph.value?.edges.length ?? 0) - visibleEdges.value.length, 0));
+
+const selectedEntityDescription = computed(() => {
+  const description = selectedEntity.value?.description || "暂无描述";
+  return renderMarkdown(description);
+});
 
 async function loadGraph() {
   if (!entityId.value.trim()) {
@@ -117,7 +123,7 @@ onMounted(loadGraph);
             <h3>{{ selectedEntity.name }}</h3>
             <small>{{ selectedEntity.id }} / {{ selectedEntity.type }}</small>
           </div>
-          <p>{{ selectedEntity.description || "暂无描述" }}</p>
+          <div class="markdown-body entity-description" v-html="selectedEntityDescription"></div>
         </div>
         <dl class="compact-stats three-cols">
           <div>

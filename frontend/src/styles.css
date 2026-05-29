@@ -733,7 +733,6 @@ button {
   color: #10224d;
   font-size: 13px;
   line-height: 1.7;
-  white-space: pre-wrap;
 }
 
 .mode-pill.best {
@@ -1455,6 +1454,28 @@ button {
   padding: 0;
   color: #e2e8f0;
   background: transparent;
+}
+
+.evidence-markdown,
+.entity-description,
+.history-answer-preview {
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.evidence-markdown {
+  margin-top: 8px;
+}
+
+.history-answer-preview {
+  max-height: 42px;
+  overflow: hidden;
+}
+
+.history-answer-preview p:last-child,
+.evidence-markdown p:last-child,
+.entity-description p:last-child {
+  margin-bottom: 0;
 }
 
 .evidence-list {

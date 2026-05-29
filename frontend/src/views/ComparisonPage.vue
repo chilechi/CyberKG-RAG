@@ -7,6 +7,7 @@ import {
   type QaComparisonResponse,
   type QaEvaluationResponse,
 } from "../api/comparison";
+import { renderMarkdown } from "../utils/markdown";
 
 const question = ref("Log4Shell 漏洞的攻击原理和防护措施是什么？");
 const data = ref<QaComparisonResponse | null>(null);
@@ -45,6 +46,10 @@ const evaluationRows = computed(() => {
 
 function formatRate(value: number) {
   return `${Math.round(value * 100)}%`;
+}
+
+function markdown(value: string) {
+  return renderMarkdown(value);
 }
 
 async function loadEvaluation() {
@@ -172,7 +177,7 @@ onMounted(loadEvaluation);
             {{ result.mode === data.metrics.best_mode ? "最佳" : "对比" }}
           </span>
         </div>
-        <p class="comparison-answer">{{ result.answer }}</p>
+        <article class="comparison-answer markdown-body" v-html="markdown(result.answer)"></article>
         <div class="comparison-score-grid">
           <div>
             <span>图谱路径</span>
@@ -233,7 +238,7 @@ onMounted(loadEvaluation);
               <div v-for="evidence in result.text_evidence" :key="`${evidence.source}-${evidence.entity_id}`">
                 <strong>{{ evidence.source }} / {{ evidence.entity_id }}</strong>
                 <span>相似度 {{ Math.round(evidence.score * 100) }}%</span>
-                <p>{{ evidence.text }}</p>
+                <div class="markdown-body evidence-markdown" v-html="markdown(evidence.text)"></div>
               </div>
             </div>
             <div v-else class="inline-empty">暂无文本证据</div>

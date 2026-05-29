@@ -3,6 +3,7 @@ import { computed, ref } from "vue";
 
 import { askQuestion, type QaMode } from "../api/qa";
 import type { QaAnswer } from "../api/types";
+import { renderMarkdown } from "../utils/markdown";
 
 const question = ref("Log4Shell 可能关联哪些攻击技术？");
 const selectedMode = ref<QaMode>("kg-rag");
@@ -24,87 +25,6 @@ const metrics = computed(() => [
 ]);
 
 const renderedAnswer = computed(() => (answer.value ? renderMarkdown(answer.value.answer) : ""));
-
-function escapeHtml(value: string) {
-  return value
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
-}
-
-function renderInlineMarkdown(value: string) {
-  return escapeHtml(value)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
-    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
-}
-
-function renderMarkdown(markdown: string) {
-  const lines = markdown.replace(/\r\n/g, "\n").split("\n");
-  const html: string[] = [];
-  let inList = false;
-  let inCode = false;
-  let codeBuffer: string[] = [];
-
-  function closeList() {
-    if (inList) {
-      html.push("</ul>");
-      inList = false;
-    }
-  }
-
-  for (const line of lines) {
-    if (line.trim().startsWith("```")) {
-      if (inCode) {
-        html.push(`<pre><code>${escapeHtml(codeBuffer.join("\n"))}</code></pre>`);
-        codeBuffer = [];
-        inCode = false;
-      } else {
-        closeList();
-        inCode = true;
-      }
-      continue;
-    }
-
-    if (inCode) {
-      codeBuffer.push(line);
-      continue;
-    }
-
-    const trimmed = line.trim();
-    if (!trimmed) {
-      closeList();
-      continue;
-    }
-
-    if (trimmed.startsWith("### ")) {
-      closeList();
-      html.push(`<h3>${renderInlineMarkdown(trimmed.slice(4))}</h3>`);
-    } else if (trimmed.startsWith("## ")) {
-      closeList();
-      html.push(`<h2>${renderInlineMarkdown(trimmed.slice(3))}</h2>`);
-    } else if (trimmed.startsWith("# ")) {
-      closeList();
-      html.push(`<h2>${renderInlineMarkdown(trimmed.slice(2))}</h2>`);
-    } else if (/^[-*]\s+/.test(trimmed)) {
-      if (!inList) {
-        html.push("<ul>");
-        inList = true;
-      }
-      html.push(`<li>${renderInlineMarkdown(trimmed.replace(/^[-*]\s+/, ""))}</li>`);
-    } else {
-      closeList();
-      html.push(`<p>${renderInlineMarkdown(trimmed)}</p>`);
-    }
-  }
-
-  closeList();
-  if (inCode) {
-    html.push(`<pre><code>${escapeHtml(codeBuffer.join("\n"))}</code></pre>`);
-  }
-  return html.join("");
-}
 
 async function submitQuestion() {
   if (!question.value.trim()) {
@@ -211,7 +131,7 @@ async function submitQuestion() {
         <div v-for="evidence in answer.text_evidence" :key="`${evidence.source}-${evidence.entity_id}`">
           <strong>{{ evidence.source }} / {{ evidence.entity_id }}</strong>
           <span>相似度 {{ Math.round(evidence.score * 100) }}%</span>
-          <p>{{ evidence.text }}</p>
+          <div class="markdown-body evidence-markdown" v-html="renderMarkdown(evidence.text)"></div>
         </div>
       </div>
       <div v-else class="empty-table">暂无文本证据</div>
