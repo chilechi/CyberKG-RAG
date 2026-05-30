@@ -2,25 +2,437 @@
   {
     "id": "eval-log4shell",
     "question": "Log4Shell 漏洞的攻击原理和防护措施是什么？",
-    "expected_entities": ["CVE-2021-44228", "CWE-502", "T1190", "MIT-001", "MIT-004", "MIT-009"],
-    "expected_relations": ["AFFECTS_PRODUCT", "HAS_WEAKNESS", "USES_TECHNIQUE", "HAS_MITIGATION"],
-    "expected_keywords": ["Log4Shell", "Log4j", "JNDI", "LDAP", "远程代码执行", "升级", "监控"],
+    "expected_entities": [
+      "CVE-2021-44228",
+      "CWE-502",
+      "T1190",
+      "MIT-001",
+      "MIT-004",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Log4Shell",
+      "Log4j",
+      "JNDI",
+      "LDAP",
+      "远程代码执行",
+      "升级",
+      "监控"
+    ],
     "reference_answer": "Log4Shell 是 Apache Log4j2 的 JNDI 远程代码执行漏洞，攻击者可通过可控日志内容触发远程查找并执行代码。防护重点包括升级 Log4j2、移除或禁用高风险组件、限制 LDAP/RMI 出站访问并监控异常 JNDI 请求。"
   },
   {
     "id": "eval-moveit",
     "question": "MOVEit SQL 注入漏洞会关联哪些攻击技术和防护措施？",
-    "expected_entities": ["CVE-2023-34362", "CWE-89", "T1190", "T1105", "MIT-001", "MIT-002", "MIT-009"],
-    "expected_relations": ["AFFECTS_PRODUCT", "HAS_WEAKNESS", "USES_TECHNIQUE", "HAS_MITIGATION"],
-    "expected_keywords": ["MOVEit", "SQL 注入", "未授权", "数据窃取", "工具传输", "输入校验", "补丁"],
+    "expected_entities": [
+      "CVE-2023-34362",
+      "CWE-89",
+      "T1190",
+      "T1105",
+      "MIT-001",
+      "MIT-002",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "MOVEit",
+      "SQL 注入",
+      "未授权",
+      "数据窃取",
+      "工具传输",
+      "输入校验",
+      "补丁"
+    ],
     "reference_answer": "MOVEit Transfer SQL 注入漏洞可导致未授权访问、数据窃取，并可能关联公网应用利用和工具传输等攻击技术。缓解方式包括安装补丁、加强输入校验和监控异常数据访问。"
   },
   {
     "id": "eval-fortigate",
     "question": "FortiGate SSL VPN 路径遍历漏洞的风险和处置建议是什么？",
-    "expected_entities": ["CVE-2018-13379", "CWE-22", "T1190", "T1078", "MIT-001", "MIT-010"],
-    "expected_relations": ["AFFECTS_PRODUCT", "HAS_WEAKNESS", "USES_TECHNIQUE", "HAS_MITIGATION"],
-    "expected_keywords": ["FortiGate", "SSL VPN", "路径遍历", "会话", "凭据", "升级", "轮换"],
+    "expected_entities": [
+      "CVE-2018-13379",
+      "CWE-22",
+      "T1190",
+      "T1078",
+      "MIT-001",
+      "MIT-010"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "FortiGate",
+      "SSL VPN",
+      "路径遍历",
+      "会话",
+      "凭据",
+      "升级",
+      "轮换"
+    ],
     "reference_answer": "FortiGate SSL VPN 路径遍历漏洞可能导致敏感会话文件泄露，攻击者可进一步利用泄露凭据登录系统。建议升级修复版本，并对可能泄露的密码、令牌和会话密钥进行轮换。"
+  },
+  {
+    "id": "eval-spring4shell",
+    "question": "Spring4Shell 漏洞的触发条件、关联弱点和防护措施是什么？",
+    "expected_entities": [
+      "CVE-2022-22965",
+      "CWE-94",
+      "PROD-SPRING",
+      "T1190",
+      "MIT-001",
+      "MIT-002",
+      "MIT-003"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Spring4Shell",
+      "Spring Framework",
+      "数据绑定",
+      "远程代码执行",
+      "代码注入",
+      "升级",
+      "WAF"
+    ],
+    "reference_answer": "Spring4Shell 是 Spring Framework 在特定部署条件下由数据绑定引发的远程代码执行漏洞，关联代码注入弱点。处置重点包括升级 Spring Framework、限制危险字段绑定、部署临时 WAF 规则并排查异常 Web 请求。"
+  },
+  {
+    "id": "eval-struts2-s2045",
+    "question": "Apache Struts2 S2-045 漏洞为什么会导致远程命令执行，应该如何缓解？",
+    "expected_entities": [
+      "CVE-2017-5638",
+      "CWE-20",
+      "CWE-78",
+      "PROD-STRUTS2",
+      "T1059",
+      "MIT-001",
+      "MIT-003"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Struts2",
+      "S2-045",
+      "Jakarta Multipart",
+      "Content-Type",
+      "命令执行",
+      "升级",
+      "WAF"
+    ],
+    "reference_answer": "Apache Struts2 S2-045 与 Jakarta Multipart 解析和异常处理有关，恶意 Content-Type 等请求头可能触发表达式或命令执行。缓解措施包括升级到修复版本、部署 WAF 拦截规则，并检查异常请求和命令执行痕迹。"
+  },
+  {
+    "id": "eval-proxyshell",
+    "question": "ProxyShell 相关 Exchange 漏洞会形成怎样的攻击链，防护重点是什么？",
+    "expected_entities": [
+      "CVE-2021-34473",
+      "CWE-287",
+      "PROD-EXCHANGE",
+      "T1190",
+      "T1505.003",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "ProxyShell",
+      "Exchange",
+      "认证绕过",
+      "远程代码执行",
+      "WebShell",
+      "补丁",
+      "监控"
+    ],
+    "reference_answer": "ProxyShell 相关漏洞可针对 Microsoft Exchange 形成从认证绕过到远程代码执行、再到 WebShell 落地的攻击链。防护重点是安装 Exchange 安全更新、限制暴露面，并监控可疑 WebShell、异常请求和命令执行行为。"
+  },
+  {
+    "id": "eval-citrix-19781",
+    "question": "Citrix ADC CVE-2019-19781 的风险、弱点类型和处置建议是什么？",
+    "expected_entities": [
+      "CVE-2019-19781",
+      "CWE-22",
+      "PROD-CITRIX-ADC",
+      "T1190",
+      "T1505.003",
+      "MIT-001",
+      "MIT-006"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Citrix ADC",
+      "路径遍历",
+      "未授权访问",
+      "代码执行",
+      "WebShell",
+      "升级",
+      "网络分段"
+    ],
+    "reference_answer": "CVE-2019-19781 是 Citrix ADC 与 Gateway 的路径遍历漏洞，可能造成未授权访问、代码执行和 WebShell 活动。建议及时升级或应用官方缓解措施，并通过网络分段限制攻击者进一步访问内部服务。"
+  },
+  {
+    "id": "eval-f5-bigip",
+    "question": "F5 BIG-IP CVE-2022-1388 如何被利用，防护措施有哪些？",
+    "expected_entities": [
+      "CVE-2022-1388",
+      "CWE-287",
+      "PROD-F5-BIGIP",
+      "T1190",
+      "T1059",
+      "MIT-001",
+      "MIT-007"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "F5 BIG-IP",
+      "iControl REST",
+      "身份绕过",
+      "管理接口",
+      "命令执行",
+      "认证加固",
+      "补丁"
+    ],
+    "reference_answer": "CVE-2022-1388 影响 F5 BIG-IP iControl REST 管理接口，攻击者可利用身份绕过访问管理功能并执行系统命令。防护建议包括安装补丁、限制管理接口暴露、强化认证和访问控制。"
+  },
+  {
+    "id": "eval-confluence-26134",
+    "question": "Confluence CVE-2022-26134 的攻击原理和应急处置重点是什么？",
+    "expected_entities": [
+      "CVE-2022-26134",
+      "CWE-94",
+      "PROD-CONFLUENCE",
+      "T1190",
+      "T1059",
+      "MIT-001",
+      "MIT-003"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Confluence",
+      "OGNL",
+      "代码注入",
+      "远程代码执行",
+      "公网应用",
+      "升级",
+      "WAF"
+    ],
+    "reference_answer": "CVE-2022-26134 是 Atlassian Confluence 的 OGNL 注入远程代码执行漏洞，攻击者可通过构造请求触发代码执行。应急处置包括升级修复版本、部署 WAF 临时规则，并排查异常进程、Web 请求和落地文件。"
+  },
+  {
+    "id": "eval-fortios-27997",
+    "question": "Fortinet FortiOS CVE-2023-27997 的影响范围和防护建议是什么？",
+    "expected_entities": [
+      "CVE-2023-27997",
+      "CWE-94",
+      "PROD-FORTIOS",
+      "T1133",
+      "T1059",
+      "MIT-001",
+      "MIT-011"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "FortiOS",
+      "SSL-VPN",
+      "远程代码执行",
+      "VPN入口",
+      "命令执行",
+      "升级",
+      "暴露面"
+    ],
+    "reference_answer": "CVE-2023-27997 影响 Fortinet FortiOS SSL-VPN，公网暴露的 VPN 入口可能被用于触发远程代码执行。防护重点包括优先升级修复、临时限制 VPN 暴露面，并监控异常登录和命令执行迹象。"
+  },
+  {
+    "id": "eval-ivanti-chain",
+    "question": "Ivanti Connect Secure 认证绕过和命令注入漏洞组合利用时风险是什么？",
+    "expected_entities": [
+      "CVE-2023-46805",
+      "CVE-2024-21887",
+      "CWE-287",
+      "CWE-78",
+      "PROD-IVANTI-CONNECT",
+      "T1133",
+      "T1059",
+      "MIT-001",
+      "MIT-009",
+      "MIT-011"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Ivanti",
+      "Connect Secure",
+      "认证绕过",
+      "命令注入",
+      "VPN",
+      "命令执行",
+      "升级",
+      "监控"
+    ],
+    "reference_answer": "Ivanti Connect Secure 的认证绕过漏洞可与命令注入漏洞组合，形成从未授权访问到系统命令执行的入侵链。建议升级修复、限制公网 VPN 暴露面，并排查异常命令执行、Web 请求和持久化痕迹。"
+  },
+  {
+    "id": "eval-panos-3400",
+    "question": "PAN-OS GlobalProtect CVE-2024-3400 的风险和缓解建议是什么？",
+    "expected_entities": [
+      "CVE-2024-3400",
+      "CWE-78",
+      "PROD-PANOS",
+      "T1133",
+      "T1059",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "PAN-OS",
+      "GlobalProtect",
+      "命令注入",
+      "安全网关",
+      "远程命令执行",
+      "升级",
+      "日志审计"
+    ],
+    "reference_answer": "CVE-2024-3400 是 PAN-OS GlobalProtect 中的命令注入漏洞，影响暴露的安全网关，可能导致未授权命令执行。应通过升级、检查可疑文件、审计系统日志和限制管理面暴露来降低风险。"
+  },
+  {
+    "id": "eval-jenkins-23897",
+    "question": "Jenkins CVE-2024-23897 会泄露哪些信息，应该如何处置？",
+    "expected_entities": [
+      "CVE-2024-23897",
+      "CWE-22",
+      "PROD-JENKINS",
+      "T1005",
+      "MIT-001",
+      "MIT-012"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Jenkins",
+      "CLI",
+      "任意文件读取",
+      "路径遍历",
+      "配置",
+      "密钥",
+      "升级",
+      "轮换"
+    ],
+    "reference_answer": "CVE-2024-23897 是 Jenkins CLI 参数解析相关的任意文件读取漏洞，攻击者可能读取配置、密钥或构建相关敏感文件。处置建议包括升级 Jenkins、排查已泄露文件范围，并轮换受影响凭据和密钥。"
+  },
+  {
+    "id": "eval-owncloud-49103",
+    "question": "ownCloud CVE-2023-49103 的信息泄露风险和后续处置是什么？",
+    "expected_entities": [
+      "CVE-2023-49103",
+      "CWE-200",
+      "PROD-OWNCLOUD",
+      "T1005",
+      "MIT-001",
+      "MIT-012"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "ownCloud",
+      "graphapi",
+      "信息泄露",
+      "环境变量",
+      "数据库口令",
+      "对象存储密钥",
+      "轮换"
+    ],
+    "reference_answer": "CVE-2023-49103 涉及 ownCloud graphapi 应用暴露 PHP 环境信息，可能泄露数据库口令、对象存储密钥等敏感配置。应升级修复、排查泄露范围，并轮换相关凭据、Token 和密钥。"
+  },
+  {
+    "id": "eval-citrix-3519",
+    "question": "Citrix ADC CVE-2023-3519 的攻击影响和检测处置建议是什么？",
+    "expected_entities": [
+      "CVE-2023-3519",
+      "CWE-306",
+      "PROD-CITRIX-ADC",
+      "T1190",
+      "T1505.003",
+      "MIT-001",
+      "MIT-006"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Citrix ADC",
+      "未授权",
+      "远程代码执行",
+      "WebShell",
+      "公网应用",
+      "升级",
+      "网络分段"
+    ],
+    "reference_answer": "CVE-2023-3519 是 Citrix ADC 与 Gateway 的未授权远程代码执行漏洞，常与 WebShell 活动相关。建议安装修复版本、限制公网暴露和内部横向访问，并检测异常 WebShell 文件、可疑请求和命令执行痕迹。"
   }
 ]

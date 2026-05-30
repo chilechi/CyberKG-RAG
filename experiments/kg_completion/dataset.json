@@ -1,0 +1,25 @@
+{
+  "entity_count": 1190,
+  "relation_count": 6,
+  "triple_count": 1596,
+  "train_count": 1373,
+  "valid_count": 108,
+  "test_count": 115,
+  "entity_types": {
+    "AttackPattern": 10,
+    "Mitigation": 12,
+    "Product": 488,
+    "Tactic": 7,
+    "Technique": 13,
+    "Vulnerability": 551,
+    "Weakness": 109
+  },
+  "relation_types": {
+    "AFFECTS_PRODUCT": 877,
+    "BELONGS_TO_TACTIC": 13,
+    "HAS_MITIGATION": 39,
+    "HAS_WEAKNESS": 614,
+    "RELATED_TO_CAPEC": 13,
+    "USES_TECHNIQUE": 40
+  }
+}

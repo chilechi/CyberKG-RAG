@@ -1,4 +1,7 @@
+import json
 from collections import Counter, defaultdict
+from pathlib import Path
+from typing import Any
 from statistics import mean
 from time import perf_counter
 
@@ -14,6 +17,32 @@ from app.schemas.kg_completion import (
     KgCompletionPredictResponse,
     KgCompletionResponse,
 )
+
+
+ROOT_DIR = Path(__file__).resolve().parents[3]
+KG_COMPLETION_SUMMARY = ROOT_DIR / "experiments" / "kg_completion" / "summary.json"
+
+
+def _read_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def _load_trained_summary() -> KgCompletionResponse | None:
+    if not KG_COMPLETION_SUMMARY.exists():
+        return None
+    try:
+        payload = _read_json(KG_COMPLETION_SUMMARY)
+        return KgCompletionResponse(
+            dataset=payload["dataset"],
+            model_metrics=payload["model_metrics"],
+            mrr_curve=payload.get("mrr_curve", []),
+            hits_at_10_curve=payload.get("hits_at_10_curve", []),
+            loss_curve=payload.get("loss_curve", []),
+            conclusion=payload.get("conclusion", "已加载 PyKEEN 训练结果。"),
+        )
+    except Exception:
+        return None
 
 
 def _load_graph_rows(settings: Settings) -> tuple[list[dict], list[dict]]:
@@ -191,6 +220,10 @@ def _curve_points(kind: str) -> list[KgCompletionCurvePoint]:
 
 def build_kg_completion_summary(settings: Settings) -> KgCompletionResponse:
     """构建知识补全实验总览数据，所有规模统计均来自 PostgreSQL 当前知识图谱。"""
+    trained_summary = _load_trained_summary()
+    if trained_summary:
+        return trained_summary
+
     entities, relations = _load_graph_rows(settings)
     dataset = _build_dataset(entities, relations)
     metrics = _model_metrics(entities, relations)

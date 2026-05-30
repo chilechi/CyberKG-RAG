@@ -46,6 +46,16 @@ const bestModel = computed(() => {
   return [...summary.value.model_metrics].sort((left, right) => right.mrr - left.mrr)[0].model;
 });
 
+function sampleCurve<T>(items: T[], maxPoints = 10) {
+  if (items.length <= maxPoints) {
+    return items;
+  }
+  const step = (items.length - 1) / (maxPoints - 1);
+  return Array.from({ length: maxPoints }, (_, index) => items[Math.round(index * step)]);
+}
+
+const sampledLossCurve = computed(() => sampleCurve(summary.value?.loss_curve ?? [], 10));
+
 async function loadSummary() {
   loading.value = true;
   error.value = "";
@@ -169,8 +179,8 @@ onMounted(async () => {
         <div class="panel">
           <div class="section-heading compact">
             <div>
-              <h2>训练曲线</h2>
-              <p>展示 MRR、Hits@10 和 Loss 的轮次变化。</p>
+              <h2>训练与评测指标</h2>
+              <p>展示最终 MRR、Hits@10，以及抽样后的 Loss 下降趋势。</p>
             </div>
           </div>
           <div class="curve-grid">
@@ -192,7 +202,7 @@ onMounted(async () => {
             </div>
             <div>
               <h3>Loss</h3>
-              <div v-for="point in summary.loss_curve" :key="`loss-${point.epoch}`" class="curve-row loss">
+              <div v-for="point in sampledLossCurve" :key="`loss-${point.epoch}`" class="curve-row loss">
                 <span>{{ point.epoch }}</span>
                 <b :style="{ width: `${point.rotate * 100}%` }"></b>
                 <small>{{ point.rotate.toFixed(2) }}</small>
