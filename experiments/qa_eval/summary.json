@@ -1,41 +1,41 @@
 {
-  "case_count": 15,
+  "case_count": 50,
   "mode_summary": {
     "普通 LLM": {
-      "avg_final_score": 0.2954,
-      "avg_entity_hit_rate": 0.1397,
+      "avg_final_score": 0.3055,
+      "avg_entity_hit_rate": 0.1958,
       "avg_relation_hit_rate": 0.0,
-      "avg_keyword_coverage": 0.6512,
+      "avg_keyword_coverage": 0.6414,
       "avg_evidence_score": 0.0,
-      "avg_confidence": 0.5233,
+      "avg_confidence": 0.542,
       "avg_graph_path_count": 0,
       "avg_text_evidence_count": 0,
-      "avg_elapsed_ms": 6714.27,
-      "case_count": 15
+      "avg_elapsed_ms": 5523.42,
+      "case_count": 50
     },
     "普通 RAG": {
-      "avg_final_score": 0.3118,
-      "avg_entity_hit_rate": 0.1749,
+      "avg_final_score": 0.2792,
+      "avg_entity_hit_rate": 0.1783,
       "avg_relation_hit_rate": 0.0,
-      "avg_keyword_coverage": 0.4357,
+      "avg_keyword_coverage": 0.3522,
       "avg_evidence_score": 0.625,
-      "avg_confidence": 0.4296,
+      "avg_confidence": 0.4269,
       "avg_graph_path_count": 0,
       "avg_text_evidence_count": 5,
-      "avg_elapsed_ms": 7627.27,
-      "case_count": 15
+      "avg_elapsed_ms": 3780.52,
+      "case_count": 50
     },
     "KG-RAG": {
-      "avg_final_score": 0.8307,
-      "avg_entity_hit_rate": 0.9533,
-      "avg_relation_hit_rate": 0.9667,
-      "avg_keyword_coverage": 0.6226,
-      "avg_evidence_score": 1.0,
-      "avg_confidence": 0.7064,
-      "avg_graph_path_count": 12,
+      "avg_final_score": 0.672,
+      "avg_entity_hit_rate": 0.6356,
+      "avg_relation_hit_rate": 0.62,
+      "avg_keyword_coverage": 0.5996,
+      "avg_evidence_score": 0.995,
+      "avg_confidence": 0.6963,
+      "avg_graph_path_count": 10.92,
       "avg_text_evidence_count": 5,
-      "avg_elapsed_ms": 6829.87,
-      "case_count": 15
+      "avg_elapsed_ms": 5340.46,
+      "case_count": 50
     }
   },
   "best_mode": "KG-RAG"

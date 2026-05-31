@@ -824,10 +824,10 @@ button {
 
 .kg-model-row {
   display: grid;
-  grid-template-columns: 1fr repeat(5, minmax(72px, 0.7fr));
+  grid-template-columns: 1fr minmax(130px, 1.15fr) repeat(2, minmax(70px, 0.62fr)) minmax(120px, 0.9fr) 58px;
   gap: 10px;
   align-items: center;
-  min-height: 44px;
+  min-height: 50px;
   padding: 9px 12px;
   border-bottom: 1px solid #edf2f7;
   font-size: 13px;
@@ -841,6 +841,84 @@ button {
   color: #64748b;
   background: #f8fbff;
   font-weight: 700;
+}
+
+.metric-bar-cell {
+  display: grid;
+  grid-template-columns: minmax(52px, 1fr) 48px;
+  gap: 8px;
+  align-items: center;
+}
+
+.metric-bar-cell b {
+  display: block;
+  height: 8px;
+  min-width: 6px;
+  max-width: 100%;
+  border-radius: 999px;
+  background: #1463ed;
+}
+
+.metric-bar-cell.neutral b {
+  background: #64748b;
+}
+
+.metric-bar-cell small,
+.rank-text {
+  color: #10224d;
+  font-weight: 800;
+}
+
+.model-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.model-detail-card {
+  display: grid;
+  gap: 10px;
+  min-height: 104px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #f8fbff;
+}
+
+.model-detail-card strong,
+.model-detail-card small {
+  display: block;
+}
+
+.model-detail-card small {
+  margin-top: 4px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.mini-metric-list {
+  display: grid;
+  gap: 7px;
+}
+
+.mini-metric-list span {
+  display: grid;
+  grid-template-columns: minmax(44px, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  color: #10224d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.mini-metric-list i {
+  display: block;
+  height: 7px;
+  min-width: 4px;
+  max-width: 100%;
+  border-radius: 999px;
+  background: #22c55e;
 }
 
 .kg-predict-form {
@@ -899,6 +977,36 @@ button {
   gap: 12px;
 }
 
+.experiment-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.experiment-card {
+  min-height: 84px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 11px 12px;
+  background: #f8fbff;
+}
+
+.experiment-card span,
+.experiment-card small {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.experiment-card strong {
+  display: block;
+  margin: 6px 0 3px;
+  color: #10224d;
+  font-size: 24px;
+  line-height: 1;
+}
+
 .curve-grid h3 {
   margin: 0 0 10px;
   color: #10224d;
@@ -907,7 +1015,7 @@ button {
 
 .curve-row {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 44px;
+  grid-template-columns: 72px minmax(0, 1fr) 44px;
   gap: 8px;
   align-items: center;
   margin-bottom: 8px;
@@ -930,6 +1038,69 @@ button {
 .curve-row small {
   color: #10224d;
   font-weight: 700;
+}
+
+.distribution-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.distribution-grid > div {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px;
+  background: #ffffff;
+}
+
+.distribution-grid h3 {
+  margin: 0 0 10px;
+  color: #10224d;
+  font-size: 14px;
+}
+
+.distribution-row {
+  display: grid;
+  grid-template-columns: minmax(110px, 0.8fr) minmax(0, 1fr) 46px;
+  gap: 8px;
+  align-items: center;
+  min-height: 26px;
+  color: #475569;
+  font-size: 12px;
+}
+
+.distribution-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.distribution-row b {
+  display: block;
+  height: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #edf2f7;
+}
+
+.distribution-row i {
+  display: block;
+  height: 100%;
+  min-width: 4px;
+  max-width: 100%;
+  border-radius: inherit;
+  background: #1463ed;
+}
+
+.distribution-row.relation i {
+  background: #14b8a6;
+}
+
+.distribution-row small {
+  color: #10224d;
+  font-weight: 800;
+  text-align: right;
 }
 
 .kg-conclusion {
@@ -1742,7 +1913,13 @@ button {
   .comparison-result-grid,
   .comparison-evidence-layout,
   .kg-completion-main,
-  .curve-grid {
+  .curve-grid,
+  .experiment-card-grid,
+  .distribution-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .model-detail-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -1806,6 +1983,9 @@ button {
   .kg-model-row,
   .kg-predict-form,
   .curve-grid,
+  .experiment-card-grid,
+  .distribution-grid,
+  .model-detail-grid,
   .settings-form-grid,
   .graph-toolbar,
   .compact-stats,
