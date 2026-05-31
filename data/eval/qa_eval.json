@@ -434,5 +434,950 @@
       "网络分段"
     ],
     "reference_answer": "CVE-2023-3519 是 Citrix ADC 与 Gateway 的未授权远程代码执行漏洞，常与 WebShell 活动相关。建议安装修复版本、限制公网暴露和内部横向访问，并检测异常 WebShell 文件、可疑请求和命令执行痕迹。"
+  },
+  {
+    "id": "eval-eternalblue-0144",
+    "question": "EternalBlue CVE-2017-0144 影响哪些组件，为什么需要优先处置？",
+    "expected_entities": [
+      "CVE-2017-0144",
+      "PROD-MICROSOFT-SERVER-MESSAGE-BLOCK",
+      "PROD-MICROSOFT-WINDOWS-10-1507",
+      "MIT-001",
+      "MIT-006"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "EternalBlue",
+      "SMB",
+      "Windows",
+      "远程执行",
+      "蠕虫",
+      "补丁",
+      "网络分段"
+    ],
+    "reference_answer": "CVE-2017-0144 常被称为 EternalBlue，影响 Microsoft SMB 相关组件和 Windows 系统，可能被用于远程代码执行和蠕虫式传播。应优先安装安全补丁，关闭不必要的 SMB 暴露，并通过网络分段降低横向移动风险。"
+  },
+  {
+    "id": "eval-bluekeep-0708",
+    "question": "BlueKeep CVE-2019-0708 的利用条件和防护重点是什么？",
+    "expected_entities": [
+      "CVE-2019-0708",
+      "CWE-416",
+      "PROD-MICROSOFT-WINDOWS-7",
+      "PROD-MICROSOFT-WINDOWS-SERVER-2008",
+      "MIT-001",
+      "MIT-006"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "BlueKeep",
+      "RDP",
+      "远程桌面",
+      "Windows 7",
+      "Server 2008",
+      "升级",
+      "网络分段"
+    ],
+    "reference_answer": "BlueKeep CVE-2019-0708 影响旧版 Windows 远程桌面服务，未授权攻击者可能通过 RDP 触发远程代码执行。防护重点是安装补丁、限制 RDP 暴露、启用网络级认证并隔离高风险主机。"
+  },
+  {
+    "id": "eval-zerologon-1472",
+    "question": "Zerologon CVE-2020-1472 为什么危险，处置时应关注什么？",
+    "expected_entities": [
+      "CVE-2020-1472",
+      "PROD-MICROSOFT-WINDOWS-SERVER-1903",
+      "MIT-001",
+      "MIT-007",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Zerologon",
+      "Netlogon",
+      "域控",
+      "权限提升",
+      "补丁",
+      "认证加固",
+      "监控"
+    ],
+    "reference_answer": "Zerologon CVE-2020-1472 影响 Windows Server 的 Netlogon 远程协议，可能导致攻击者接管域控制器。处置时应安装微软补丁，强制安全 RPC，排查异常 Netlogon 活动并加强域控监控。"
+  },
+  {
+    "id": "eval-proxylogon-26855",
+    "question": "ProxyLogon CVE-2021-26855 和 Exchange 暴露面有什么关系？",
+    "expected_entities": [
+      "CVE-2021-26855",
+      "CWE-918",
+      "PROD-MICROSOFT-EXCHANGE-SERVER",
+      "T1190",
+      "T1505.003",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "ProxyLogon",
+      "Exchange",
+      "SSRF",
+      "公网应用",
+      "WebShell",
+      "补丁",
+      "监控"
+    ],
+    "reference_answer": "ProxyLogon CVE-2021-26855 是 Exchange Server 的 SSRF 漏洞，可作为攻击链入口访问内部接口并进一步落地 WebShell。应尽快安装 Exchange 更新，限制公网暴露，并检查异常 WebShell、请求日志和可疑进程。"
+  },
+  {
+    "id": "eval-printnightmare-34527",
+    "question": "PrintNightmare CVE-2021-34527 主要影响什么服务，应如何降低风险？",
+    "expected_entities": [
+      "CVE-2021-34527",
+      "PROD-MICROSOFT-WINDOWS-10-1507",
+      "MIT-001",
+      "MIT-005",
+      "MIT-007"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "PrintNightmare",
+      "打印后台处理",
+      "Windows",
+      "权限提升",
+      "远程代码执行",
+      "补丁",
+      "最小权限"
+    ],
+    "reference_answer": "PrintNightmare CVE-2021-34527 与 Windows 打印后台处理服务相关，可能造成远程代码执行或权限提升。应安装安全更新，限制打印服务暴露，关闭不必要的打印后台处理服务并强化权限控制。"
+  },
+  {
+    "id": "eval-follina-30190",
+    "question": "Follina CVE-2022-30190 的攻击入口和缓解措施是什么？",
+    "expected_entities": [
+      "CVE-2022-30190",
+      "PROD-MICROSOFT-WINDOWS-10-1507",
+      "T1059",
+      "MIT-001",
+      "MIT-004",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Follina",
+      "MSDT",
+      "Office",
+      "命令执行",
+      "禁用组件",
+      "补丁",
+      "监控"
+    ],
+    "reference_answer": "Follina CVE-2022-30190 通过 Office 文档等入口触发 MSDT 相关调用，可能导致命令执行。缓解措施包括安装补丁、禁用高风险协议处理程序、监控异常 Office 子进程和脚本执行行为。"
+  },
+  {
+    "id": "eval-cisco-20198",
+    "question": "Cisco IOS XE CVE-2023-20198 的风险和处置建议是什么？",
+    "expected_entities": [
+      "CVE-2023-20198",
+      "CWE-420",
+      "T1190",
+      "MIT-001",
+      "MIT-007",
+      "MIT-011"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Cisco IOS XE",
+      "Web UI",
+      "权限提升",
+      "公网暴露",
+      "认证加固",
+      "升级",
+      "关闭暴露面"
+    ],
+    "reference_answer": "CVE-2023-20198 与 Cisco IOS XE Web UI 暴露有关，攻击者可能利用管理界面缺陷获得高权限访问。建议关闭公网 Web 管理入口、安装修复版本、强化认证并检查异常账号和配置变更。"
+  },
+  {
+    "id": "eval-papercut-27350",
+    "question": "PaperCut CVE-2023-27350 可造成什么影响，如何检测和修复？",
+    "expected_entities": [
+      "CVE-2023-27350",
+      "CWE-284",
+      "PROD-PAPERCUT-PAPERCUT-MF",
+      "PROD-PAPERCUT-PAPERCUT-NG",
+      "T1190",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "PaperCut",
+      "访问控制",
+      "未授权",
+      "远程代码执行",
+      "补丁",
+      "日志",
+      "监控"
+    ],
+    "reference_answer": "PaperCut CVE-2023-27350 影响 PaperCut MF/NG，攻击者可能绕过访问控制并执行管理操作或代码。应安装官方补丁，检查异常管理员操作、服务执行日志和可疑网络连接。"
+  },
+  {
+    "id": "eval-barracuda-2868",
+    "question": "Barracuda ESG CVE-2023-2868 的弱点类型和应急处置是什么？",
+    "expected_entities": [
+      "CVE-2023-2868",
+      "CWE-20",
+      "CWE-77",
+      "PROD-BARRACUDA-EMAIL-SECURITY-GATEWAY-300",
+      "T1059",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Barracuda",
+      "Email Security Gateway",
+      "输入校验",
+      "命令注入",
+      "命令执行",
+      "补丁",
+      "监控"
+    ],
+    "reference_answer": "CVE-2023-2868 影响 Barracuda Email Security Gateway，关联输入校验和命令注入问题，可导致命令执行。处置时应应用厂商方案、检查设备是否存在异常文件或持久化痕迹，并持续监控外联行为。"
+  },
+  {
+    "id": "eval-teamcity-42793",
+    "question": "TeamCity CVE-2023-42793 的认证风险和防护建议是什么？",
+    "expected_entities": [
+      "CVE-2023-42793",
+      "CWE-288",
+      "CWE-306",
+      "PROD-JETBRAINS-TEAMCITY",
+      "T1190",
+      "MIT-001",
+      "MIT-007"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "TeamCity",
+      "认证绕过",
+      "未授权",
+      "CI/CD",
+      "公网应用",
+      "补丁",
+      "认证加固"
+    ],
+    "reference_answer": "TeamCity CVE-2023-42793 涉及认证绕过或未授权访问风险，攻击者可能控制 CI/CD 服务并影响构建环境。应升级 TeamCity、限制公网访问、强化认证，并检查可疑用户、构建脚本和令牌使用。"
+  },
+  {
+    "id": "eval-screenconnect-1709",
+    "question": "ConnectWise ScreenConnect CVE-2024-1709 的风险和处置重点是什么？",
+    "expected_entities": [
+      "CVE-2024-1709",
+      "CWE-288",
+      "PROD-CONNECTWISE-SCREENCONNECT",
+      "T1190",
+      "MIT-001",
+      "MIT-007",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "ScreenConnect",
+      "认证绕过",
+      "远程管理",
+      "公网应用",
+      "补丁",
+      "认证加固",
+      "监控"
+    ],
+    "reference_answer": "CVE-2024-1709 影响 ConnectWise ScreenConnect，认证绕过可能让攻击者接管远程管理服务。建议升级修复、限制外部访问、检查异常会话和新建账号，并加强远程管理平台认证。"
+  },
+  {
+    "id": "eval-outlook-21412",
+    "question": "Microsoft Outlook CVE-2024-21412 可能绕过什么安全机制，如何防护？",
+    "expected_entities": [
+      "CVE-2024-21412",
+      "CWE-693",
+      "PROD-MICROSOFT-WINDOWS-10-1809",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Outlook",
+      "安全机制绕过",
+      "凭据泄露",
+      "钓鱼",
+      "Windows",
+      "补丁",
+      "监控"
+    ],
+    "reference_answer": "CVE-2024-21412 涉及 Microsoft Outlook 安全机制绕过，可能在诱导用户打开内容后造成凭据泄露或进一步攻击。应安装补丁、加强邮件安全策略，并监控异常外联和认证尝试。"
+  },
+  {
+    "id": "eval-checkpoint-24919",
+    "question": "Check Point CVE-2024-24919 的信息泄露风险和补救步骤是什么？",
+    "expected_entities": [
+      "CVE-2024-24919",
+      "CWE-200",
+      "PROD-CHECKPOINT-QUANTUM-SPARK",
+      "MIT-001",
+      "MIT-010",
+      "MIT-012"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Check Point",
+      "Quantum",
+      "信息泄露",
+      "凭据",
+      "升级",
+      "轮换",
+      "密钥"
+    ],
+    "reference_answer": "CVE-2024-24919 影响 Check Point Quantum 相关网关，可能导致敏感信息泄露。应升级修复，排查是否存在配置或凭据泄露，并轮换受影响账号、密钥和会话凭据。"
+  },
+  {
+    "id": "eval-teamcity-27198",
+    "question": "TeamCity CVE-2024-27198 和 CVE-2023-42793 在防护思路上有什么相似点？",
+    "expected_entities": [
+      "CVE-2024-27198",
+      "CVE-2023-42793",
+      "CWE-288",
+      "PROD-JETBRAINS-TEAMCITY",
+      "T1190",
+      "MIT-001",
+      "MIT-007"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "TeamCity",
+      "认证绕过",
+      "CI/CD",
+      "公网应用",
+      "补丁",
+      "访问控制",
+      "令牌"
+    ],
+    "reference_answer": "CVE-2024-27198 和 CVE-2023-42793 都与 TeamCity 认证或访问控制风险相关，防护思路都是尽快升级、限制公网访问、强化认证，并检查异常用户、令牌和构建配置。"
+  },
+  {
+    "id": "eval-xz-3094",
+    "question": "XZ Utils CVE-2024-3094 的供应链风险体现在哪里？",
+    "expected_entities": [
+      "CVE-2024-3094",
+      "CWE-506",
+      "PROD-TUKAANI-XZ",
+      "MIT-009",
+      "MIT-012"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "XZ Utils",
+      "供应链",
+      "恶意代码",
+      "后门",
+      "软件包",
+      "监控",
+      "审查"
+    ],
+    "reference_answer": "CVE-2024-3094 涉及 XZ Utils 软件包中的恶意代码或后门风险，体现了开源供应链污染对下游系统的影响。应回退或升级到安全版本，核查受影响包来源，并加强软件供应链审查和监控。"
+  },
+  {
+    "id": "eval-php-cgi-4577",
+    "question": "PHP-CGI CVE-2024-4577 的命令注入风险和防护措施是什么？",
+    "expected_entities": [
+      "CVE-2024-4577",
+      "CWE-78",
+      "PROD-PHP-PHP",
+      "PROD-MICROSOFT-WINDOWS",
+      "T1059",
+      "MIT-001",
+      "MIT-003"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "PHP-CGI",
+      "Windows",
+      "命令注入",
+      "远程代码执行",
+      "升级",
+      "WAF",
+      "参数"
+    ],
+    "reference_answer": "CVE-2024-4577 影响特定 Windows 场景下的 PHP-CGI 参数解析，可能造成命令注入和远程代码执行。建议升级 PHP，避免暴露 CGI 模式入口，并通过 WAF 或 Web 服务器规则拦截异常参数。"
+  },
+  {
+    "id": "eval-regresshion-6387",
+    "question": "OpenSSH regreSSHion CVE-2024-6387 的并发缺陷风险是什么？",
+    "expected_entities": [
+      "CVE-2024-6387",
+      "CWE-362",
+      "CWE-364",
+      "MIT-001",
+      "MIT-011"
+    ],
+    "expected_relations": [
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "regreSSHion",
+      "OpenSSH",
+      "竞争条件",
+      "信号处理",
+      "远程代码执行",
+      "升级",
+      "暴露面"
+    ],
+    "reference_answer": "CVE-2024-6387 与 OpenSSH 服务中的竞争条件和信号处理问题相关，可能在特定条件下导致远程代码执行。应升级到修复版本，并临时限制公网 SSH 暴露面和登录尝试速率。"
+  },
+  {
+    "id": "eval-tcpip-38063",
+    "question": "Windows TCP/IP CVE-2024-38063 为什么需要关注网络暴露面？",
+    "expected_entities": [
+      "CVE-2024-38063",
+      "CWE-191",
+      "PROD-MICROSOFT-WINDOWS-10-1507",
+      "MIT-001",
+      "MIT-006"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Windows",
+      "TCP/IP",
+      "整数下溢",
+      "网络暴露",
+      "远程代码执行",
+      "补丁",
+      "网络分段"
+    ],
+    "reference_answer": "CVE-2024-38063 影响 Windows TCP/IP 栈，网络可达性会直接影响攻击面。应安装安全补丁，限制不必要的网络暴露，并通过边界过滤和网络分段降低远程利用风险。"
+  },
+  {
+    "id": "eval-rds-38077",
+    "question": "Windows RDS CVE-2024-38077 的缓解建议是什么？",
+    "expected_entities": [
+      "CVE-2024-38077",
+      "CWE-122",
+      "PROD-MICROSOFT-WINDOWS-SERVER-2008",
+      "MIT-001",
+      "MIT-006",
+      "MIT-007"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Windows Server",
+      "远程桌面",
+      "堆溢出",
+      "RDS",
+      "补丁",
+      "网络分段",
+      "认证"
+    ],
+    "reference_answer": "CVE-2024-38077 影响 Windows Server 远程桌面相关服务，关联堆溢出风险。缓解建议包括安装补丁、限制 RDS/RDP 访问来源、启用强认证并隔离暴露的远程访问服务。"
+  },
+  {
+    "id": "eval-cwe-89-sql-injection",
+    "question": "CWE-89 SQL 注入类漏洞通常关联哪些风险和防护措施？",
+    "expected_entities": [
+      "CWE-89",
+      "CAPEC-66",
+      "T1190",
+      "MIT-001",
+      "MIT-002",
+      "MIT-003"
+    ],
+    "expected_relations": [
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "SQL 注入",
+      "数据库",
+      "未授权",
+      "数据泄露",
+      "输入校验",
+      "参数化",
+      "WAF"
+    ],
+    "reference_answer": "CWE-89 表示 SQL 注入，攻击者可通过拼接 SQL 影响后端查询，造成认证绕过、数据泄露或数据篡改。防护重点包括参数化查询、输入校验、最小权限和 WAF 规则。"
+  },
+  {
+    "id": "eval-cwe-22-path-traversal",
+    "question": "CWE-22 路径遍历如何映射到攻击模式和缓解措施？",
+    "expected_entities": [
+      "CWE-22",
+      "CAPEC-126",
+      "T1190",
+      "MIT-001",
+      "MIT-002",
+      "MIT-005"
+    ],
+    "expected_relations": [
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "路径遍历",
+      "../",
+      "任意文件",
+      "公网应用",
+      "输入校验",
+      "最小权限",
+      "补丁"
+    ],
+    "reference_answer": "CWE-22 路径遍历通常对应 CAPEC 路径遍历攻击模式，可被用于读取任意文件或访问受限路径。防护包括路径规范化、白名单校验、限制文件权限和及时安装补丁。"
+  },
+  {
+    "id": "eval-cwe-78-command-injection",
+    "question": "CWE-78 命令注入为什么常与 ATT&CK 命令解释器技术相关？",
+    "expected_entities": [
+      "CWE-78",
+      "CAPEC-88",
+      "T1059",
+      "MIT-002",
+      "MIT-005",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "命令注入",
+      "系统命令",
+      "命令解释器",
+      "T1059",
+      "输入校验",
+      "最小权限",
+      "监控"
+    ],
+    "reference_answer": "CWE-78 命令注入会让攻击者把输入拼接进系统命令执行流程，常对应 CAPEC 命令注入并关联 ATT&CK 的命令和脚本解释器技术 T1059。防护应避免命令拼接、校验输入、降低权限并监控异常命令执行。"
+  },
+  {
+    "id": "eval-cwe-502-deserialization",
+    "question": "CWE-502 反序列化不可信数据会形成什么攻击链？",
+    "expected_entities": [
+      "CWE-502",
+      "CAPEC-586",
+      "T1190",
+      "MIT-002",
+      "MIT-004",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "反序列化",
+      "不可信数据",
+      "对象注入",
+      "公网应用",
+      "禁用组件",
+      "输入校验",
+      "监控"
+    ],
+    "reference_answer": "CWE-502 反序列化不可信数据可能被映射为对象注入类攻击，攻击者通过公网应用入口提交恶意对象并触发代码执行。缓解方式包括禁用危险反序列化组件、校验输入、升级依赖并监控异常执行行为。"
+  },
+  {
+    "id": "eval-capec-webshell",
+    "question": "CAPEC-650 WebShell 上传通常会关联哪些 ATT&CK 技术和防护重点？",
+    "expected_entities": [
+      "CAPEC-650",
+      "T1505.003",
+      "MIT-001",
+      "MIT-008",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "WebShell",
+      "上传",
+      "服务器软件组件",
+      "持久化",
+      "文件上传限制",
+      "监控",
+      "补丁"
+    ],
+    "reference_answer": "CAPEC-650 描述上传 WebShell 到 Web 服务器，常关联 ATT&CK 的 Server Software Component: Web Shell 技术 T1505.003。防护重点包括限制文件上传类型和执行权限、升级漏洞组件，并监控异常 WebShell 文件和访问行为。"
+  },
+  {
+    "id": "eval-capec-ssrf",
+    "question": "CAPEC-664 SSRF 类型攻击在云环境中有什么风险？",
+    "expected_entities": [
+      "CAPEC-664",
+      "T1190",
+      "MIT-002",
+      "MIT-006",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "SSRF",
+      "服务端请求伪造",
+      "云元数据",
+      "公网应用",
+      "输入校验",
+      "网络分段",
+      "监控"
+    ],
+    "reference_answer": "CAPEC-664 表示服务端请求伪造，攻击者可诱导服务器访问内部资产或云元数据服务，造成凭据泄露或内网探测。防护包括 URL 白名单、阻断元数据地址、网络分段和异常请求监控。"
+  },
+  {
+    "id": "eval-t1190-initial-access",
+    "question": "ATT&CK T1190 公网应用利用在漏洞知识图谱中通常连接哪些节点？",
+    "expected_entities": [
+      "T1190",
+      "TA0001",
+      "CAPEC-126",
+      "CAPEC-66",
+      "CAPEC-586",
+      "MIT-001",
+      "MIT-003"
+    ],
+    "expected_relations": [
+      "USES_TECHNIQUE",
+      "BELONGS_TO_TACTIC",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "T1190",
+      "公网应用",
+      "Initial Access",
+      "CAPEC",
+      "漏洞利用",
+      "补丁",
+      "WAF"
+    ],
+    "reference_answer": "ATT&CK T1190 表示 Exploit Public-Facing Application，在知识图谱中通常与路径遍历、SQL 注入、对象注入等 CAPEC 攻击模式相连，并归属于 Initial Access 战术。防护重点包括补丁、WAF 和减少公网暴露面。"
+  },
+  {
+    "id": "eval-t1059-command",
+    "question": "ATT&CK T1059 命令和脚本解释器为什么常出现在漏洞利用链后半段？",
+    "expected_entities": [
+      "T1059",
+      "TA0002",
+      "CAPEC-88",
+      "CAPEC-242",
+      "MIT-002",
+      "MIT-005",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "USES_TECHNIQUE",
+      "BELONGS_TO_TACTIC",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "T1059",
+      "命令解释器",
+      "脚本",
+      "执行",
+      "命令注入",
+      "最小权限",
+      "监控"
+    ],
+    "reference_answer": "T1059 表示命令和脚本解释器，很多漏洞在获得执行能力后会调用 shell、PowerShell 或脚本运行后续载荷，因此常出现在利用链后半段。防护包括限制命令执行、最小权限和日志监控。"
+  },
+  {
+    "id": "eval-t1133-external-remote-services",
+    "question": "ATT&CK T1133 外部远程服务为什么常与 VPN 和网关漏洞相关？",
+    "expected_entities": [
+      "T1133",
+      "TA0001",
+      "CVE-2023-46805",
+      "CVE-2023-27997",
+      "MIT-007",
+      "MIT-011",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "USES_TECHNIQUE",
+      "BELONGS_TO_TACTIC",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "T1133",
+      "外部远程服务",
+      "VPN",
+      "网关",
+      "Initial Access",
+      "认证加固",
+      "暴露面"
+    ],
+    "reference_answer": "T1133 外部远程服务常用于描述 VPN、远程访问网关等入口被利用的场景。Ivanti、FortiOS 等漏洞可能让攻击者通过外部服务进入环境，因此应强化认证、限制公网暴露并监控异常登录。"
+  },
+  {
+    "id": "eval-product-exchange-chain",
+    "question": "Microsoft Exchange 漏洞链通常涉及哪些实体和攻击技术？",
+    "expected_entities": [
+      "PROD-MICROSOFT-EXCHANGE-SERVER",
+      "CVE-2021-26855",
+      "CVE-2021-34473",
+      "T1190",
+      "T1505.003",
+      "MIT-001",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "Exchange",
+      "ProxyLogon",
+      "ProxyShell",
+      "公网应用",
+      "WebShell",
+      "补丁",
+      "监控"
+    ],
+    "reference_answer": "Microsoft Exchange 漏洞链常涉及 ProxyLogon、ProxyShell 等 CVE，攻击者利用公网应用入口后可能落地 WebShell。知识图谱中应关联 Exchange 产品、T1190、公网应用利用和 T1505.003 WebShell，并给出补丁和监控建议。"
+  },
+  {
+    "id": "eval-product-vpn-gateway",
+    "question": "VPN 和安全网关类漏洞在 KG-RAG 中应如何解释风险？",
+    "expected_entities": [
+      "CVE-2023-27997",
+      "CVE-2023-46805",
+      "CVE-2024-3400",
+      "T1133",
+      "MIT-001",
+      "MIT-011",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "AFFECTS_PRODUCT",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "VPN",
+      "安全网关",
+      "远程服务",
+      "入口",
+      "暴露面",
+      "升级",
+      "监控"
+    ],
+    "reference_answer": "VPN 和安全网关类漏洞通常位于边界入口，可能被映射到外部远程服务或公网应用利用技术。KG-RAG 应结合图谱路径说明相关 CVE、产品、ATT&CK 技术和缓解措施，包括升级、限制暴露面和监控异常登录。"
+  },
+  {
+    "id": "eval-cwe-200-info-disclosure",
+    "question": "CWE-200 信息泄露类漏洞为什么需要结合凭据轮换处置？",
+    "expected_entities": [
+      "CWE-200",
+      "CVE-2023-49103",
+      "CVE-2024-24919",
+      "MIT-010",
+      "MIT-012"
+    ],
+    "expected_relations": [
+      "HAS_WEAKNESS",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "信息泄露",
+      "凭据",
+      "密钥",
+      "配置",
+      "Token",
+      "轮换",
+      "排查"
+    ],
+    "reference_answer": "CWE-200 信息泄露可能暴露配置、密钥、Token 或会话信息，仅修复漏洞不足以消除已泄露凭据带来的风险。因此需要排查泄露范围，并结合凭据轮换和密钥审查完成闭环处置。"
+  },
+  {
+    "id": "eval-cwe-287-auth-bypass",
+    "question": "CWE-287 认证问题在漏洞利用中通常会造成什么后果？",
+    "expected_entities": [
+      "CWE-287",
+      "CAPEC-115",
+      "T1078",
+      "MIT-007",
+      "MIT-009"
+    ],
+    "expected_relations": [
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "认证",
+      "认证绕过",
+      "有效账号",
+      "权限",
+      "访问控制",
+      "认证加固",
+      "监控"
+    ],
+    "reference_answer": "CWE-287 认证问题可能导致认证绕过、非法访问或有效账号滥用，攻击者可进一步获得系统权限或访问敏感功能。防护应强化认证流程、限制会话风险并监控异常登录和权限变更。"
+  },
+  {
+    "id": "eval-multi-hop-log4j-cwe-capec-technique",
+    "question": "从 Log4Shell 到 CWE、CAPEC 和 ATT&CK 技术可以形成怎样的多跳证据链？",
+    "expected_entities": [
+      "CVE-2021-44228",
+      "CWE-502",
+      "CAPEC-586",
+      "T1190",
+      "TA0001"
+    ],
+    "expected_relations": [
+      "HAS_WEAKNESS",
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "BELONGS_TO_TACTIC"
+    ],
+    "expected_keywords": [
+      "Log4Shell",
+      "CWE-502",
+      "CAPEC-586",
+      "T1190",
+      "Initial Access",
+      "多跳",
+      "证据链"
+    ],
+    "reference_answer": "Log4Shell 可从 CVE-2021-44228 关联到 CWE-502 反序列化不可信数据，再关联 CAPEC-586 对象注入，并映射到 ATT&CK T1190 公网应用利用，进一步归属 Initial Access 战术，形成可解释的多跳证据链。"
+  },
+  {
+    "id": "eval-multi-hop-sql-cwe-capec-technique",
+    "question": "SQL 注入漏洞如何从 CWE 映射到 CAPEC 和 ATT&CK 技术？",
+    "expected_entities": [
+      "CWE-89",
+      "CAPEC-66",
+      "T1190",
+      "TA0001",
+      "MIT-002"
+    ],
+    "expected_relations": [
+      "RELATED_TO_CAPEC",
+      "USES_TECHNIQUE",
+      "BELONGS_TO_TACTIC",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "CWE-89",
+      "CAPEC-66",
+      "SQL 注入",
+      "T1190",
+      "Initial Access",
+      "输入校验",
+      "证据链"
+    ],
+    "reference_answer": "SQL 注入可由 CWE-89 映射到 CAPEC-66，再映射到 ATT&CK T1190 公网应用利用，并归属 Initial Access 战术。防护应强调参数化查询、输入校验和最小权限。"
+  },
+  {
+    "id": "eval-multi-hop-webshell",
+    "question": "WebShell 相关攻击路径为什么需要同时关注文件上传和服务器组件？",
+    "expected_entities": [
+      "CAPEC-650",
+      "T1505.003",
+      "MIT-008",
+      "MIT-009",
+      "MIT-005"
+    ],
+    "expected_relations": [
+      "USES_TECHNIQUE",
+      "HAS_MITIGATION"
+    ],
+    "expected_keywords": [
+      "WebShell",
+      "文件上传",
+      "服务器组件",
+      "持久化",
+      "执行权限",
+      "监控",
+      "最小权限"
+    ],
+    "reference_answer": "WebShell 攻击路径通常从文件上传或代码执行入口开始，随后利用服务器软件组件实现持久化控制。处置时既要限制上传类型和执行权限，也要监控异常 WebShell 文件、访问日志和进程行为。"
   }
 ]
