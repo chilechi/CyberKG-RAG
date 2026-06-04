@@ -32,6 +32,12 @@ class Settings(BaseSettings):
         "https://dashscope.aliyuncs.com/api/v1/services/embeddings/text-embedding/text-embedding"
     )
 
+    rerank_provider: str = "dashscope"
+    rerank_model: str = "gte-rerank-v2"
+    dashscope_rerank_api_key: str = ""
+    dashscope_rerank_url: str = "https://dashscope.aliyuncs.com/api/v1/services/rerank/text-rerank/text-rerank"
+    rerank_timeout: int = 30
+
     deepseek_api_key: str = ""
     deepseek_base_url: str = "https://api.deepseek.com"
     deepseek_model: str = "deepseek-chat"
