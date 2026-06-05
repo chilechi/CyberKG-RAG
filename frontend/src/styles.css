@@ -973,8 +973,20 @@ button {
 
 .curve-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 12px;
+}
+
+.loss-curve-panel {
+  grid-column: 1 / -1;
+  padding-top: 4px;
+  border-top: 1px solid #edf2f7;
+}
+
+.loss-curve-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 18px;
 }
 
 .experiment-card-grid {

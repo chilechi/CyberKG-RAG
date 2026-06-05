@@ -276,6 +276,22 @@ onMounted(async () => {
               </div>
             </div>
             <div>
+              <h3>Hits@1 对比</h3>
+              <div v-for="item in enrichedModelMetrics" :key="`hits1-${item.model}`" class="curve-row">
+                <span>{{ item.model }}</span>
+                <b :style="{ width: `${item.hits_at_1 * 100}%` }"></b>
+                <small>{{ item.hits_at_1.toFixed(2) }}</small>
+              </div>
+            </div>
+            <div>
+              <h3>Hits@3 对比</h3>
+              <div v-for="item in enrichedModelMetrics" :key="`hits3-${item.model}`" class="curve-row">
+                <span>{{ item.model }}</span>
+                <b :style="{ width: `${item.hits_at_3 * 100}%` }"></b>
+                <small>{{ item.hits_at_3.toFixed(2) }}</small>
+              </div>
+            </div>
+            <div>
               <h3>Hits@10 对比</h3>
               <div v-for="item in enrichedModelMetrics" :key="`hits-${item.model}`" class="curve-row">
                 <span>{{ item.model }}</span>
@@ -283,12 +299,14 @@ onMounted(async () => {
                 <small>{{ item.hits_at_10.toFixed(2) }}</small>
               </div>
             </div>
-            <div>
+            <div class="loss-curve-panel">
               <h3>Loss 趋势</h3>
-              <div v-for="point in sampledLossCurve" :key="`loss-${point.epoch}`" class="curve-row loss">
-                <span>{{ point.epoch }}</span>
-                <b :style="{ width: `${point.rotate * 100}%` }"></b>
-                <small>{{ point.rotate.toFixed(2) }}</small>
+              <div class="loss-curve-grid">
+                <div v-for="point in sampledLossCurve" :key="`loss-${point.epoch}`" class="curve-row loss">
+                  <span>{{ point.epoch }}</span>
+                  <b :style="{ width: `${point.rotate * 100}%` }"></b>
+                  <small>{{ point.rotate.toFixed(2) }}</small>
+                </div>
               </div>
             </div>
           </div>
